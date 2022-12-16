@@ -18,5 +18,7 @@ jobs:
         - run: npm ci
         - uses: cypress-io/github-action@v4.2.2
           with:
-            working-directory: ./
-            start: npm start
+            working-directory: ./client
+            run: cd .. 
+            run: npm ci
+            start: npm start 
