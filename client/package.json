@@ -1,0 +1,34 @@
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "ts-mocha -p tsconfig.json src/**/test/*.test.ts"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.0",
+    "@mui/x-date-pickers": "^5.0.11",
+    "cypress": "^12.1.0",
+    "dayjs": "^1.11.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "@typescript-eslint/eslint-plugin": "^5.46.1",
+    "@typescript-eslint/parser": "^5.46.1",
+    "@vitejs/plugin-react": "^2.2.0",
+    "eslint": "^8.29.0",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3"
+  }
+}
