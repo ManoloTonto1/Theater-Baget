@@ -16,13 +16,13 @@ jobs:
           run: dotnet build
           working-directory: ./server
         - name: Install node
-        - uses: actions/setup-node@v1
+          uses: actions/setup-node@v1
           with:
-            working-directory: ./client
             node-version: 16
         - run: npm ci
+          working-directory: ./client
         - name: run cypress
-        - uses: cypress-io/github-action@v4.2.2
+          uses: cypress-io/github-action@v4.2.2
           with:
             working-directory: ./client
             start: npm run cypress-tests
