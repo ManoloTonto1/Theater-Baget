@@ -8,18 +8,20 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v3
         - name: build Dotnet
+        - uses: actions/checkout@v3
         - uses: actions/setup-dotnet@v3
           with:
             dotnet-version: '6.0'
         - run: dotnet build
           working-directory: ./server
+        - name: Install node
         - uses: actions/setup-node@v1
           with:
             working-directory: ./client
             node-version: 16
         - run: npm ci
+        - name: run cypress
         - uses: cypress-io/github-action@v4.2.2
           with:
             working-directory: ./client
