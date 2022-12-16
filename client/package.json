@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "ts-mocha -p tsconfig.json src/**/test/*.test.ts"
+    "test": "ts-mocha -p tsconfig.json src/**/test/*.test.ts",
+    "server": "cd.. && cd server && dotnet run",
+    "cypress-tests": "run-p dev server"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -16,6 +18,7 @@
     "@mui/x-date-pickers": "^5.0.11",
     "cypress": "^12.1.0",
     "dayjs": "^1.11.7",
+    "npm-run-all": "^4.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
