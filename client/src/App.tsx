@@ -1,56 +1,35 @@
-import React, {
-	useState 
-} from 'react';
+import {
+	ThemeProvider 
+} from '@emotion/react';
+import {
+	Paper 
+} from '@mui/material';
+import React from 'react';
 
-import reactLogo from './assets/react.svg';
-
-import './App.css';
+import {
+	Route, Routes, useLocation 
+} from 'react-router-dom';
+import UserContext from './context/UserContext';
+import Login from './routes/login/Login';
 
 function App() {
-
-	const [count, setCount] = useState(0);
-
+	const { theme } = React.useContext(UserContext);
+	const location = useLocation();
 	return (
+		<ThemeProvider theme={theme.theme}>
+			<Paper sx={{
+				borderRadius: '0',
+				minHeight: '100vh',
+			}}>
+				<Routes location={location}
+					key={location.pathname}
+				>
+					<Route path={'/'} element={<Login/>} />
 
-		<div className="App">
-			<div>
-				<a href="https://vitejs.dev" target="_blank"
-					rel="noreferrer">
-					<img src="/vite.svg" className="logo"
-						alt="Vite logo" />
-				</a>
-				<a href="https://reactjs.org" target="_blank"
-					rel="noreferrer">
-					<img src={reactLogo} className="logo react"
-						alt="React logo" />
-				</a>
-			</div>
-			<h1>Vite + React</h1>
-			<div className="card">
-				<button onClick={() => setCount((count) => count + 1)}>
-
-          count is {count}
-
-				</button>
-
-				<p>
-
-          Edit <code>src/App.tsx</code> and save to test HMR
-
-				</p>
-
-			</div>
-
-			<p className="read-the-docs">
-
-        Click on the Vite and React logos to learn more
-
-			</p>
-
-		</div>
-
+				</Routes >
+			</Paper>
+		</ThemeProvider>
 	);
-
 }
 
 export default App;
