@@ -1,13 +1,13 @@
 import {
-	ThemeProvider 
+	ThemeProvider
 } from '@emotion/react';
 import {
-	Paper 
+	Paper
 } from '@mui/material';
 import React from 'react';
 
 import {
-	Route, Routes, useLocation 
+	Route, Routes, useLocation
 } from 'react-router-dom';
 import Footer from './components/global/Footer';
 import Topbar from './components/global/Topbar';
@@ -28,7 +28,7 @@ function App() {
 				<Routes location={location}
 					key={location.pathname}
 				>
-					<Route path={'/'} element={<Login/>} />
+					<Route path={'/'} element={<Login />} />
 
 				</Routes >
 				<Footer/>
