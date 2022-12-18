@@ -1,13 +1,13 @@
 import {
-	ThemeProvider 
+	ThemeProvider
 } from '@emotion/react';
 import {
-	Paper 
+	Paper
 } from '@mui/material';
 import React from 'react';
 
 import {
-	Route, Routes, useLocation 
+	Route, Routes, useLocation
 } from 'react-router-dom';
 import UserContext from './context/UserContext';
 import Login from './routes/login/Login';
@@ -17,14 +17,14 @@ function App() {
 	const location = useLocation();
 	return (
 		<ThemeProvider theme={theme.theme}>
-			<Paper sx={{
+			<Paper className="bg" sx={{
 				borderRadius: '0',
 				minHeight: '100vh',
 			}}>
 				<Routes location={location}
 					key={location.pathname}
 				>
-					<Route path={'/'} element={<Login/>} />
+					<Route path={'/'} element={<Login />} />
 
 				</Routes >
 			</Paper>
