@@ -15,6 +15,8 @@ import React, {
 import SignIn from './tabs/SignIn';
 import SignUp from './tabs/SignUp';
 
+import img from '../../assets/poster.png';
+
 interface TabPanelProps {
 	children?: React.ReactNode;
 	index: number;
@@ -23,7 +25,7 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
 	const { children, value, index, ...other } = props;
-
+	
 	return (
 		<Box
 			role="tabpanel"
@@ -34,7 +36,7 @@ function TabPanel(props: TabPanelProps) {
 		>
 			{value === index && (
 				<Box sx={{
- 					p: 3 
+					p: 3 
 				}}>
 					{children}
 				</Box>
@@ -52,7 +54,7 @@ function tabId(index: number) {
 
 function Login() {
 	const [tab, setTab] = React.useState(0);
-
+	
 	// errors
 	// const [passwordsMatch, setPasswordsMatch] = React.useState(true);
 	
@@ -61,41 +63,49 @@ function Login() {
 	}, []);
 	
 	return (
-		<Container style={{
-			height: '100vh', 
-			display: 'flex', 
-			 justifyContent: 'center', 
-			 alignItems: 'center' 
+		<Box style={{
+			width: '100%',
+			height: '100vh',
+			backgroundImage: 'url('+img+')'
 		}}>
 
-			<Card elevation={4} sx={{ 
-				width: 450 
+			<Container style={{
+				height: '100vh',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
 			}}>
-				< Box sx={{ 
-					width: '100%' 
+
+				<Card elevation={4} sx={{ 
+					width: 750,
+					p: 4,
 				}}>
-					<Box sx={{ 
-						borderBottom: 1, 
-						borderColor: 'divider' 
+					< Box sx={{ 
+						width: '100%' 
 					}}>
-						<Tabs value={tab} onChange={handleTabChange}
-							variant='fullWidth' sx={{
-								ml:1, 
-								mr:1
-							}}>
-							<Tab label="sign in" {...tabId(0)} />
-							<Tab label="sign up" {...tabId(1)} />
-						</Tabs>
-					</Box>
-					<TabPanel value={tab} index={0}>
-						<SignIn />
-					</TabPanel>
-					<TabPanel value={tab} index={1}>
-						<SignUp />
-					</TabPanel>
-				</Box >
-			</Card>
-		</Container>
+						<Box sx={{ 
+							borderBottom: 1, 
+							borderColor: 'divider' 
+						}}>
+							<Tabs value={tab} onChange={handleTabChange}
+								variant='fullWidth' sx={{
+									ml:1, 
+									mr:1
+								}}>
+								<Tab label="sign in" {...tabId(0)} />
+								<Tab label="sign up" {...tabId(1)} />
+							</Tabs>
+						</Box>
+						<TabPanel value={tab} index={0}>
+							<SignIn />
+						</TabPanel>
+						<TabPanel value={tab} index={1}>
+							<SignUp />
+						</TabPanel>
+					</Box >
+				</Card>
+			</Container>
+		</Box>
 
 	);
 }
