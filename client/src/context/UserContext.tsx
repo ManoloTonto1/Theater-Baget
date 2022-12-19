@@ -39,10 +39,10 @@ export const UserProvider = ({ children }: $TSfixMeAny) => {
 		palette: {
 			mode: !darkMode ? 'dark' : 'light',
 			primary: {
-				main: yellow[500],
+				main: red['A700'],
 			},
 			secondary: {
-				main: red['A700'],
+				main: yellow[500],
 			},
 		},
 
