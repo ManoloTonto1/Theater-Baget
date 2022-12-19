@@ -44,12 +44,6 @@ export const UserProvider = ({ children }: $TSfixMeAny) => {
 			secondary: {
 				main: red['A700'],
 			},
-			// background: {
-				
-			//   default: !darkMode 
-			//   ? 'linear-gradient(180deg, rgba(75,75,75,1) 0%, rgba(32,32,32,1) 100%)'
-			//   : 'linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,235,235,1) 100%)',
-			// },
 		},
 
 	});

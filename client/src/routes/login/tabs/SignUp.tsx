@@ -49,17 +49,10 @@ function SignUp () {
 
 		if(!error) {
 
-			// logs voor testen
-			console.log(voornaam);
-			console.log(tussenvoegsel);
-			console.log(achternaam);
-			console.log(geboorteDatum);
-			console.log(email);
-			console.log(password);
-			console.log(confirmPassword);
-			console.log(rememberMe);
+			// login geslaagd
+			
 		}
-	}, [achternaam, confirmPassword, email, geboorteDatum, password, rememberMe, tussenvoegsel, voornaam]);
+	}, []);
 
 	const handlePassword = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setPassword(e.target.value);
@@ -67,27 +60,22 @@ function SignUp () {
 
 	const handleEmail = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setEmail(e.target.value);
-		console.log(e.target.value);
 	}, []);
 
 	const handleConfirmPassword = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setConfirmPassword(e.target.value);
-		console.log(e.target.value);
 	}, []);
 
 	const handleVoornaam = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setVoornaam(e.target.value);
-		console.log(e.target.value);
 	}, []);
 	
 	const handleTussenvoegsel = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setTussenvoegsel(e.target.value);
-		console.log(e.target.value);
 	}, []);
 	
 	const handleAchternaam = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setAchternaam(e.target.value);
-		console.log(e.target.value);
 	}, []);
 
 	return (
@@ -113,6 +101,7 @@ function SignUp () {
 						type='text' 
 						required 
 						onChange={handleVoornaam}
+						value={voornaam}
 						/>
 
 						<TextField sx={{ 
@@ -122,6 +111,7 @@ function SignUp () {
 						variant='standard' 
 						type='text' 
 						onChange={handleTussenvoegsel}
+						value={tussenvoegsel}
 						/>
 
 						<TextField sx={{ 
@@ -132,6 +122,7 @@ function SignUp () {
 						type='text' 
 						required 
 						onChange={handleAchternaam}
+						value={achternaam}
 						/>
 
 					</Box>
@@ -152,17 +143,20 @@ function SignUp () {
 						m: 1, mb: 2 
 					}} label='E-mail adres'
 					variant='standard' type='email'
-					required onChange={handleEmail} />
+					required onChange={handleEmail} 
+					value={email}/>
 					<TextField sx={{
 						m: 1, mb: 2 
 					}} label='Wachtwoord'
 					variant='standard' type='password'
-					required onChange={handlePassword} />
+					required onChange={handlePassword} 
+					value={password}/>
 					<TextField sx={{
 						m: 1, mb: 2 
 					}} label='Wachtwoord bevestigen'
 					variant='standard' type='password'
 					required onChange={handleConfirmPassword}
+					value={confirmPassword}
 					error={!passwordsMatch} 
 					helperText={!passwordsMatch ? 'Wachtwoorden komen niet overeen' : ''}
 					/>

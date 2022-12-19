@@ -55,9 +55,6 @@ function tabId(index: number) {
 function Login() {
 	const [tab, setTab] = React.useState(0);
 	
-	// errors
-	// const [passwordsMatch, setPasswordsMatch] = React.useState(true);
-	
 	const handleTabChange = useCallback((event: React.SyntheticEvent, newValue: number) => {
 		setTab(newValue);
 	}, []);

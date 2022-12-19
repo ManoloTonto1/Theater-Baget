@@ -21,21 +21,14 @@ function SignIn () {
 
 	const handlePassword = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setPassword(e.target.value);
-		console.log('passed data: '+e.target.value);
-		console.log('usestate data: '+password);
-	}, [password]);
+	}, []);
 
 	const handleEmail = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setEmail(e.target.value);
-		console.log(e.target.value);
 	}, []);
 
 	const signIn = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		// logs voor testen
-		// console.log(email);
-		// console.log(password);
-		// console.log(rememberMe);
 	};
 
 	return (
@@ -54,7 +47,9 @@ function SignIn () {
 					}} 
 					label='E-mail adres'
 					variant='standard' type='email'
-					required onChange={handleEmail} />
+					required onChange={handleEmail}
+					value={email}
+					/>
 
 					<TextField sx={{ 
 						mb: 2 
@@ -63,6 +58,7 @@ function SignIn () {
 					variant='standard' 
 					type='password' 
 					onChange={handlePassword} 
+					value={password}
 					required 
 					/>
 
