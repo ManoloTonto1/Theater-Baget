@@ -8,4 +8,4 @@ public class Reservering {
     public Zaal zaal { get; set; }
     public Programmering programmering { get; set; }
     public bestelling bestelling { get; set; }
-} 
+}

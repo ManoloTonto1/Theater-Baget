@@ -4,4 +4,4 @@ public class Betrokkene : Gebruiker {
     public string afbeelding { get; set; }
     public List<Groep> groepen { get; set; }
     public List<Programmering> programmeringen { get; set; }
-} 
+}

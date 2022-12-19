@@ -8,5 +8,4 @@ public class Programmering {
     public List<Betrokkene> betrokkenen { get; set; }
     public List<Groep> groepen { get; set; }
     public List<Reservering> reserveringen { get; set; }
- 
 }

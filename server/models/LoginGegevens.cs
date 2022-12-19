@@ -4,4 +4,4 @@ public class LoginGegevens {
     public string wachtwoord { get; set; }
     public bool twoFactor { get; set; }
     public Gebruiker owner { get; set; }
-} 
+}
