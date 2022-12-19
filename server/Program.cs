@@ -1,5 +1,8 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<theaterContext>(options =>
+    options.UseSqlite("Data Source=database.db"));
 // Add services to the container.
 
 builder.Services.AddControllers();
