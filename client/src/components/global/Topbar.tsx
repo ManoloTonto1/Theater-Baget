@@ -44,7 +44,7 @@ export default function Topbar() {
 				navigate('/login');
 			});
 		};
-		fetchData();
+		fetchData();    
 
 		// do not include user, it will create an infinite loop.
 		// eslint-disable-next-line react-hooks/exhaustive-deps

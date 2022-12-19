@@ -1,8 +1,5 @@
 import {
-	ThemeProvider
-} from '@emotion/react';
-import {
-	Paper
+	Paper, ThemeProvider 
 } from '@mui/material';
 import React from 'react';
 
