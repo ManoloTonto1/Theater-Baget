@@ -12,12 +12,14 @@ import {
 import UserContext from './context/UserContext';
 import Login from './routes/login/Login';
 
+
+
 function App() {
 	const { theme } = React.useContext(UserContext);
 	const location = useLocation();
 	return (
 		<ThemeProvider theme={theme.theme}>
-			<Paper className="bg" sx={{
+			<Paper sx={{
 				borderRadius: '0',
 				minHeight: '100vh',
 			}}>
