@@ -9,6 +9,8 @@ import {
 } from '@mui/system';
 import React from 'react';
 
+//const { user, theme } = React.useContext(UserContext);
+
 function Homepage() {
 	return (
 		<Container>
