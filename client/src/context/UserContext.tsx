@@ -7,7 +7,7 @@ import {
 import React from 'react';
 import {
 	$TSfixMeAny 
-} from '../components/globalTypes';
+} from '../components/global/globalTypes';
 
 type TRole = 'admin' | 'medewerker' | 'user' | 'donateur'
 
@@ -42,7 +42,7 @@ export const UserProvider = ({ children }: $TSfixMeAny) => {
 				main: yellow[500],
 			},
 			secondary: {
-				main: red[500],
+				main: red['A700'],
 			},
 		},
 
