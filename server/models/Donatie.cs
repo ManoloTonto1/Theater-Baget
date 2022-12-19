@@ -1,3 +1,3 @@
-public class Donaties : Betalingen {
+public class Donatie : Betaling {
     public string message { get; set; }
 }

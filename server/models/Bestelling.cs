@@ -1,4 +1,4 @@
-public class bestellingen : Betalingen{
+public class bestelling : Betaling{
     public int korting { get; set; }
     public Reservering reservering { get; set; }
 }

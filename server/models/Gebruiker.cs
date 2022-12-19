@@ -8,6 +8,6 @@ public class Gebruiker {
     public LoginGegevens loginGegevens { get; set; }
     public List<Reservering> reserveringen { get; set; } 
     public List<Interesse> interesses { get; set; }
-    public List<Betalingen> betalingen { get; set; }
+    public List<Betaling> betalingen { get; set; }
     public List<Logs> logs { get; set; }
 }

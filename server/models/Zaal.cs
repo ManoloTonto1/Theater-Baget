@@ -1,4 +1,4 @@
-public class Zalen {
+public class Zaal {
     public int zaalnr { get; set; }
     public string soort { get; set; }
     public int eersterangsAantal { get; set; }
