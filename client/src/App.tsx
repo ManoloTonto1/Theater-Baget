@@ -19,7 +19,6 @@ function App() {
 	const location = useLocation();
 	return (
 		<ThemeProvider theme={theme.theme}>
-			
 			<Paper sx={{
 				borderRadius: '0',
 				minHeight: '100vh',

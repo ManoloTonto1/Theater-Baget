@@ -4,11 +4,6 @@ html,body {
   font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 
-.bg {
-  background: rgb(64,64,64);
-  background: linear-gradient(180deg, rgb(49, 49, 49) 0%, rgb(22, 22, 22) 100%);
-}
-
 .loginTab {
   padding: 10px;
   padding-top: 20px;
