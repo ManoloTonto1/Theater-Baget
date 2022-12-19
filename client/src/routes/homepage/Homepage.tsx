@@ -9,33 +9,117 @@ import {
 } from '@mui/system';
 import React from 'react';
 
+const src = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley';
+
 function Homepage() {
 	return (
 		<Container>
-			<Grid>
-				<Card sx={{
-					maxWidth: 345 
-				}}>
-					<CardMedia
-						component="img"
-						height="400"
-						image="/src/components/gorilla.jfif"
-						alt="gorilla"
-					/>
+			<Typography variant="h3">Welkom bij theater Baget!</Typography>
+			<Grid container spacing={3}>
+				<Grid item xs={11}>
+					<iframe width="560" height="315"
+						src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowFullScreen></iframe>
+				</Grid>
+				<Typography textAlign={'center'} variant="h4">Huidige activiteiten</Typography>
+				<Typography></Typography>
+				<Grid item xs={3}>
+					<Card sx={{
+						maxWidth: 260 
+					}}>
+						<CardMedia
+							component="img"
+							height="120"
+							image="/src/components/gorilla.jfif"
+							alt="gorilla"
+						/>
 	  <CardContent>
-						<Typography gutterBottom variant="h5"
-							component="div">
+							<Typography gutterBottom variant="h5"
+								component="div">
           Programma1
-						</Typography>
-						<Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-						</Typography>
-						<CardActions>
-							<Button size="small">Bekijk programma</Button>
-						</CardActions>
-					</CardContent>
-				</Card>
+							</Typography>
+							<Typography variant="body2" color="text.secondary">
+          Omschrijving programma1
+							</Typography>
+							<CardActions>
+								<Button size="small">Bekijk programma</Button>
+							</CardActions>
+						</CardContent>
+					</Card>
+				</Grid>
+				<Grid item xs={3}>
+					<Card sx={{
+						maxWidth: 260 
+					}}>
+						<CardMedia
+							component="img"
+							height="120"
+							image="/src/components/gorilla.jfif"
+							alt="gorilla"
+						/>
+	  <CardContent>
+							<Typography gutterBottom variant="h5"
+								component="div">
+          Programma2
+							</Typography>
+							<Typography variant="body2" color="text.secondary">
+          Omschrijving programma2
+							</Typography>
+							<CardActions>
+								<Button size="small">Bekijk programma</Button>
+							</CardActions>
+						</CardContent>
+					</Card>
+				</Grid>
+				<Grid item xs={3}>
+					<Card sx={{
+						maxWidth: 260 
+					}}>
+						<CardMedia
+							component="img"
+							height="120"
+							image="/src/components/gorilla.jfif"
+							alt="gorilla"
+						/>
+	  <CardContent>
+							<Typography gutterBottom variant="h5"
+								component="div">
+          Programma3
+							</Typography>
+							<Typography variant="body2" color="text.secondary">
+          Omschrijving programma3
+							</Typography>
+							<CardActions>
+								<Button size="small">Bekijk programma</Button>
+							</CardActions>
+						</CardContent>
+					</Card>
+				</Grid>
+				<Grid item xs={3}>
+					<Card sx={{
+						maxWidth: 260 
+					}}>
+						<CardMedia
+							component="img"
+							height="120"
+							image="/src/components/gorilla.jfif"
+							alt="gorilla"
+						/>
+	  <CardContent>
+							<Typography gutterBottom variant="h5"
+								component="div">
+          Programma4
+							</Typography>
+							<Typography variant="body2" color="text.secondary">
+          Omschrijving programma4
+							</Typography>
+							<CardActions>
+								<Button size="small">Bekijk programma</Button>
+							</CardActions>
+						</CardContent>
+					</Card>
+				</Grid>
 			</Grid>
 		</Container>
 
