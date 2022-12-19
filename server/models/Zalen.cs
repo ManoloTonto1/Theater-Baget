@@ -6,4 +6,4 @@ public class Zalen {
     public int derderangsAantal { get; set; }
     public List<Programmering> programmeringen { get; set; }
     public List<Reservering> reserveringen { get; set; }
-}
+} 

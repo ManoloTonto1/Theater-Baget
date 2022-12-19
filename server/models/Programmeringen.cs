@@ -6,6 +6,7 @@ public class Programmering {
     public string afbeelding { get; set; }
     public Zalen zaal { get; set; }
     public List<Betrokkenen> betrokkenen { get; set; }
+    public List<Groep> groepen { get; set; }
     public List<Reservering> reserveringen { get; set; }
-
+ 
 }

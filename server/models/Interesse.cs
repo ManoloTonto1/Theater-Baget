@@ -3,4 +3,4 @@ public class Interesse {
     public string omschrijving { get; set; }
     public DateTime datum { get; set; }
     public Gebruiker owner { get; set; }
-}
+} 
