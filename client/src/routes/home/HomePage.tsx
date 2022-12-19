@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
 	Box,
 	CardActionArea, CardContent, CardMedia, Divider, Grid, ThemeProvider
@@ -156,3 +157,14 @@ function Homepage() {
 }
 
 export default Homepage;
+=======
+import React from 'react';
+
+function HomePage() {
+	return (
+		<div>HomePage</div>
+	);
+}
+
+export default HomePage;
+>>>>>>> 52fdf8c (Added the footer and the header to the root of the app.)

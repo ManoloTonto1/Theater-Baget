@@ -3,12 +3,11 @@ import React, {
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-
 import {
 	ThemeProvider
 } from '@mui/material/styles';
 import {
-	Button, IconButton, Typography
+	Button, Typography
 } from '@mui/material';
 import {
 	useNavigate
