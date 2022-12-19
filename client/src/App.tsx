@@ -12,7 +12,7 @@ import {
 import Footer from './components/global/Footer';
 import Topbar from './components/global/Topbar';
 import UserContext from './context/UserContext';
-import Login from './routes/login/Login';
+import Homepage from './routes/homepage/Homepage';
 
 function App() {
 	const { theme } = React.useContext(UserContext);
@@ -27,7 +27,7 @@ function App() {
 				<Routes location={location}
 					key={location.pathname}
 				>
-					<Route path={'/'} element={<Login />} />
+					<Route path={'/'} element={<Homepage/>} />
 
 				</Routes >
 				<Footer/>
