@@ -37,13 +37,19 @@ export const UserProvider = ({ children }: $TSfixMeAny) => {
 	const [darkMode, setDarkmode] = React.useState(localStorage.getItem('darkMode') === 'dark');
 	const theme = createTheme({
 		palette: {
-			mode: darkMode ? 'dark' : 'light',
+			mode: !darkMode ? 'dark' : 'light',
 			primary: {
 				main: yellow[500],
 			},
 			secondary: {
 				main: red['A700'],
 			},
+			// background: {
+				
+			//   default: !darkMode 
+			//   ? 'linear-gradient(180deg, rgba(75,75,75,1) 0%, rgba(32,32,32,1) 100%)'
+			//   : 'linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,235,235,1) 100%)',
+			// },
 		},
 
 	});
@@ -75,3 +81,14 @@ export const UserProvider = ({ children }: $TSfixMeAny) => {
 };
 
 export default UserContext;
+function rgb(arg0: number, arg1: number, arg2: number) {
+	throw new Error('Function not implemented.');
+}
+
+function gradient(arg0: number, deg: any, arg2: any, arg3: number, arg4: any, arg5: number) {
+	throw new Error('Function not implemented.');
+}
+
+function rgba(arg0: number, arg1: number, arg2: number, arg3: number): any {
+	throw new Error('Function not implemented.');
+}

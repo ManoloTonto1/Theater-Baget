@@ -18,7 +18,7 @@ function App() {
 	const { theme } = React.useContext(UserContext);
 	const location = useLocation();
 	return (
-		<ThemeProvider theme={theme.theme}>
+		<ThemeProvider theme={theme.theme} >
 			<Paper sx={{
 				borderRadius: '0',
 				minHeight: '100vh',
