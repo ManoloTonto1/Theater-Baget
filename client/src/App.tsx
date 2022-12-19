@@ -10,7 +10,7 @@ import {
 	Route, Routes, useLocation 
 } from 'react-router-dom';
 import UserContext from './context/UserContext';
-import Homepage from './routes/homepage/Homepage';
+import Homepage from './routes/homepage/HomePage';
 
 function App() {
 	const { theme } = React.useContext(UserContext);
