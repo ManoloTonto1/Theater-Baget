@@ -9,21 +9,26 @@ import {
 } from '@mui/system';
 import React from 'react';
 
-const src = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley';
-
 function Homepage() {
 	return (
 		<Container>
-			<Typography variant="h3">Welkom bij theater Baget!</Typography>
-			<Grid container spacing={3}>
-				<Grid item xs={11}>
-					<iframe width="560" height="315"
-						src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-						allowFullScreen></iframe>
-				</Grid>
+			<Card sx={{
+				maxWidth: 2000
+			}}>
+				<Typography textAlign={'center'} variant="h3">Welkom bij theater Baget!</Typography>
+			</Card>
+			<Grid item xs={11}>
+				<iframe width="560" height="315"
+					src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowFullScreen></iframe>
+			</Grid>
+			<Card sx={{
+				maxWidth: 3000
+			}}>
 				<Typography textAlign={'center'} variant="h4">Huidige activiteiten</Typography>
-				<Typography></Typography>
+			</Card>
+			<Grid container spacing={3}>
 				<Grid item xs={3}>
 					<Card sx={{
 						maxWidth: 260 
