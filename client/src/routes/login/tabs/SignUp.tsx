@@ -1,5 +1,5 @@
 import {
-	Box, Button, Checkbox, FormControlLabel, FormGroup, TextField 
+	Box, Button, Checkbox, FormControlLabel, FormGroup, Slide, TextField 
 } from '@mui/material';
 
 import { 
@@ -40,19 +40,12 @@ function SignUp () {
 	const signUp = useCallback((e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		let error = false;
-		if(password != confirmPassword) {
-			setPasswordsMatch(false);
-			error = true;
+		if (password === confirmPassword) {
+			// login geslaagd
 			return;
 		}
-
-		if(!error) {
-
-			// login geslaagd
-			
-		}
-	}, []);
+		setPasswordsMatch(false);
+	}, [confirmPassword, password]);
 
 	const handlePassword = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setPassword(e.target.value);
@@ -80,11 +73,16 @@ function SignUp () {
 
 	return (
 
-		<form onSubmit={signUp}>
-
-			<Box sx={{ 
-				p: 2 
-			}}>
+		<Slide
+			in
+			direction='right'
+		>
+			<Box
+				onSubmit={signUp}
+				component='form'
+				sx={{ 
+					p: 2 
+				}}>
 				<FormGroup>
 					<Box sx={{
 						'& .MuiTextField-root': { 
@@ -176,7 +174,7 @@ function SignUp () {
 						type='submit'>sign up</Button>
 				</FormGroup>
 			</Box>
-		</form>
+		</Slide>
 	);
 }
 

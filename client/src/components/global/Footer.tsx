@@ -1,11 +1,9 @@
 import React from 'react';
 import {
-	Grid,
-	Link, Typography, TypographyProps
-	, ThemeProvider, 
+	Link, Typography, TypographyProps,
+	ThemeProvider, 
 	IconButton,
-	Box,
-	Container
+	Box
 } from '@mui/material';
 import UserContext from '../../context/UserContext';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -27,55 +25,44 @@ export default function Footer(props: TypographyProps) {
 				py:2,
 				bgcolor: 'primary.main',
 				height: '100%',
+				color:'#fff'
 			}}>
-				<Container>
-					<Grid
-						container
-						spacing={1}
-						sx={{
-							width: 400
-						}}>
-                        
-						<Grid item xs={12}>
-							<Typography>
-                                Follow ons op onze Sociale media!
-							</Typography>
-
-						</Grid>
-						<Grid item xs={2}>
-							<IconButton href="https://twitter.com/elonmusk?">
-								<TwitterIcon />
-							</IconButton>
-						</Grid>
-						<Grid item xs={2}>
-							<IconButton href='https://youtu.be/9zLWwGQf7v8'>
-								<YouTubeIcon />
-							</IconButton>
-						</Grid>
-						<Grid item xs={2}>
-							<IconButton href='tel:+31-0669696969'>
-								<LocalPhoneIcon />
-							</IconButton>
-						</Grid>
-						<Grid item xs={2}>
-							<IconButton href='mailto:bitch@gmail.com'>
-								<EmailIcon />
-							</IconButton>
-						</Grid>
-					</Grid>
-					<Typography
-						variant="body2"
-						color="text.secondary"
-						align="center" {...props}>
-						{'Copyright © '}
-						<Link color="inherit" href="https://matias.ma/nsfw/">
+				<Typography align={'center'}>
+					Follow ons op onze Sociale media!
+				</Typography>
+				<Box
+					sx={{
+						width: '100%',
+						display: 'flex',
+						justifyContent: 'center',
+						my: 1,
+					}}>
+					<IconButton href="https://twitter.com/elonmusk?" color='secondary'>
+						<TwitterIcon />
+					</IconButton>
+					<IconButton href='https://youtu.be/9zLWwGQf7v8' color='secondary'>
+						<YouTubeIcon />
+					</IconButton>
+					<IconButton href='tel:+31-0669696969' color='secondary'>
+						<LocalPhoneIcon />
+					</IconButton>
+					<IconButton href='mailto:bitch@gmail.com' color='secondary'>
+						<EmailIcon />
+					</IconButton>
+				</Box>
+				<Typography
+					variant="body2"
+					color='#fff'
+					align="center" {...props}>
+					{'Copyright © '}
+					<Link color="inherit" href="https://matias.ma/nsfw/">
                             Theater Baget
-						</Link>
-						{' '}
-						{new Date().getFullYear()}
-						{'.'}
-					</Typography>
-				</Container>    
+					</Link>
+					{' '}
+					{new Date().getFullYear()}
+					{'.'}
+				</Typography>
+				  
 			</Box>
 		</ThemeProvider>
 	);
