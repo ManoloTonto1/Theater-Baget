@@ -1,6 +1,6 @@
 import {
 	Box,
-	CardActionArea, CardContent, CardMedia, Divider, Grid, ThemeProvider
+	CardActionArea, CardContent, CardMedia, Divider, Grid, Grow, ThemeProvider
 } from '@mui/material';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -117,35 +117,38 @@ function Homepage() {
 						p: 4
 					}}>
 					{
-						cards.map((card) => {
+						cards.map((card,index) => {
 							return (
-								<Grid item xs={4}
+								<Grow in timeout={index * 100}
 									key={card.naam}>
-									<Card elevation={4}>
-										<CardActionArea>
+									<Grid item xs={4}
+									>
+										<Card elevation={4}>
+											<CardActionArea>
 
-											<CardMedia
-												component="img"
-												height=""
-												image={card.afbeelding}
-												alt="gorilla"
-											/>
-											<CardContent>
-												<Typography gutterBottom variant="h5"
-													component="div">
-													{card.naam}
-												</Typography>
-												<Typography variant="body2" color="text.secondary">
-													{card.datum}
-												</Typography>
-												<Typography variant="body2" color="text.secondary">
-													{card.omschrijving}
-												</Typography>
-											</CardContent>
-										</CardActionArea>
+												<CardMedia
+													component="img"
+													height=""
+													image={card.afbeelding}
+													alt="gorilla"
+												/>
+												<CardContent>
+													<Typography gutterBottom variant="h5"
+														component="div">
+														{card.naam}
+													</Typography>
+													<Typography variant="body2" color="text.secondary">
+														{card.datum}
+													</Typography>
+													<Typography variant="body2" color="text.secondary">
+														{card.omschrijving}
+													</Typography>
+												</CardContent>
+											</CardActionArea>
 
-									</Card>
-								</Grid>
+										</Card>
+									</Grid>
+								</Grow>
 							);
 						})
 					}

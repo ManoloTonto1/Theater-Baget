@@ -1,10 +1,9 @@
 import {
-	ThemeProvider
-} from '@emotion/react';
-import {
-	Paper
+	Paper, ThemeProvider 
 } from '@mui/material';
-import React from 'react';
+import React, {
+	Suspense 
+} from 'react';
 
 import {
 	Route, Routes, useLocation
@@ -12,7 +11,9 @@ import {
 import Footer from './components/global/Footer';
 import Topbar from './components/global/Topbar';
 import UserContext from './context/UserContext';
-import Login from './routes/login/Login';
+
+const Login = React.lazy(() => import('./routes/login/Login'));
+const Homepage = React.lazy(() => import('./routes/home/HomePage'));
 
 function App() {
 	const { theme } = React.useContext(UserContext);
@@ -27,7 +28,8 @@ function App() {
 				<Routes location={location}
 					key={location.pathname}
 				>
-					<Route path={'/'} element={<Login />} />
+					<Route path={'/login'} element={<Suspense><Login/></Suspense>} />
+					<Route path={'/'} element={<Suspense><Homepage/></Suspense>} />
 
 				</Routes >
 				<Footer/>

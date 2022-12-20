@@ -39,10 +39,10 @@ export const UserProvider = ({ children }: $TSfixMeAny) => {
 		palette: {
 			mode: !darkMode ? 'dark' : 'light',
 			primary: {
-				main: yellow[500],
+				main: red['A700'],
 			},
 			secondary: {
-				main: red['A700'],
+				main: yellow[500],
 			},
 		},
 
@@ -75,14 +75,3 @@ export const UserProvider = ({ children }: $TSfixMeAny) => {
 };
 
 export default UserContext;
-function rgb(arg0: number, arg1: number, arg2: number) {
-	throw new Error('Function not implemented.');
-}
-
-function gradient(arg0: number, deg: any, arg2: any, arg3: number, arg4: any, arg5: number) {
-	throw new Error('Function not implemented.');
-}
-
-function rgba(arg0: number, arg1: number, arg2: number, arg3: number): any {
-	throw new Error('Function not implemented.');
-}

@@ -1,19 +1,20 @@
-import React, { 
-	useCallback 
+import React, {
+	useCallback
 } from 'react';
 
-import { 
-	Box, 
-	Button, 
-	Checkbox, 
-	FormControlLabel, 
-	FormGroup, 
-	Link, 
-	TextField 
+import {
+	Box,
+	Button,
+	Checkbox,
+	FormControlLabel,
+	FormGroup,
+	Link,
+	Slide,
+	TextField
 } from '@mui/material';
 
-function SignIn () {
-    
+function SignIn() {
+
 	// general values
 	const [password, setPassword] = React.useState('');
 	const [email, setEmail] = React.useState('');
@@ -32,64 +33,70 @@ function SignIn () {
 	};
 
 	return (
-
-		<form onSubmit={signIn}>
-			<Box sx={{ 
-				p: 2 
-			}}>
+		<Slide
+			in
+			direction='left'
+		>
+			<Box
+				component={'form'}
+				onSubmit={signIn}
+				sx={{
+					p: 2
+				}}>
 				<FormGroup sx={{
-					'& .MuiTextField-root': { 
-						m: 1 
+					'& .MuiTextField-root': {
+						m: 1
 					}, textAlign: 'center'
 				}}>
-					<TextField sx={{ 
-						mb: 2 
-					}} 
+					<TextField sx={{
+						mb: 2
+					}}
 					label='E-mail adres'
 					variant='standard' type='email'
 					required onChange={handleEmail}
 					value={email}
 					/>
 
-					<TextField sx={{ 
-						mb: 2 
-					}} 
-					label='Wachtwoord' 
-					variant='standard' 
-					type='password' 
-					onChange={handlePassword} 
+					<TextField sx={{
+						mb: 2
+					}}
+					label='Wachtwoord'
+					variant='standard'
+					type='password'
+					onChange={handlePassword}
 					value={password}
-					required 
+					required
 					/>
 
-					<FormControlLabel sx={{ 
-						mb: 2 
-					}} 
-									
+					<FormControlLabel sx={{
+						mb: 2
+					}}
+
 					control={
-						<Checkbox 
-							checked={rememberMe} 
-							onChange={() => setRememberMe(!rememberMe)} 
-						/>} 
-					label='Aangemeld blijven' 
+						<Checkbox
+							checked={rememberMe}
+							onChange={() => setRememberMe(!rememberMe)}
+						/>}
+					label='Aangemeld blijven'
 					/>
-									
-					<Button 
-						variant='contained' 
+
+					<Button
+						variant='contained'
 						color='secondary'
 						type='submit'>
-										sign in
+						sign in
 					</Button>
 
-					<Link sx={{ 
-						pt: 2 
-					}} 
+					<Link sx={{
+						cursor: 'pointer',
+						mt: 4
+					}}
 					color='#0d99ff'>
-										Wachtwoord vergeten?
+						Wachtwoord vergeten?
 					</Link>
 				</FormGroup>
 			</Box>
-		</form>
+		</Slide>
 
 	);
 }
