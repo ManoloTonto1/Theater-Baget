@@ -19,7 +19,7 @@ import PaidIcon from '@mui/icons-material/Paid';
 
 export default function Topbar() {
 	const navigate = useNavigate();
-	const {theme } = React.useContext(UserContext);
+	const { theme } = React.useContext(UserContext);
 	return (
 		<ThemeProvider theme={theme.theme}>
 			<Box sx={{
@@ -60,7 +60,8 @@ export default function Topbar() {
 								}}>
                                 Donate
 							</Button>
-							<Button color='secondary' startIcon={<PersonIcon/>}
+							<Button onClick={()=>navigate('/login')}
+								color='secondary' startIcon={<PersonIcon />}
 								variant='contained'>
                                 Login
 							</Button>

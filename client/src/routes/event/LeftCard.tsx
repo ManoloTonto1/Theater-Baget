@@ -3,7 +3,14 @@ import {
 	Box, Grow, Card, CardMedia, CardContent, Typography, Button 
 } from '@mui/material';
 import Monki from '../../assets/gorilla.jfif';
+import {
+	useNavigate 
+} from 'react-router-dom';
 function LeftCard() {
+	const navigate = useNavigate();
+	const goToPayPage = React.useCallback(() => {
+		navigate('/ticket');  
+	},[navigate]);
 	return (
 		<Box sx={{
 			m: 2
@@ -43,6 +50,7 @@ function LeftCard() {
 						mb: 2
 					}}>
 						<Button
+							onClick={goToPayPage}
 							variant={'contained'}>
                             Tickets Kopen
 						</Button>
