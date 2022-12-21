@@ -31,7 +31,6 @@ function TicketKopen() {
 	const [cardHolder, setCardHolder] = useState('');
 	const [expDate, setExpDate] = useState<Dayjs | null>(dayjs());
 	const [stoel, setStoel] = useState(''); 
-	const [comment, setComment] = useState(''); 
 
 	const handleCardNumber = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setCardNumber(parseInt(e.target.value));
@@ -45,15 +44,13 @@ function TicketKopen() {
 		setStoel(e.target.value);
 	}, []);
 
-	const handleComment = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setComment(e.target.value);
-	}, []);
-
 	return (
 		<Box style={{
 			width: '100%',
 			height: '100vh',
-		}}>
+		}}
+		onSubmit={buyTicket}
+		component={'form'}>
 			<Container style={{
 				height: '100vh',
 				display: 'flex',
@@ -64,99 +61,86 @@ function TicketKopen() {
 				<Card elevation={4} sx={{ 
 					width: 750,
 					p: 4,
-				}}>
-					<form onSubmit={buyTicket}>
+				}} >
 
-						<FormGroup sx={{
-							'& .MuiTextField-root': {
-								m: 1,
-							}, textAlign: 'center',
+					<FormGroup sx={{
+						'& .MuiTextField-root': {
+							m: 1,
+						}, textAlign: 'center',
+					}}>
+						<Box sx={{
+							'& .MuiTextField-root': { 
+								m: 1, 
+								width: '30%'
+							},
 						}}>
-							<Box sx={{
-								'& .MuiTextField-root': { 
-									m: 1, 
-									width: '30%'
-								},
-							}}>
-								<TextField sx={{
-									mb: 2
-								}}
-								label='Card holder'
-								variant='standard' type='text'
-								required
-								value={cardHolder}
-								onChange={handleCardHolder}
-								/>
-								<TextField sx={{
-									mb: 2
-								}}
-								label='Card number'
-								variant='standard' type='number'
-								onChange={handleCardNumber}
-								required
-								/>
-								<LocalizationProvider dateAdapter={AdapterDayjs}>
-									<DatePicker
-										label="Expiration Date"
-										value={expDate}
-										onChange={(newValue) => {
-											setExpDate(newValue);
-										}}
-										renderInput={(params) => <TextField sx={{
-											m:1
-										}} variant='standard'
-										{...params} />}
-									/>
-								</LocalizationProvider>
-							</Box>
-						</FormGroup>
-						<FormGroup sx={{
-							'& .MuiTextField-root': {
-								m: 1
-							}, textAlign: 'center', p:1.5
-						}}>
-
 							<TextField sx={{
-								m:2,
+								mb: 2
 							}}
-							label='Commentaar'
-							variant='standard' 
-							type='text'
-							multiline
-							value={comment}
-							onChange={handleComment}
-                            
+							label='Card holder'
+							variant='standard' type='text'
+							required
+							value={cardHolder}
+							onChange={handleCardHolder}
 							/>
-						</FormGroup>
-						<FormGroup 
-							sx={{
-								p:2,    
-							}}>
+							<TextField sx={{
+								mb: 2
+							}}
+							label='Card number'
+							variant='standard' type='number'
+							onChange={handleCardNumber}
+							required
+							/>
+							<LocalizationProvider dateAdapter={AdapterDayjs}>
+								<DatePicker
+									label="Expiration Date"
+									value={expDate}
+									onChange={(newValue) => {
+										setExpDate(newValue);
+									}}
+									renderInput={(params) => <TextField sx={{
+										m:1
+									}} variant='standard'
+									{...params} />}
+								/>
+							</LocalizationProvider>
+						</Box>
+					</FormGroup>
+					<FormGroup sx={{
+						'& .MuiTextField-root': {
+							m: 1
+						}, textAlign: 'center', p:1.5
+					}}>
+					</FormGroup>
+					<FormGroup 
+						sx={{
+							p:2,    
+						}}>
 
-							<Typography variant='h6'>
+						<Typography variant='h6'>
                             Stoelen selecteren
                             
-							</Typography>
+						</Typography>
 
-							{/* dit deel moet nog */}
+						{/* dit deel moet nog */}
 							
-						</FormGroup>
-						<Box sx={{
-							display: 'flex',
-							m:2
-						}}>
-							<Button type='submit' 
-								variant='contained' 
-								sx={{
-									mr:2
-								}}>
+					</FormGroup>
+					<Box sx={{
+						display: 'flex',
+						m:2
+					}}>
+						<Button 
+							type='submit' 
+							variant='contained' 
+							sx={{
+								mr:2
+							}}>
                             Betalen
-							</Button>
-							<Button variant='text' color='secondary'>
+						</Button>
+						<Button variant='text' color='secondary'>
                             Cancel
-							</Button>
-						</Box>
-					</form>
+						</Button>
+					</Box>
 				</Card>
 			</Container>
 
