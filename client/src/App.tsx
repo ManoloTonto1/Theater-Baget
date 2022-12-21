@@ -9,6 +9,7 @@ import {
 	Route, Routes, useLocation
 } from 'react-router-dom';
 import Footer from './components/global/Footer';
+import LoadingPage from './components/global/LoadingPage';
 import Topbar from './components/global/Topbar';
 import UserContext from './context/UserContext';
 import TicketKopen from './routes/ticket/TicketKopen';
@@ -30,10 +31,10 @@ function App() {
 				<Routes location={location}
 					key={location.pathname}
 				>
-					<Route path={'/'} element={<Suspense><Homepage/></Suspense>} />
-					<Route path={'/login'} element={<Suspense><Login/></Suspense>} />
-					<Route path={'/ticket'} element={<Suspense><TicketKopen/></Suspense>} />
-					<Route path={'/event/:id'} element={<Suspense><Event/></Suspense>} />
+					<Route path={'/'} element={<Suspense fallback={<LoadingPage/>}><Homepage/></Suspense>} />
+					<Route path={'/login'} element={<Suspense fallback={<LoadingPage />}><Login/></Suspense>} />
+					<Route path={'/ticket'} element={<Suspense fallback={<LoadingPage />}><TicketKopen/></Suspense>} />
+					<Route path={'/event/:id'} element={<Suspense fallback={<LoadingPage />}><Event/></Suspense>} />
 
 				</Routes >
 				<Footer/>
