@@ -1,5 +1,6 @@
 public class Reservering {
     public int id { get; set; }
+    public int bestellingFK { get; set; }
     public string QR { get; set; }
     public bool betaald { get; set; }
     public DateTime aankoopDatum { get; set; }
@@ -7,5 +8,5 @@ public class Reservering {
     public Gebruiker owner { get; set; }
     public Zaal zaal { get; set; }
     public Programmering programmering { get; set; }
-    public bestelling bestelling { get; set; }
+    public Bestelling bestelling { get; set; }
 }
