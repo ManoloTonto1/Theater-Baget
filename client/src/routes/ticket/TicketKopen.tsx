@@ -1,5 +1,5 @@
 import {
-	Box, Card, Container, FormGroup, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField 
+	Box, Card, Container, FormGroup, TextField 
 } from '@mui/material';
 
 import React, {
@@ -23,7 +23,7 @@ import Typography from '@mui/material/Typography';
 
 function TicketKopen() {
 
-	const buyTicket = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+	const buyTicket = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault(); 
 	}, []);
     
@@ -32,15 +32,15 @@ function TicketKopen() {
 	const [expDate, setExpDate] = useState<Dayjs | null>(dayjs());
 	const [stoel, setStoel] = useState(''); 
 
-	const handleCardNumber = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleCardNumber = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setCardNumber(parseInt(e.target.value));
 	}, []);
 
-	const handleCardHolder = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleCardHolder = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setCardHolder(e.target.value);
 	}, []);
 
-	const handleStoel = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleStoel = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setStoel(e.target.value);
 	}, []);
 
