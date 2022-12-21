@@ -9,6 +9,7 @@ import {
 	Route, Routes, useLocation
 } from 'react-router-dom';
 import Footer from './components/global/Footer';
+import LoadingPage from './components/global/LoadingPage';
 import Topbar from './components/global/Topbar';
 import UserContext from './context/UserContext';
 import IntressesFeedback from './routes/feedback/IntressesFeedback';
