@@ -10,6 +10,9 @@ import {
 import React from 'react';
 import UserContext from '../../context/UserContext';
 import Monki from '../../assets/gorilla.jfif';
+import {
+	useNavigate 
+} from 'react-router-dom';
 
 type TCard = {
 		naam: string,
@@ -78,6 +81,7 @@ const cards: TCard = [
 
 function Homepage() {
 	const { theme } = React.useContext(UserContext);
+	const navigate = useNavigate();
 	return (
 		<ThemeProvider theme={theme.theme}>
 			<Container>
@@ -124,7 +128,7 @@ function Homepage() {
 									<Grid item xs={4}
 									>
 										<Card elevation={4}>
-											<CardActionArea>
+											<CardActionArea onClick={()=>navigate('event/1')}>
 
 												<CardMedia
 													component="img"
