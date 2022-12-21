@@ -13,6 +13,7 @@ module.exports = {
 	],
 	'parser': '@typescript-eslint/parser',
 	'parserOptions': {
+		'project': ['./client/tsconfig.json','./client/tsconfig.node.json'],
 		'ecmaFeatures': {
 			'jsx': true
 		},
@@ -71,6 +72,9 @@ module.exports = {
 		'react/jsx-max-props-per-line': [1, {
 			'maximum': 2,
 			'when': 'always'
-		}]
+		}],
+		"@typescript-eslint/consistent-type-imports": "warn",
+		"@typescript-eslint/consistent-type-exports": "warn",
+		'@typescript-eslint/explicit-function-return-type': 'warn',
 	}
 };

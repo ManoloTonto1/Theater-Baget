@@ -20,6 +20,6 @@
     "jsx": "react-jsx",
     "types": ["cypress", "mocha", "chai"]
   },
-  "include": ["src", "**/test.ts"],
+  "include": ["src", "**/test.ts","**/vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

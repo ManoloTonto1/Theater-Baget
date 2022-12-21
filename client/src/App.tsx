@@ -32,7 +32,7 @@ const ProfielTicketsById = React.lazy(()=>import('./routes/profiel/tickets/Profi
 const Bands = React.lazy(()=>import('./routes/bands/Bands'));
 const BandsById = React.lazy(() => import('./routes/bands/BandsById'));
 
-function App() {
+function App() : JSX.Element {
 	const { theme } = React.useContext(UserContext);
 	const location = useLocation();
 	return (
@@ -93,9 +93,7 @@ function App() {
 					<Route path={'/bands/:id'} element={<Suspense fallback={<LoadingPage />}>
 						<BandsById />
 					</Suspense>} />
-					<Route path={'*'} element={<Suspense fallback={<LoadingPage />}>
-						<ErrorPage />
-					</Suspense>} />
+					<Route path={'*'} element={<ErrorPage />} />
 				</Routes >
 				<Footer/>
 			</Paper>
