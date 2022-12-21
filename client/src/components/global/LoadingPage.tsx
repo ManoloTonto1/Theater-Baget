@@ -5,9 +5,11 @@ import React from 'react';
 import UserContext from '../../context/UserContext';
 
 function LoadingPage(){
-	<Typography>
+	return(
+		<Typography>
         Allo
-	</Typography>;
+		</Typography>
+	);
 }
 
 export default LoadingPage;
