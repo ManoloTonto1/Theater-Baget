@@ -1,4 +1,4 @@
 public enum LeeftijdsGroep
 {
-    Teener, Volwassenen, Senior
+    Tiener, Volwassenen, Senior
 }
