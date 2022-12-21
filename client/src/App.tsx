@@ -9,13 +9,11 @@ import {
 	Route, Routes, useLocation
 } from 'react-router-dom';
 import Footer from './components/global/Footer';
-import LoadingPage from './components/global/LoadingPage';
 import Topbar from './components/global/Topbar';
 import UserContext from './context/UserContext';
 
 const Login = React.lazy(() => import('./routes/login/Login'));
 const Homepage = React.lazy(() => import('./routes/home/HomePage'));
-//const LoadingPage = React.lazy(() => import('./components/global/LoadingPage'));
 
 function App() {
 	const { theme } = React.useContext(UserContext);
