@@ -20,11 +20,11 @@ function SignIn() {
 	const [email, setEmail] = React.useState('');
 	const [rememberMe, setRememberMe] = React.useState(false);
 
-	const handlePassword = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handlePassword = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setPassword(e.target.value);
 	}, []);
 
-	const handleEmail = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleEmail = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setEmail(e.target.value);
 	}, []);
 

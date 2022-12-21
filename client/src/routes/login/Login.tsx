@@ -55,7 +55,7 @@ function tabId(index: number) {
 function Login() {
 	const [tab, setTab] = React.useState(0);
 	
-	const handleTabChange = useCallback((event: React.SyntheticEvent, newValue: number) => {
+	const handleTabChange = useCallback(async (event: React.SyntheticEvent, newValue: number) => {
 		setTab(newValue);
 	}, []);
 	

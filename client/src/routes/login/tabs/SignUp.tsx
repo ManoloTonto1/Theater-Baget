@@ -37,7 +37,7 @@ function SignUp () {
 	
 	const [passwordsMatch, setPasswordsMatch] = React.useState(true);
 
-	const signUp = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+	const signUp = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (password === confirmPassword) {
@@ -47,27 +47,27 @@ function SignUp () {
 		setPasswordsMatch(false);
 	}, [confirmPassword, password]);
 
-	const handlePassword = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handlePassword = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setPassword(e.target.value);
 	}, []);
 
-	const handleEmail = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleEmail = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setEmail(e.target.value);
 	}, []);
 
-	const handleConfirmPassword = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleConfirmPassword = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setConfirmPassword(e.target.value);
 	}, []);
 
-	const handleVoornaam = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleVoornaam = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setVoornaam(e.target.value);
 	}, []);
 	
-	const handleTussenvoegsel = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleTussenvoegsel = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setTussenvoegsel(e.target.value);
 	}, []);
 	
-	const handleAchternaam = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleAchternaam = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setAchternaam(e.target.value);
 	}, []);
 

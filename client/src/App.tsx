@@ -11,6 +11,8 @@ import {
 import Footer from './components/global/Footer';
 import Topbar from './components/global/Topbar';
 import UserContext from './context/UserContext';
+import IntressesFeedback from './routes/feedback/IntressesFeedback';
+import IntressesSuggestie from './routes/feedback/IntressesSuggestie';
 import TicketKopen from './routes/ticket/TicketKopen';
 
 const Login = React.lazy(() => import('./routes/login/Login'));
@@ -33,6 +35,8 @@ function App() {
 					<Route path={'/'} element={<Suspense><Homepage/></Suspense>} />
 					<Route path={'/login'} element={<Suspense><Login/></Suspense>} />
 					<Route path={'/ticket'} element={<Suspense><TicketKopen/></Suspense>} />
+					<Route path={'/intresses/feedback'} element={<Suspense><IntressesFeedback/></Suspense>} />
+					<Route path={'/intresses/suggestie'} element={<Suspense><IntressesSuggestie/></Suspense>} />
 					<Route path={'/event/:id'} element={<Suspense><Event/></Suspense>} />
 
 				</Routes >
