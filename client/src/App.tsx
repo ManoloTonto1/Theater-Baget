@@ -31,7 +31,7 @@ function App() {
 					key={location.pathname}
 				>
 					<Route path={'/login'} element={<Suspense><Login/></Suspense>} />
-					<Route path={'/'} element={<Suspense><LoadingPage/></Suspense>} />
+					<Route path={'/'} element={<Suspense><Homepage/></Suspense>} />
 
 				</Routes >
 				<Footer/>
