@@ -1,16 +1,9 @@
 import {
-	Box,
-	Card,
-	CardMedia,
 	CircularProgress,
-	Divider,
 	Grid,
 	ThemeProvider,
 	Typography 
 } from '@mui/material';
-import {
-	Container 
-} from '@mui/system';
 import React from 'react';
 import UserContext from '../../context/UserContext';
 
