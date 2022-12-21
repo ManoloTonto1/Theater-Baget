@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace server.Migrations
 {
     [DbContext(typeof(theaterContext))]
-    [Migration("20221221113133_test3")]
-    partial class test3
+    [Migration("20221221124534_1")]
+    partial class _1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,9 +21,13 @@ namespace server.Migrations
 
             modelBuilder.Entity("Betaling", b =>
                 {
-                    b.Property<int>("factuurnr")
+                    b.Property<int>("factuurNr")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ownerid")
                         .HasColumnType("INTEGER");
@@ -31,13 +35,30 @@ namespace server.Migrations
                     b.Property<int>("prijs")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("factuurnr");
+                    b.HasKey("factuurNr");
 
                     b.HasIndex("ownerid");
 
                     b.ToTable("Betaling");
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Betaling");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("EncryptionKey", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("key")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Key");
                 });
 
             modelBuilder.Entity("Gebruiker", b =>
@@ -50,9 +71,6 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("donatieAantal")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("leeftijdsGroep")
                         .HasColumnType("INTEGER");
 
@@ -60,10 +78,6 @@ namespace server.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("naam")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("soort")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -86,15 +100,15 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("link")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("naam")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("omschrijving")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("websiteUrl")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -126,21 +140,6 @@ namespace server.Migrations
                     b.ToTable("Interesse");
                 });
 
-            modelBuilder.Entity("Key", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("key")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Key");
-                });
-
             modelBuilder.Entity("LoginGegevens", b =>
                 {
                     b.Property<int>("id")
@@ -151,10 +150,10 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("gebruikerFK")
+                    b.Property<bool>("twoFactor")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("twoFactor")
+                    b.Property<int>("user_id")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("wachtwoord")
@@ -163,7 +162,7 @@ namespace server.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("gebruikerFK")
+                    b.HasIndex("user_id")
                         .IsUnique();
 
                     b.ToTable("LoginGegeven");
@@ -213,12 +212,12 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("zaalnr")
+                    b.Property<int>("zaalNr")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("id");
 
-                    b.HasIndex("zaalnr");
+                    b.HasIndex("zaalNr");
 
                     b.ToTable("Programmering");
                 });
@@ -249,7 +248,7 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("zaalnr")
+                    b.Property<int>("zaalNr")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("id");
@@ -258,14 +257,14 @@ namespace server.Migrations
 
                     b.HasIndex("programmeringid");
 
-                    b.HasIndex("zaalnr");
+                    b.HasIndex("zaalNr");
 
                     b.ToTable("Reservering");
                 });
 
             modelBuilder.Entity("Zaal", b =>
                 {
-                    b.Property<int>("zaalnr")
+                    b.Property<int>("zaalNr")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -282,7 +281,7 @@ namespace server.Migrations
                     b.Property<int>("tweederangsAantal")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("zaalnr");
+                    b.HasKey("zaalNr");
 
                     b.ToTable("Zaal");
                 });
@@ -345,7 +344,7 @@ namespace server.Migrations
                     b.HasIndex("reserveringFK")
                         .IsUnique();
 
-                    b.ToTable("Bestelling");
+                    b.HasDiscriminator().HasValue("Bestelling");
                 });
 
             modelBuilder.Entity("Donatie", b =>
@@ -356,7 +355,7 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("Donatie", (string)null);
+                    b.HasDiscriminator().HasValue("Donatie");
                 });
 
             modelBuilder.Entity("Betrokkene", b =>
@@ -401,13 +400,13 @@ namespace server.Migrations
 
             modelBuilder.Entity("LoginGegevens", b =>
                 {
-                    b.HasOne("Gebruiker", "owner")
+                    b.HasOne("Gebruiker", "user")
                         .WithOne("loginGegevens")
-                        .HasForeignKey("LoginGegevens", "gebruikerFK")
+                        .HasForeignKey("LoginGegevens", "user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("owner");
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Logs", b =>
@@ -425,7 +424,7 @@ namespace server.Migrations
                 {
                     b.HasOne("Zaal", "zaal")
                         .WithMany("programmeringen")
-                        .HasForeignKey("zaalnr")
+                        .HasForeignKey("zaalNr")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -448,7 +447,7 @@ namespace server.Migrations
 
                     b.HasOne("Zaal", "zaal")
                         .WithMany("reserveringen")
-                        .HasForeignKey("zaalnr")
+                        .HasForeignKey("zaalNr")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -513,15 +512,6 @@ namespace server.Migrations
                         .IsRequired();
 
                     b.Navigation("reservering");
-                });
-
-            modelBuilder.Entity("Donatie", b =>
-                {
-                    b.HasOne("Betaling", null)
-                        .WithOne()
-                        .HasForeignKey("Donatie", "factuurnr")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Gebruiker", b =>

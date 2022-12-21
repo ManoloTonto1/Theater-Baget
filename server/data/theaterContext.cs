@@ -3,22 +3,39 @@ using Microsoft.EntityFrameworkCore;
 public class theaterContext : DbContext
 {
     public theaterContext(DbContextOptions<theaterContext> options)
-        : base(options)
+    : base(options)
     {
     }
+
+    public DbSet<Gebruiker> Gebruiker { get; set; } = default!;
+    public DbSet<Bestelling> Bestelling { get; set; } = default!;
+    public DbSet<Betaling> Betaling { get; set; } = default!;
+    public DbSet<Betrokkene> Betrokkene { get; set; } = default!;
+    public DbSet<Donatie> Donaties { get; set; } = default!;
+    public DbSet<Groep> Groep { get; set; } = default!;
+    public DbSet<Interesse> Interesse { get; set; } = default!;
+    public DbSet<EncryptionKey> Key { get; set; } = default!;
+    public DbSet<LoginGegevens> LoginGegeven { get; set; } = default!;
+    public DbSet<Logs> Logs { get; set; } = default!;
+    public DbSet<Programmering> Programmering { get; set; } = default!;
+    public DbSet<Reservering> Reservering { get; set; } = default!;
+    public DbSet<Zaal> Zaal { get; set; } = default!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<Donatie>()
-            .ToTable("Donatie");
-
+        // Betaling
         builder.Entity<Betaling>()
-            .HasKey(bt => bt.factuurnr);
+            .HasKey(bt => bt.factuurNr);
 
         builder.Entity<Betaling>()
             .HasOne(ba => ba.owner)
             .WithMany(gb => gb.betalingen);
+
+        // Betrokkene
+        builder.Entity<Betrokkene>()
+            .ToTable("Betrokkene");
 
         builder.Entity<Betrokkene>()
             .HasMany(bt => bt.groepen)
@@ -30,10 +47,11 @@ public class theaterContext : DbContext
             .WithMany(pr => pr.betrokkenen)
             .UsingEntity("betrokkene-programmering");
 
+        // Gebruiker
         builder.Entity<Gebruiker>()
             .HasOne(gb => gb.loginGegevens)
-            .WithOne(lg => lg.owner)
-            .HasForeignKey<LoginGegevens>(lg => lg.gebruikerFK);
+            .WithOne(lg => lg.user)
+            .HasForeignKey<LoginGegevens>(lg => lg.user_id);
 
         builder.Entity<Gebruiker>()
             .HasMany(gb => gb.reserveringen)
@@ -47,6 +65,7 @@ public class theaterContext : DbContext
             .HasMany(gb => gb.logs)
             .WithOne(lo => lo.gebruiker);
 
+        // Groep
         builder.Entity<Groep>()
             .HasMany(gr => gr.betrokkenen)
             .WithMany(bt => bt.groepen);
@@ -56,6 +75,7 @@ public class theaterContext : DbContext
             .WithMany(pr => pr.groepen)
             .UsingEntity("groep-programmering");
 
+        // Programmering
         builder.Entity<Programmering>()
             .HasOne(pr => pr.zaal)
             .WithMany(za => za.programmeringen);
@@ -72,6 +92,7 @@ public class theaterContext : DbContext
             .HasMany(pr => pr.reserveringen)
             .WithOne(re => re.programmering);
 
+        // Reserveering
         builder.Entity<Reservering>()
             .HasOne(re => re.zaal)
             .WithMany(za => za.reserveringen);
@@ -81,23 +102,21 @@ public class theaterContext : DbContext
             .WithOne(bs => bs.reservering)
             .HasForeignKey<Bestelling>(be => be.reserveringFK);
 
+        // Zaal
         builder.Entity<Zaal>()
-            .HasKey(za => za.zaalnr);
+            .HasKey(za => za.zaalNr);
 
+        // logs
         builder.Entity<Logs>()
             .HasKey(lo => lo.lognr);
-    }
 
-    public DbSet<Bestelling> Bestelling { get; set; } = default!;
-    public DbSet<Betaling> Betaling { get; set; } = default!;
-    public DbSet<Betrokkene> Betrokkene { get; set; } = default!;
-    public DbSet<Donatie> Donaties { get; set; } = default!;
-    public DbSet<Groep> Groep { get; set; } = default!;
-    public DbSet<Interesse> Interesse { get; set; } = default!;
-    public DbSet<Key> Key { get; set; } = default!;
-    public DbSet<LoginGegevens> LoginGegeven { get; set; } = default!;
-    public DbSet<Logs> Logs { get; set; } = default!;
-    public DbSet<Programmering> Programmering { get; set; } = default!;
-    public DbSet<Reservering> Reservering { get; set; } = default!;
-    public DbSet<Zaal> Zaal { get; set; } = default!;
+        // bestellingen
+        builder.Entity<Bestelling>()
+            .ToTable("Bestelling");
+
+        // Donaties
+        builder.Entity<Donatie>()
+            .ToTable("Donatie");
+
+    }
 }

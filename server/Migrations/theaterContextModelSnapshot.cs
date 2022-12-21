@@ -18,7 +18,7 @@ namespace server.Migrations
 
             modelBuilder.Entity("Betaling", b =>
                 {
-                    b.Property<int>("factuurnr")
+                    b.Property<int>("factuurNr")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -28,7 +28,7 @@ namespace server.Migrations
                     b.Property<int>("prijs")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("factuurnr");
+                    b.HasKey("factuurNr");
 
                     b.HasIndex("ownerid");
 
@@ -37,17 +37,25 @@ namespace server.Migrations
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("Gebruiker", b =>
+            modelBuilder.Entity("EncryptionKey", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("key")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("donatieAantal")
+                    b.HasKey("id");
+
+                    b.ToTable("Key");
+                });
+
+            modelBuilder.Entity("Gebruiker", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("leeftijdsGroep")
@@ -60,17 +68,11 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("soort")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("id");
 
                     b.ToTable("Gebruiker");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Gebruiker");
-
-                    b.UseTphMappingStrategy();
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Groep", b =>
@@ -83,15 +85,15 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("link")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("naam")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("omschrijving")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("websiteUrl")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -133,10 +135,10 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("gebruikerFK")
+                    b.Property<bool>("twoFactor")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("twoFactor")
+                    b.Property<int>("user_id")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("wachtwoord")
@@ -145,10 +147,10 @@ namespace server.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("gebruikerFK")
+                    b.HasIndex("user_id")
                         .IsUnique();
 
-                    b.ToTable("LoginGegevens");
+                    b.ToTable("LoginGegeven");
                 });
 
             modelBuilder.Entity("Logs", b =>
@@ -195,12 +197,12 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("zaalnr")
+                    b.Property<int>("zaalNr")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("id");
 
-                    b.HasIndex("zaalnr");
+                    b.HasIndex("zaalNr");
 
                     b.ToTable("Programmering");
                 });
@@ -231,7 +233,7 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("zaalnr")
+                    b.Property<int>("zaalNr")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("id");
@@ -240,14 +242,14 @@ namespace server.Migrations
 
                     b.HasIndex("programmeringid");
 
-                    b.HasIndex("zaalnr");
+                    b.HasIndex("zaalNr");
 
                     b.ToTable("Reservering");
                 });
 
             modelBuilder.Entity("Zaal", b =>
                 {
-                    b.Property<int>("zaalnr")
+                    b.Property<int>("zaalNr")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -264,7 +266,7 @@ namespace server.Migrations
                     b.Property<int>("tweederangsAantal")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("zaalnr");
+                    b.HasKey("zaalNr");
 
                     b.ToTable("Zaal");
                 });
@@ -327,7 +329,7 @@ namespace server.Migrations
                     b.HasIndex("reserveringFK")
                         .IsUnique();
 
-                    b.ToTable("Bestelling");
+                    b.ToTable("Bestelling", (string)null);
                 });
 
             modelBuilder.Entity("Donatie", b =>
@@ -356,7 +358,7 @@ namespace server.Migrations
                     b.Property<int>("type")
                         .HasColumnType("INTEGER");
 
-                    b.HasDiscriminator().HasValue("Betrokkene");
+                    b.ToTable("Betrokkene", (string)null);
                 });
 
             modelBuilder.Entity("Betaling", b =>
@@ -383,13 +385,13 @@ namespace server.Migrations
 
             modelBuilder.Entity("LoginGegevens", b =>
                 {
-                    b.HasOne("Gebruiker", "owner")
+                    b.HasOne("Gebruiker", "user")
                         .WithOne("loginGegevens")
-                        .HasForeignKey("LoginGegevens", "gebruikerFK")
+                        .HasForeignKey("LoginGegevens", "user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("owner");
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Logs", b =>
@@ -407,7 +409,7 @@ namespace server.Migrations
                 {
                     b.HasOne("Zaal", "zaal")
                         .WithMany("programmeringen")
-                        .HasForeignKey("zaalnr")
+                        .HasForeignKey("zaalNr")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -430,7 +432,7 @@ namespace server.Migrations
 
                     b.HasOne("Zaal", "zaal")
                         .WithMany("reserveringen")
-                        .HasForeignKey("zaalnr")
+                        .HasForeignKey("zaalNr")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -488,6 +490,12 @@ namespace server.Migrations
 
             modelBuilder.Entity("Bestelling", b =>
                 {
+                    b.HasOne("Betaling", null)
+                        .WithOne()
+                        .HasForeignKey("Bestelling", "factuurNr")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Reservering", "reservering")
                         .WithOne("bestelling")
                         .HasForeignKey("Bestelling", "reserveringFK")
@@ -501,7 +509,16 @@ namespace server.Migrations
                 {
                     b.HasOne("Betaling", null)
                         .WithOne()
-                        .HasForeignKey("Donatie", "factuurnr")
+                        .HasForeignKey("Donatie", "factuurNr")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Betrokkene", b =>
+                {
+                    b.HasOne("Gebruiker", null)
+                        .WithOne()
+                        .HasForeignKey("Betrokkene", "id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

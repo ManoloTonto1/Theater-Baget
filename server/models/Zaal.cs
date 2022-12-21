@@ -1,5 +1,5 @@
 public class Zaal {
-    public int zaalnr { get; set; }
+    public int zaalNr { get; set; }
     public string soort { get; set; }
     public int eersterangsAantal { get; set; }
     public int tweederangsAantal { get; set; }
