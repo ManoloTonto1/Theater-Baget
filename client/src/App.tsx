@@ -14,6 +14,7 @@ import UserContext from './context/UserContext';
 
 const Login = React.lazy(() => import('./routes/login/Login'));
 const Homepage = React.lazy(() => import('./routes/home/HomePage'));
+const Event = React.lazy(() => import('./routes/event/Event'));
 
 function App() {
 	const { theme } = React.useContext(UserContext);
@@ -28,8 +29,9 @@ function App() {
 				<Routes location={location}
 					key={location.pathname}
 				>
-					<Route path={'/login'} element={<Suspense><Login/></Suspense>} />
 					<Route path={'/'} element={<Suspense><Homepage/></Suspense>} />
+					<Route path={'/login'} element={<Suspense><Login/></Suspense>} />
+					<Route path={'/event/:id'} element={<Suspense><Event/></Suspense>} />
 
 				</Routes >
 				<Footer/>
