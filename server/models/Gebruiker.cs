@@ -8,4 +8,5 @@ public class Gebruiker {
     public List<Interesse> interesses { get; set; }
     public List<Betaling> betalingen { get; set; }
     public List<Logs> logs { get; set; }
+    public List<Comment> comments { get; set; }
 }

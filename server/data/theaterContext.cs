@@ -102,6 +102,15 @@ public class theaterContext : DbContext
             .WithOne(bestelling => bestelling.reservering)
             .HasForeignKey<Bestelling>(be => be.reserveringFK);
 
+        // Comments
+        builder.Entity<Comment>()
+            .HasOne(comment => comment.owner)
+            .WithMany(gebruiker => gebruiker.comments);
+
+        builder.Entity<Comment>()
+            .HasOne(comment => comment.programmering)
+            .WithMany(programmering => programmering.comments);
+
         // Zaal
         builder.Entity<Zaal>()
             .HasKey(zaal => zaal.zaalNr);
