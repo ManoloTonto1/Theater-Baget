@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 
 import UserContext from './context/UserContext';
+import ErrorPage from './components/ErrorPage';
 import Footer from './components/global/Footer';
 import LoadingPage from './components/global/LoadingPage';
 import Topbar from './components/global/Topbar';
@@ -91,6 +92,9 @@ function App() {
 					</Suspense>} />
 					<Route path={'/bands/:id'} element={<Suspense fallback={<LoadingPage />}>
 						<BandsById />
+					</Suspense>} />
+					<Route path={'*'} element={<Suspense fallback={<LoadingPage />}>
+						<ErrorPage />
 					</Suspense>} />
 				</Routes >
 				<Footer/>
