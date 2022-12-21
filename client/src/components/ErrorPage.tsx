@@ -1,21 +1,23 @@
 import {
-	Alert,
-	Avatar,
 	Box,
 	Button,
 	Card,
-	CardMedia,
-	CircularProgress,
+	CardActionArea,
 	Grid,
 	ThemeProvider,
 	Typography 
 } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React from 'react';
 import UserContext from '../context/UserContext';
 import img from '../assets/poster.png';
+import {
+	useNavigate 
+} from 'react-router-dom';
 
 function ErrorPage(){
 	const { theme } = React.useContext(UserContext);
+	const navigate = useNavigate();
 	return(
 		<ThemeProvider theme={theme.theme}>
 			<Box style={{
@@ -35,17 +37,20 @@ function ErrorPage(){
 				>
 					<Typography variant= "h2"
 						sx={{
-							py:10
+							pt:10
 						}}>
                     Pagina niet gevonden
 					</Typography>
-					<Alert variant='filled' severity='warning'>Error</Alert>
 					<Typography sx={{
 						py:3
 					}}>
-                    De pagina die u probeert te bereiken is niet gevonden
+                    Error 404: De pagina die u probeert te bereiken is niet gevonden
 					</Typography>
-					<Button variant="contained">Ga terug</Button>
+					<Card>
+						<CardActionArea onClick={()=>navigate('HomePage')}>
+							<Button variant="contained" startIcon={<ArrowBackIcon />}>Ga terug</Button>
+						</CardActionArea>
+					</Card>
 				</Grid>
 			</Box>
 		</ThemeProvider>
