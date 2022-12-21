@@ -1,8 +1,6 @@
 import {
 	Box,
 	Button,
-	Card,
-	CardActionArea,
 	Grid,
 	ThemeProvider,
 	Typography 
@@ -46,11 +44,11 @@ function ErrorPage(){
 					}}>
                     Error 404: De pagina die u probeert te bereiken is niet gevonden
 					</Typography>
-					<Card>
-						<CardActionArea onClick={()=>navigate('/')}>
-							<Button variant="contained" startIcon={<ArrowBackIcon />}>Ga terug</Button>
-						</CardActionArea>
-					</Card>
+					<Box>
+						<Button onClick={()=>navigate('/')} variant="contained"
+							startIcon={<ArrowBackIcon />}>Ga terug</Button>
+					</Box>
+					
 				</Grid>
 			</Box>
 		</ThemeProvider>
