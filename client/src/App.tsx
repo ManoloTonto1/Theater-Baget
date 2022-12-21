@@ -11,6 +11,7 @@ import {
 import Footer from './components/global/Footer';
 import Topbar from './components/global/Topbar';
 import UserContext from './context/UserContext';
+import TicketKopen from './routes/ticket/TicketKopen';
 
 const Login = React.lazy(() => import('./routes/login/Login'));
 const Homepage = React.lazy(() => import('./routes/home/HomePage'));
@@ -29,6 +30,7 @@ function App() {
 					key={location.pathname}
 				>
 					<Route path={'/login'} element={<Suspense><Login/></Suspense>} />
+					<Route path={'/ticket'} element={<Suspense><TicketKopen/></Suspense>} />
 					<Route path={'/'} element={<Suspense><Homepage/></Suspense>} />
 
 				</Routes >
