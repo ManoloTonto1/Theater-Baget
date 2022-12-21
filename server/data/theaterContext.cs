@@ -27,88 +27,88 @@ public class theaterContext : DbContext
 
         // Betaling
         builder.Entity<Betaling>()
-            .HasKey(bt => bt.factuurNr);
+            .HasKey(betaling => betaling.factuurNr);
 
         builder.Entity<Betaling>()
-            .HasOne(ba => ba.owner)
-            .WithMany(gb => gb.betalingen);
+            .HasOne(betaling => betaling.owner)
+            .WithMany(gebruiker => gebruiker.betalingen);
 
         // Betrokkene
         builder.Entity<Betrokkene>()
             .ToTable("Betrokkene");
 
         builder.Entity<Betrokkene>()
-            .HasMany(bt => bt.groepen)
-            .WithMany(gr => gr.betrokkenen)
+            .HasMany(betrokkene => betrokkene.groepen)
+            .WithMany(groep => groep.betrokkenen)
             .UsingEntity("betrokkene-groepen");
 
         builder.Entity<Betrokkene>()
-            .HasMany(bt => bt.programmeringen)
-            .WithMany(pr => pr.betrokkenen)
+            .HasMany(betrokkene => betrokkene.programmeringen)
+            .WithMany(programmering => programmering.betrokkenen)
             .UsingEntity("betrokkene-programmering");
 
         // Gebruiker
         builder.Entity<Gebruiker>()
-            .HasOne(gb => gb.loginGegevens)
-            .WithOne(lg => lg.user)
-            .HasForeignKey<LoginGegevens>(lg => lg.user_id);
+            .HasOne(gebruiker => gebruiker.loginGegevens)
+            .WithOne(logingegevens => logingegevens.user)
+            .HasForeignKey<LoginGegevens>(logingegevens => logingegevens.user_id);
 
         builder.Entity<Gebruiker>()
-            .HasMany(gb => gb.reserveringen)
-            .WithOne(re => re.owner);
+            .HasMany(gebruiker => gebruiker.reserveringen)
+            .WithOne(reservering => reservering.owner);
 
         builder.Entity<Gebruiker>()
-            .HasMany(gb => gb.interesses)
+            .HasMany(gebruiker => gebruiker.interesses)
             .WithOne(it => it.owner);
 
         builder.Entity<Gebruiker>()
-            .HasMany(gb => gb.logs)
-            .WithOne(lo => lo.gebruiker);
+            .HasMany(gebruiker => gebruiker.logs)
+            .WithOne(logs => logs.gebruiker);
 
         // Groep
         builder.Entity<Groep>()
-            .HasMany(gr => gr.betrokkenen)
-            .WithMany(bt => bt.groepen);
+            .HasMany(groep => groep.betrokkenen)
+            .WithMany(betrokkene => betrokkene.groepen);
 
         builder.Entity<Groep>()
-            .HasMany(gr => gr.programmeringen)
-            .WithMany(pr => pr.groepen)
+            .HasMany(groep => groep.programmeringen)
+            .WithMany(programmering => programmering.groepen)
             .UsingEntity("groep-programmering");
 
         // Programmering
         builder.Entity<Programmering>()
-            .HasOne(pr => pr.zaal)
-            .WithMany(za => za.programmeringen);
+            .HasOne(programmering => programmering.zaal)
+            .WithMany(zaal => zaal.programmeringen);
 
         builder.Entity<Programmering>()
-            .HasMany(pr => pr.betrokkenen)
-            .WithMany(bt => bt.programmeringen);
+            .HasMany(programmering => programmering.betrokkenen)
+            .WithMany(betrokkene => betrokkene.programmeringen);
 
         builder.Entity<Programmering>()
-            .HasMany(pr => pr.groepen)
-            .WithMany(gr => gr.programmeringen);
+            .HasMany(programmering => programmering.groepen)
+            .WithMany(groep => groep.programmeringen);
 
         builder.Entity<Programmering>()
-            .HasMany(pr => pr.reserveringen)
-            .WithOne(re => re.programmering);
+            .HasMany(programmering => programmering.reserveringen)
+            .WithOne(reservering => reservering.programmering);
 
         // Reserveering
         builder.Entity<Reservering>()
-            .HasOne(re => re.zaal)
-            .WithMany(za => za.reserveringen);
+            .HasOne(reservering => reservering.zaal)
+            .WithMany(zaal => zaal.reserveringen);
 
         builder.Entity<Reservering>()
-            .HasOne(re => re.bestelling)
-            .WithOne(bs => bs.reservering)
+            .HasOne(reservering => reservering.bestelling)
+            .WithOne(bestelling => bestelling.reservering)
             .HasForeignKey<Bestelling>(be => be.reserveringFK);
 
         // Zaal
         builder.Entity<Zaal>()
-            .HasKey(za => za.zaalNr);
+            .HasKey(zaal => zaal.zaalNr);
 
         // logs
         builder.Entity<Logs>()
-            .HasKey(lo => lo.lognr);
+            .HasKey(logs => logs.lognr);
 
         // bestellingen
         builder.Entity<Bestelling>()
