@@ -47,7 +47,7 @@ function ErrorPage(){
                     Error 404: De pagina die u probeert te bereiken is niet gevonden
 					</Typography>
 					<Card>
-						<CardActionArea onClick={()=>navigate('HomePage')}>
+						<CardActionArea onClick={()=>navigate('/')}>
 							<Button variant="contained" startIcon={<ArrowBackIcon />}>Ga terug</Button>
 						</CardActionArea>
 					</Card>

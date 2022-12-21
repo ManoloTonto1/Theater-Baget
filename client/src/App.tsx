@@ -8,6 +8,7 @@ import React, {
 import {
 	Route, Routes, useLocation
 } from 'react-router-dom';
+import ErrorPage from './components/ErrorPage';
 import Footer from './components/global/Footer';
 import Topbar from './components/global/Topbar';
 import UserContext from './context/UserContext';
@@ -34,6 +35,7 @@ function App() {
 					<Route path={'/login'} element={<Suspense><Login/></Suspense>} />
 					<Route path={'/ticket'} element={<Suspense><TicketKopen/></Suspense>} />
 					<Route path={'/event/:id'} element={<Suspense><Event/></Suspense>} />
+					<Route path={'*'} element={<Suspense><ErrorPage/></Suspense>} />
 
 				</Routes >
 				<Footer/>
