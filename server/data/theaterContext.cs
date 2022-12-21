@@ -10,16 +10,8 @@ public class theaterContext : DbContext
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<Bestelling>()
-            .ToTable("Bestelling");
-
         builder.Entity<Donatie>()
-            .ToTable("bestelling");
-
-        builder.Entity<Bestelling>()
-            .HasOne(bs => bs.reservering)
-            .WithOne(re => re.bestelling)
-            .HasForeignKey<Reservering>(re => re.bestellingFK);
+            .ToTable("Donatie");
 
         builder.Entity<Betaling>()
             .HasKey(bt => bt.factuurnr);
@@ -27,9 +19,6 @@ public class theaterContext : DbContext
         builder.Entity<Betaling>()
             .HasOne(ba => ba.owner)
             .WithMany(gb => gb.betalingen);
-
-        builder.Entity<Betrokkene>()
-            .ToTable("Betrokkene");
 
         builder.Entity<Betrokkene>()
             .HasMany(bt => bt.groepen)
@@ -87,6 +76,11 @@ public class theaterContext : DbContext
             .HasOne(re => re.zaal)
             .WithMany(za => za.reserveringen);
 
+        builder.Entity<Reservering>()
+            .HasOne(re => re.bestelling)
+            .WithOne(bs => bs.reservering)
+            .HasForeignKey<Bestelling>(be => be.reserveringFK);
+
         builder.Entity<Zaal>()
             .HasKey(za => za.zaalnr);
 
@@ -98,7 +92,6 @@ public class theaterContext : DbContext
     public DbSet<Betaling> Betaling { get; set; } = default!;
     public DbSet<Betrokkene> Betrokkene { get; set; } = default!;
     public DbSet<Donatie> Donaties { get; set; } = default!;
-    public DbSet<Gebruiker> Gebruiker { get; set; } = default!;
     public DbSet<Groep> Groep { get; set; } = default!;
     public DbSet<Interesse> Interesse { get; set; } = default!;
     public DbSet<Key> Key { get; set; } = default!;

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace server.Migrations
 {
     [DbContext(typeof(theaterContext))]
-    [Migration("20221221104627_test1")]
-    partial class test1
+    [Migration("20221221113133_test3")]
+    partial class test3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,10 +25,6 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ownerid")
                         .HasColumnType("INTEGER");
 
@@ -41,9 +37,7 @@ namespace server.Migrations
 
                     b.ToTable("Betaling");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Betaling");
-
-                    b.UseTphMappingStrategy();
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Gebruiker", b =>
@@ -242,9 +236,6 @@ namespace server.Migrations
                     b.Property<DateTime>("aankoopDatum")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("bestellingFK")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("betaald")
                         .HasColumnType("INTEGER");
 
@@ -262,9 +253,6 @@ namespace server.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("id");
-
-                    b.HasIndex("bestellingFK")
-                        .IsUnique();
 
                     b.HasIndex("ownerid");
 
@@ -344,6 +332,22 @@ namespace server.Migrations
                     b.ToTable("groep-programmering");
                 });
 
+            modelBuilder.Entity("Bestelling", b =>
+                {
+                    b.HasBaseType("Betaling");
+
+                    b.Property<int>("korting")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("reserveringFK")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("reserveringFK")
+                        .IsUnique();
+
+                    b.ToTable("Bestelling");
+                });
+
             modelBuilder.Entity("Donatie", b =>
                 {
                     b.HasBaseType("Betaling");
@@ -352,17 +356,7 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasDiscriminator().HasValue("Donatie");
-                });
-
-            modelBuilder.Entity("bestelling", b =>
-                {
-                    b.HasBaseType("Betaling");
-
-                    b.Property<int>("korting")
-                        .HasColumnType("INTEGER");
-
-                    b.HasDiscriminator().HasValue("bestelling");
+                    b.ToTable("Donatie", (string)null);
                 });
 
             modelBuilder.Entity("Betrokkene", b =>
@@ -440,12 +434,6 @@ namespace server.Migrations
 
             modelBuilder.Entity("Reservering", b =>
                 {
-                    b.HasOne("bestelling", "bestelling")
-                        .WithOne("reservering")
-                        .HasForeignKey("Reservering", "bestellingFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Gebruiker", "owner")
                         .WithMany("reserveringen")
                         .HasForeignKey("ownerid")
@@ -463,8 +451,6 @@ namespace server.Migrations
                         .HasForeignKey("zaalnr")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("bestelling");
 
                     b.Navigation("owner");
 
@@ -518,6 +504,26 @@ namespace server.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Bestelling", b =>
+                {
+                    b.HasOne("Reservering", "reservering")
+                        .WithOne("bestelling")
+                        .HasForeignKey("Bestelling", "reserveringFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("reservering");
+                });
+
+            modelBuilder.Entity("Donatie", b =>
+                {
+                    b.HasOne("Betaling", null)
+                        .WithOne()
+                        .HasForeignKey("Donatie", "factuurnr")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Gebruiker", b =>
                 {
                     b.Navigation("betalingen");
@@ -537,17 +543,17 @@ namespace server.Migrations
                     b.Navigation("reserveringen");
                 });
 
+            modelBuilder.Entity("Reservering", b =>
+                {
+                    b.Navigation("bestelling")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Zaal", b =>
                 {
                     b.Navigation("programmeringen");
 
                     b.Navigation("reserveringen");
-                });
-
-            modelBuilder.Entity("bestelling", b =>
-                {
-                    b.Navigation("reservering")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -21,11 +21,7 @@ namespace server.Migrations
                     leeftijdsGroep = table.Column<int>(type: "INTEGER", nullable: false),
                     donatieAantal = table.Column<int>(type: "INTEGER", nullable: false),
                     soort = table.Column<string>(type: "TEXT", nullable: false),
-                    level = table.Column<int>(type: "INTEGER", nullable: false),
-                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
-                    type = table.Column<int>(type: "INTEGER", nullable: true),
-                    omschrijving = table.Column<string>(type: "TEXT", nullable: true),
-                    afbeelding = table.Column<string>(type: "TEXT", nullable: true)
+                    level = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,10 +80,7 @@ namespace server.Migrations
                     factuurnr = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     prijs = table.Column<int>(type: "INTEGER", nullable: false),
-                    ownerid = table.Column<int>(type: "INTEGER", nullable: false),
-                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
-                    message = table.Column<string>(type: "TEXT", nullable: true),
-                    korting = table.Column<int>(type: "INTEGER", nullable: true)
+                    ownerid = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,6 +88,27 @@ namespace server.Migrations
                     table.ForeignKey(
                         name: "FK_Betaling_Gebruiker_ownerid",
                         column: x => x.ownerid,
+                        principalTable: "Gebruiker",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Betrokkene",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    type = table.Column<int>(type: "INTEGER", nullable: false),
+                    omschrijving = table.Column<string>(type: "TEXT", nullable: false),
+                    afbeelding = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Betrokkene", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Betrokkene_Gebruiker_id",
+                        column: x => x.id,
                         principalTable: "Gebruiker",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -165,30 +179,6 @@ namespace server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "betrokkene-groepen",
-                columns: table => new
-                {
-                    betrokkenenid = table.Column<int>(type: "INTEGER", nullable: false),
-                    groepenid = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_betrokkene-groepen", x => new { x.betrokkenenid, x.groepenid });
-                    table.ForeignKey(
-                        name: "FK_betrokkene-groepen_Gebruiker_betrokkenenid",
-                        column: x => x.betrokkenenid,
-                        principalTable: "Gebruiker",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_betrokkene-groepen_Groep_groepenid",
-                        column: x => x.groepenid,
-                        principalTable: "Groep",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Programmering",
                 columns: table => new
                 {
@@ -212,6 +202,49 @@ namespace server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Donatie",
+                columns: table => new
+                {
+                    factuurnr = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    message = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Donatie", x => x.factuurnr);
+                    table.ForeignKey(
+                        name: "FK_Donatie_Betaling_factuurnr",
+                        column: x => x.factuurnr,
+                        principalTable: "Betaling",
+                        principalColumn: "factuurnr",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "betrokkene-groepen",
+                columns: table => new
+                {
+                    betrokkenenid = table.Column<int>(type: "INTEGER", nullable: false),
+                    groepenid = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_betrokkene-groepen", x => new { x.betrokkenenid, x.groepenid });
+                    table.ForeignKey(
+                        name: "FK_betrokkene-groepen_Betrokkene_betrokkenenid",
+                        column: x => x.betrokkenenid,
+                        principalTable: "Betrokkene",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_betrokkene-groepen_Groep_groepenid",
+                        column: x => x.groepenid,
+                        principalTable: "Groep",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "betrokkene-programmering",
                 columns: table => new
                 {
@@ -222,9 +255,9 @@ namespace server.Migrations
                 {
                     table.PrimaryKey("PK_betrokkene-programmering", x => new { x.betrokkenenid, x.programmeringenid });
                     table.ForeignKey(
-                        name: "FK_betrokkene-programmering_Gebruiker_betrokkenenid",
+                        name: "FK_betrokkene-programmering_Betrokkene_betrokkenenid",
                         column: x => x.betrokkenenid,
-                        principalTable: "Gebruiker",
+                        principalTable: "Betrokkene",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -265,7 +298,6 @@ namespace server.Migrations
                 {
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    bestellingFK = table.Column<int>(type: "INTEGER", nullable: false),
                     QR = table.Column<string>(type: "TEXT", nullable: false),
                     betaald = table.Column<bool>(type: "INTEGER", nullable: false),
                     aankoopDatum = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -277,12 +309,6 @@ namespace server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservering", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Reservering_Betaling_bestellingFK",
-                        column: x => x.bestellingFK,
-                        principalTable: "Betaling",
-                        principalColumn: "factuurnr",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reservering_Gebruiker_ownerid",
                         column: x => x.ownerid,
@@ -302,6 +328,32 @@ namespace server.Migrations
                         principalColumn: "zaalnr",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Bestelling",
+                columns: table => new
+                {
+                    factuurnr = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    korting = table.Column<int>(type: "INTEGER", nullable: false),
+                    reserveringFK = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bestelling", x => x.factuurnr);
+                    table.ForeignKey(
+                        name: "FK_Bestelling_Reservering_reserveringFK",
+                        column: x => x.reserveringFK,
+                        principalTable: "Reservering",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bestelling_reserveringFK",
+                table: "Bestelling",
+                column: "reserveringFK",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Betaling_ownerid",
@@ -345,12 +397,6 @@ namespace server.Migrations
                 column: "zaalnr");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservering_bestellingFK",
-                table: "Reservering",
-                column: "bestellingFK",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reservering_ownerid",
                 table: "Reservering",
                 column: "ownerid");
@@ -370,10 +416,16 @@ namespace server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Bestelling");
+
+            migrationBuilder.DropTable(
                 name: "betrokkene-groepen");
 
             migrationBuilder.DropTable(
                 name: "betrokkene-programmering");
+
+            migrationBuilder.DropTable(
+                name: "Donatie");
 
             migrationBuilder.DropTable(
                 name: "groep-programmering");
@@ -394,10 +446,13 @@ namespace server.Migrations
                 name: "Reservering");
 
             migrationBuilder.DropTable(
-                name: "Groep");
+                name: "Betrokkene");
 
             migrationBuilder.DropTable(
                 name: "Betaling");
+
+            migrationBuilder.DropTable(
+                name: "Groep");
 
             migrationBuilder.DropTable(
                 name: "Programmering");

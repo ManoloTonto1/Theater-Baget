@@ -1,6 +1,5 @@
 public class Reservering {
     public int id { get; set; }
-    public int bestellingFK { get; set; }
     public string QR { get; set; }
     public bool betaald { get; set; }
     public DateTime aankoopDatum { get; set; }

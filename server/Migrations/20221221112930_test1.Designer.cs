@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace server.Migrations
 {
     [DbContext(typeof(theaterContext))]
-    partial class theaterContextModelSnapshot : ModelSnapshot
+    [Migration("20221221112930_test1")]
+    partial class test1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.1");
@@ -43,10 +46,6 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("donatieAantal")
                         .HasColumnType("INTEGER");
 
@@ -68,9 +67,7 @@ namespace server.Migrations
 
                     b.ToTable("Gebruiker");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Gebruiker");
-
-                    b.UseTphMappingStrategy();
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Groep", b =>
@@ -123,6 +120,21 @@ namespace server.Migrations
                     b.ToTable("Interesse");
                 });
 
+            modelBuilder.Entity("Key", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("key")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Key");
+                });
+
             modelBuilder.Entity("LoginGegevens", b =>
                 {
                     b.Property<int>("id")
@@ -148,7 +160,7 @@ namespace server.Migrations
                     b.HasIndex("gebruikerFK")
                         .IsUnique();
 
-                    b.ToTable("LoginGegevens");
+                    b.ToTable("LoginGegeven");
                 });
 
             modelBuilder.Entity("Logs", b =>
@@ -356,7 +368,7 @@ namespace server.Migrations
                     b.Property<int>("type")
                         .HasColumnType("INTEGER");
 
-                    b.HasDiscriminator().HasValue("Betrokkene");
+                    b.ToTable("Betrokkene", (string)null);
                 });
 
             modelBuilder.Entity("Betaling", b =>
@@ -502,6 +514,15 @@ namespace server.Migrations
                     b.HasOne("Betaling", null)
                         .WithOne()
                         .HasForeignKey("Donatie", "factuurnr")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Betrokkene", b =>
+                {
+                    b.HasOne("Gebruiker", null)
+                        .WithOne()
+                        .HasForeignKey("Betrokkene", "id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

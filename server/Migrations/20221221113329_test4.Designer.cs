@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace server.Migrations
 {
     [DbContext(typeof(theaterContext))]
-    [Migration("20221221110506_test2")]
-    partial class test2
+    [Migration("20221221113329_test4")]
+    partial class test4
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,10 @@ namespace server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("donatieAantal")
                         .HasColumnType("INTEGER");
 
@@ -67,7 +71,9 @@ namespace server.Migrations
 
                     b.ToTable("Gebruiker");
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Gebruiker");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Groep", b =>
@@ -120,21 +126,6 @@ namespace server.Migrations
                     b.ToTable("Interesse");
                 });
 
-            modelBuilder.Entity("Key", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("key")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Key");
-                });
-
             modelBuilder.Entity("LoginGegevens", b =>
                 {
                     b.Property<int>("id")
@@ -160,7 +151,7 @@ namespace server.Migrations
                     b.HasIndex("gebruikerFK")
                         .IsUnique();
 
-                    b.ToTable("LoginGegeven");
+                    b.ToTable("LoginGegevens");
                 });
 
             modelBuilder.Entity("Logs", b =>
@@ -230,9 +221,6 @@ namespace server.Migrations
                     b.Property<DateTime>("aankoopDatum")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("bestellingFK")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("betaald")
                         .HasColumnType("INTEGER");
 
@@ -250,9 +238,6 @@ namespace server.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("id");
-
-                    b.HasIndex("bestellingFK")
-                        .IsUnique();
 
                     b.HasIndex("ownerid");
 
@@ -339,7 +324,13 @@ namespace server.Migrations
                     b.Property<int>("korting")
                         .HasColumnType("INTEGER");
 
-                    b.ToTable("Bestelling", (string)null);
+                    b.Property<int>("reserveringFK")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("reserveringFK")
+                        .IsUnique();
+
+                    b.ToTable("Bestelling");
                 });
 
             modelBuilder.Entity("Donatie", b =>
@@ -350,7 +341,7 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("bestelling", (string)null);
+                    b.ToTable("Donatie", (string)null);
                 });
 
             modelBuilder.Entity("Betrokkene", b =>
@@ -368,7 +359,7 @@ namespace server.Migrations
                     b.Property<int>("type")
                         .HasColumnType("INTEGER");
 
-                    b.ToTable("Betrokkene", (string)null);
+                    b.HasDiscriminator().HasValue("Betrokkene");
                 });
 
             modelBuilder.Entity("Betaling", b =>
@@ -428,12 +419,6 @@ namespace server.Migrations
 
             modelBuilder.Entity("Reservering", b =>
                 {
-                    b.HasOne("Bestelling", "bestelling")
-                        .WithOne("reservering")
-                        .HasForeignKey("Reservering", "bestellingFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Gebruiker", "owner")
                         .WithMany("reserveringen")
                         .HasForeignKey("ownerid")
@@ -451,8 +436,6 @@ namespace server.Migrations
                         .HasForeignKey("zaalnr")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("bestelling");
 
                     b.Navigation("owner");
 
@@ -508,11 +491,13 @@ namespace server.Migrations
 
             modelBuilder.Entity("Bestelling", b =>
                 {
-                    b.HasOne("Betaling", null)
-                        .WithOne()
-                        .HasForeignKey("Bestelling", "factuurnr")
+                    b.HasOne("Reservering", "reservering")
+                        .WithOne("bestelling")
+                        .HasForeignKey("Bestelling", "reserveringFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("reservering");
                 });
 
             modelBuilder.Entity("Donatie", b =>
@@ -520,15 +505,6 @@ namespace server.Migrations
                     b.HasOne("Betaling", null)
                         .WithOne()
                         .HasForeignKey("Donatie", "factuurnr")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Betrokkene", b =>
-                {
-                    b.HasOne("Gebruiker", null)
-                        .WithOne()
-                        .HasForeignKey("Betrokkene", "id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -552,17 +528,17 @@ namespace server.Migrations
                     b.Navigation("reserveringen");
                 });
 
+            modelBuilder.Entity("Reservering", b =>
+                {
+                    b.Navigation("bestelling")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Zaal", b =>
                 {
                     b.Navigation("programmeringen");
 
                     b.Navigation("reserveringen");
-                });
-
-            modelBuilder.Entity("Bestelling", b =>
-                {
-                    b.Navigation("reservering")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
