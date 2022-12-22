@@ -1,79 +1,81 @@
 public class EncryptionTools {
 
-    public string GenerateKey(int id) {
+    public string GenerateKey(int userId) {
 
     }
 
-    public string Mix(string a, string b) {
+	// mixes the 2 strings for encryption
+    public static string Mix(string userId, string key) {
+		// the size difference between the two entered strings
         int diff = 0;
-		string c = "";
-		int aBigger = 2;
-		
-		char[] aSplit = a.ToCharArray();
-		Console.WriteLine(aSplit.Length);
-		char[] bSplit = b.ToCharArray();
-		Console.WriteLine(bSplit.Length);
+		string result = "";
+		char[] userIdSplit = userId.ToCharArray();
+		char[] keySplit = key.ToCharArray();
 
-		if(aSplit.Length > bSplit.Length)
+		if(userIdSplit.Length > keySplit.Length)
 		{
-			Console.WriteLine(aSplit.Length - bSplit.Length);
-			aBigger = 1;
-			diff = aSplit.Length - bSplit.Length;
+			diff = userIdSplit.Length - keySplit.Length;
+
+			result+= diff + "??@&B%#A!*G^$!!" + formatSplitStrings(userIdSplit, keySplit);
 		} 
-		else if(aSplit.Length < bSplit.Length)
-		{
-			Console.WriteLine(bSplit.Length - aSplit.Length);
-			aBigger = 0;
-			diff = bSplit.Length - aSplit.Length;
-		}
 		
-		if(aBigger == 1)
+		if(userIdSplit.Length < keySplit.Length)
 		{
-			c+= diff + "??@&B%#A!*G^$!!";
-			for(int i = 0; i < bSplit.Length; i++)
-			{
-				c += aSplit[i].ToString() + bSplit[i].ToString();
-				
-				if(i == bSplit.Length - 1)
-				{
-					for(int j = bSplit.Length; j < aSplit.Length; j++)
-					{
-						c += aSplit[j].ToString();
-					}
-				}
-			}
-		} 
-		else if(aBigger == 0)
-		{
-			for(int i = 0; i < aSplit.Length; i++)
-			{
-				c+= aSplit[i].ToString() + bSplit[i].ToString();
-				
-				if(i == aSplit.Length - 1)
-				{
-					for(int j = aSplit.Length; j < bSplit.Length; j++)
-					{
-						c += bSplit[j].ToString();
-					}
-				}
-			}
-			c+= "!!@&B%#A!*G^$??" + diff;
+			diff = keySplit.Length - userIdSplit.Length;
+
+			result+= formatSplitStrings(keySplit, userIdSplit) + "!!@&B%#A!*G^$??" + diff;
 		}
-		else
+
+		if(userIdSplit.Length == keySplit.Length) 
 		{
-			for(int i = 0; i < aSplit.Length; i++)
+			for(int i = 0; i < userIdSplit.Length; i++)
 			{
-				c+= aSplit[i].ToString() + bSplit[i].ToString();
+				result+= userIdSplit[i].ToString() + keySplit[i].ToString();
 			}
 		}
-        return c;
+
+        return result;
     }
 
-    public List<string> Split(string a) {
+	public static string formatSplitStrings(char[] bigger, char[] smaller) {
+		string result = "";
 
-    }
+		for(int i = 0; i < smaller.Length; i++)
+		{
+			result += bigger[i].ToString() + smaller[i].ToString();
+			
+			if(i == smaller.Length - 1)
+			{
+				for(int j = smaller.Length; j < bigger.Length; j++)
+				{
+					result += bigger[j].ToString();
+				}
+			}
+		}
 
-    public bool CheckId(string id) {
+		return result;
+	}
+
+	public static string UnMix(string toUnMix, bool getUserId) {
+		string result = "";
+		if(toUnMix.Contains("??@&B%#A!*G^$!!"))
+		{
+			string[] pieces = toUnMix.Split("??@&B%#A!*G^$!!");
+		}
+
+		if(toUnMix.Contains("!!@&B%#A!*G^$??"))
+		{
+			string[] pieces = toUnMix.Split("!!@&B%#A!*G^$??");
+		}
+
+		if(!toUnMix.Contains("??@&B%#A!*G^$!!") && !toUnMix.Contains("!!@&B%#A!*G^$??"))
+		{
+			
+		}
+		return result;
+	}
+
+    public bool CheckId(string userId) {
 
     }
 
