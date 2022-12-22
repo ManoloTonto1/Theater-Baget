@@ -1,6 +1,7 @@
 import {
 	Box,
 	Button,
+	Container,
 	Grid,
 	ThemeProvider,
 	Typography 
@@ -13,44 +14,57 @@ import {
 	useNavigate 
 } from 'react-router-dom';
 
-function ErrorPage(){
+function ErrorPage() : JSX.Element{
 	const { theme } = React.useContext(UserContext);
 	const navigate = useNavigate();
 	return(
 		<ThemeProvider theme={theme.theme}>
+			
 			<Box style={{
 				width: '100%',
 				height: '100vh',
-				backgroundImage: 'url('+img+')'
+				backgroundImage: `url(${img})`
 			}}>
-				<Grid
-					container
-					direction="column"
-					alignItems="center"
-					justifyContent="center"
-					sx={{
-						minHeight:'60%',
-						height:'68vh'
-					}}
-				>
-					<Typography variant= "h2"
+				<Container>
+					<Grid
+						container
+						direction="column"
+						alignItems="center"
+						justifyContent="center"
 						sx={{
-							pt:10
-						}}>
-                    Pagina niet gevonden
-					</Typography>
-					<Typography sx={{
-						py:3
-					}}>
-                    Error 404: De pagina die u probeert te bereiken is niet gevonden
-					</Typography>
-					<Box>
-						<Button onClick={()=>navigate('/')} variant="contained"
-							startIcon={<ArrowBackIcon />}>Ga terug</Button>
-					</Box>
-					
-				</Grid>
+							minHeight: '60%',
+							height: '68vh'
+						}}
+					>
+						<Box>
+							<Typography variant="h2"
+
+								sx={{
+									fontWeight: 'bold',
+									pt: 10
+								}}>
+								Pagina niet gevonden
+							</Typography>
+
+							<Typography
+
+								sx={{
+									py: 3
+								}}>
+								Error 404: De pagina die u probeert te bereiken bestaat niet.
+							</Typography>
+							
+							<Button size='large' onClick={(): void => navigate('/')}
+								variant="contained"
+								startIcon={<ArrowBackIcon />}>Ga terug
+							</Button>
+								
+						</Box>
+
+					</Grid>
+				</Container>
 			</Box>
+
 		</ThemeProvider>
 	);
 }

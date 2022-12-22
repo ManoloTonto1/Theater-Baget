@@ -1,6 +1,9 @@
 import React from 'react';
+import type {
+	TypographyProps
+} from '@mui/material';
 import {
-	Link, Typography, TypographyProps,
+	Link, Typography,
 	ThemeProvider, 
 	IconButton,
 	Box
@@ -17,7 +20,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
  * @param {TypographyProps} props
  * @returns {JSX.Element}
  */
-export default function Footer(props: TypographyProps) {
+export default function Footer(props: TypographyProps) :JSX.Element {
 	const { theme } = React.useContext(UserContext);
 	return (
 		<ThemeProvider theme={theme.theme}>
