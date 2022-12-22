@@ -31,6 +31,7 @@ const ProfielTickets = React.lazy(()=>import('./routes/profiel/tickets/ProfielTi
 const ProfielTicketsById = React.lazy(()=>import('./routes/profiel/tickets/ProfielTicketsById'));
 const Bands = React.lazy(()=>import('./routes/bands/Bands'));
 const BandsById = React.lazy(() => import('./routes/bands/BandsById'));
+const Donate = React.lazy(() => import('./routes/donate/Donate'));
 
 function App() : JSX.Element {
 	const { theme } = React.useContext(UserContext);
@@ -94,6 +95,9 @@ function App() : JSX.Element {
 						<BandsById />
 					</Suspense>} />
 					<Route path={'*'} element={<ErrorPage />} />
+					<Route path={'/donate'} element={<Suspense fallback={<LoadingPage />}>
+						<Donate />
+					</Suspense>} />
 				</Routes >
 				<Footer/>
 			</Paper>

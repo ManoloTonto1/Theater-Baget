@@ -54,7 +54,8 @@ export default function Topbar() {
 						<Box sx={{
 							display: 'flex',
 						}}>
-							<Button color='secondary' startIcon={<PaidIcon/>}
+							<Button onClick={() => navigate('/donate')}
+								color='secondary' startIcon={<PaidIcon />}
 								variant='contained' sx={{
 									mr:2
 								}}>
