@@ -6,7 +6,6 @@ import Monki from '../../assets/gorilla.jfif';
 import {
 	useNavigate 
 } from 'react-router-dom';
-import AnchoredBackButton from '../../components/global/AnchoredBackButton';
 
 function LeftCard() : JSX.Element {
 	scrollTo(0, 0);
@@ -60,7 +59,6 @@ function LeftCard() : JSX.Element {
 						</Button>
 
 					</Box>
-					<AnchoredBackButton newLocation='/' />
 				</Card>
 			</Grow>
 		</Box>
