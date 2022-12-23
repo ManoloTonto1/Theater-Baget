@@ -8,11 +8,10 @@ import Typography from '@mui/material/Typography';
 import {
 	Box
 } from '@mui/system';
-type Charity = {
-    name: string
-    image: string
-    description:string
-}
+import type {
+	Charity 
+} from './types';
+
 const charities: Charity[] = [
 	{
 		name: 'Dieren Lot',
@@ -55,14 +54,14 @@ const charities: Charity[] = [
 ];
 
 type props = {
-    setChosenCharity: React.Dispatch<React.SetStateAction<string>>
-    setCurrentStep: React.Dispatch<React.SetStateAction<number>>
+    setChosenCharity: React.Dispatch<React.SetStateAction<Charity | null>>
+    nextStep: () => Promise<void>
 }
 
 export default function CharityList(props: props): JSX.Element {
-	const setChosenCharity = React.useCallback(async (charity:string) => {
+	const setChosenCharity = React.useCallback(async (charity:Charity) => {
 		props.setChosenCharity(charity);
-		props.setCurrentStep(1);
+		props.nextStep();
 	}, [props]);
     
 	return (
@@ -76,7 +75,7 @@ export default function CharityList(props: props): JSX.Element {
 					justifyContent={'center'}
 				>
 					<Card elevation={3}>
-						<CardActionArea onClick={(): Promise<void> => setChosenCharity(charity.name)} sx={{
+						<CardActionArea onClick={(): Promise<void> => setChosenCharity(charity)} sx={{
 							display: 'flex'
 						}}>
 							<CardMedia
