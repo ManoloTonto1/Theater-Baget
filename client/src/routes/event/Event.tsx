@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-	Container, 
+	Container,
 	Grid
 } from '@mui/material';
 import RightCard from './RightCard';
@@ -12,12 +12,17 @@ import LeftCard from './LeftCard';
  */
 function Event(): JSX.Element{
 	return (
-		<Container>
+		<Container sx={{
+			position: 'relative',
+			mt:3
+		}}>
 			<Grid container spacing={2}>
-				<Grid item xs={6}>
+				<Grid item xs={12}
+					sm={6}>
 					<LeftCard/>
 				</Grid>
-				<Grid item xs={6}>
+				<Grid item xs={12}
+					sm={6}>
 					<RightCard/>
 				</Grid>
 			</Grid>

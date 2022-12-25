@@ -1,11 +1,14 @@
+import type {
+	Theme
+} from '@mui/material';
 import {
-	createTheme, Theme
+	createTheme
 } from '@mui/material';
 import {
 	red, yellow 
 } from '@mui/material/colors';
 import React from 'react';
-import {
+import type {
 	$TSfixMeAny 
 } from '../components/global/globalTypes';
 
@@ -34,10 +37,15 @@ type contextData = {
 const UserContext = React.createContext<contextData>(null as $TSfixMeAny);
 
 export const UserProvider = ({ children }: $TSfixMeAny) => {
+	// If no item is present when in dark mode, just give the user darkMode as default
+	if (!localStorage.getItem('darkMode')) {
+		localStorage.setItem('darkMode', 'dark');
+	}
+	
 	const [darkMode, setDarkmode] = React.useState(localStorage.getItem('darkMode') === 'dark');
 	const theme = createTheme({
 		palette: {
-			mode: !darkMode ? 'dark' : 'light',
+			mode: darkMode ? 'dark' : 'light',
 			primary: {
 				main: red['A700'],
 			},

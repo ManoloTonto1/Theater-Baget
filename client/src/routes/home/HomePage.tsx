@@ -1,6 +1,5 @@
 import {
-	Box,
-	CardActionArea, CardContent, CardMedia, Divider, Grid, Grow, ThemeProvider
+	CardActionArea, CardContent, CardMedia, Grid, Grow, ThemeProvider
 } from '@mui/material';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -13,7 +12,10 @@ import Monki from '../../assets/gorilla.jfif';
 import {
 	useNavigate 
 } from 'react-router-dom';
-
+import {
+	ActionButtons 
+} from './ActionButtons';
+import WelcomeTextAndVideo from './WelcomeTextAndVideo';
 type TCard = {
 		naam: string,
 		datum: string,
@@ -71,64 +73,42 @@ const cards: TCard = [
 		datum: '69th of your mom',
 		omschrijving:'SUPER GAAF'
 	},
-	{
-		naam: 'niggas in paris',
-		afbeelding: Monki,
-		datum: '69th of your mom',
-		omschrijving:'SUPER GAAF'
-	},
 ];
 
-function Homepage() {
+function Homepage() :JSX.Element {
 	const { theme } = React.useContext(UserContext);
 	const navigate = useNavigate();
 	return (
 		<ThemeProvider theme={theme.theme}>
-			<Container>
-				<Typography sx={{
-					py: 2
-				}} component={'h1'}
-				textAlign={'center'}
-				variant="h3">Welkom bij theater Baget!</Typography>
-				<Box sx={{
-					display: 'flex',
-					justifyContent: 'center',
-				}}>
-					<Card
-						elevation={3}
-						sx={{
-							width: 500,
-							mb: 2,
-							p: 4
-						}}>
-						<CardMedia>
-							<iframe width="500" height="315"
-								src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player"
-								allow="accelerometer; autoplay; clipboard-write;
-							 encrypted-media; gyroscope; picture-in-picture"
-								allowFullScreen>
+			<Container maxWidth="xl">
+				<WelcomeTextAndVideo />
 
-							</iframe>
-						</CardMedia>
-					</Card>
-				</Box>
-				<Divider sx={{
-					my:2
-				}}/>
-				<Typography textAlign={'center'} variant="h4">Huidige activiteiten</Typography>
+				<ActionButtons />
+				
+				<Typography
+					sx={{
+						mb:4
+					}}
+					textAlign={'left'}
+					variant="h3">
+					Huidige activiteiten:
+				</Typography>
+
 				<Grid container spacing={3}
 					sx={{
-						p: 4
+						mb:4
 					}}>
 					{
 						cards.map((card,index) => {
 							return (
 								<Grow in timeout={index * 100}
 									key={card.naam}>
-									<Grid item xs={4}
+									<Grid item
+										xs={12}
+										sm={3}
 									>
-										<Card elevation={4}>
-											<CardActionArea onClick={()=>navigate('event/1')}>
+										<Card elevation={10}>
+											<CardActionArea onClick={() : void =>navigate('event/1')}>
 
 												<CardMedia
 													component="img"

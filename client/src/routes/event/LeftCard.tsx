@@ -1,24 +1,27 @@
 import React from 'react';
 import {
-	Box, Grow, Card, CardMedia, CardContent, Typography, Button 
+	Box, Grow, Card, CardMedia, CardContent, Typography, Button
 } from '@mui/material';
 import Monki from '../../assets/gorilla.jfif';
 import {
 	useNavigate 
 } from 'react-router-dom';
-function LeftCard() {
+
+function LeftCard() : JSX.Element {
+	scrollTo(0, 0);
 	const navigate = useNavigate();
 	const goToPayPage = React.useCallback(() => {
 		navigate('/ticket');  
 	},[navigate]);
 	return (
 		<Box sx={{
-			m: 2
+			m: 2,
 		}}>
 			<Grow in timeout={200}>
 				<Card elevation={3} sx={{
 					p: 2,
 				}}>
+					
 					<Box sx={{
 						m: 2
 					}}>
