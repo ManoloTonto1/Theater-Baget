@@ -20,17 +20,11 @@ function Donate(): JSX.Element{
 	const [currentStep, setCurrentStep] = React.useState(0);
 	const [chosenCharity, setChosenCharity] = React.useState<Charity | null>(null);
 	const [animationIn, setAnimationIn] = React.useState(true);
-	const [animationDirection, setAnimationDirection] = React.useState<'left' | 'right'>('left');
+	const [isAnimationDone,setAnimationDone] = React.useState(false);
 	
 	const nextStep = React.useCallback(async () => {
-		setAnimationDirection('right');
 		setAnimationIn(false);
-		setTimeout(() => {
-			setAnimationDirection('left');
-			setCurrentStep((current) => current + 1);
-			setAnimationIn(true);
-		}, 200);
-
+		setCurrentStep((current) => current + 1);
 	}, []);
 	
 	const previousStep = React.useCallback(async() => {
@@ -74,7 +68,8 @@ function Donate(): JSX.Element{
 								</Step>
 							</Stepper>
 						</Card>
-						<Slide in={animationIn} direction={animationDirection}>
+						<Slide in={animationIn}
+							direction={animationIn ? 'left' : 'right'}>
 							<Grid container
 								spacing={3}
 								pt={2}
