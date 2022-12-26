@@ -13,7 +13,7 @@ module.exports = {
 	],
 	'parser': '@typescript-eslint/parser',
 	'parserOptions': {
-		'project': ['./client/tsconfig.json','./client/tsconfig.node.json'],
+		'project': ['./client/tsconfig.json','./client/tsconfig.node.json','./client/cypress/tsconfig.json'],
 		'ecmaFeatures': {
 			'jsx': true
 		},

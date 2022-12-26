@@ -79,7 +79,7 @@ function Confirm(props: props): JSX.Element {
 						sx={{
 							mr: 2
 						}}>
-                        Gereed
+                        gereed
 					</Button>
 					<Button variant='outlined' onClick={props.previousStep}>terug</Button>
 				</Grid>

@@ -22,13 +22,15 @@ function PayDetails(props: props): JSX.Element {
 	const [isDisabled, setDisabled] = React.useState(true);
 
 	const handleChange = React.useCallback((e: ChangeEvent<HTMLInputElement>) => {
-		if (e.target.name === 'comment') {
-			e.target.value ? setDisabled(false) : setDisabled(true);
-			setComment(e.target.value);
+		e.target.name === 'comment'? 
+			setComment(e.target.value) :
+			setAmount(parseInt(e.target.value) | 0);
+
+		if (e.target.value === '' || e.target.value === ' ' || e.target.value === '0' || !e.target.value) {
+			setDisabled(true);
 			return; 
 		}
-		e.target.value ? setDisabled(false) : setDisabled(true);
-		setAmount(parseInt(e.target.value) | 0);
+		setDisabled(false);
 	}, []);
 
 	const setData = React.useCallback(() => {
