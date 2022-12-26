@@ -19,30 +19,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import PaidIcon from '@mui/icons-material/Paid';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Tooltip from '@mui/material/Tooltip';
+import useWindowSize from '../../hooks/useWindowSize';
 
-function getWindowSize(): {
-	innerWidth: number;
-	innerHeight: number;
-	} {
-	const { innerWidth, innerHeight } = window;
-	return {
-		innerWidth, innerHeight 
-	};
-}
 export default function Topbar(): JSX.Element {
-	const [windowSize, setWindowSize] = React.useState(getWindowSize());
-
-	React.useEffect(() => {
-		const handleWindowResize = async () : Promise<void>=> {
-			setWindowSize(getWindowSize());
-		};
-
-		window.addEventListener('resize', handleWindowResize);
-
-		return () => {
-			window.removeEventListener('resize', handleWindowResize);
-		};
-	}, []);
+	const windowSize = useWindowSize();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const changeLocation = React.useCallback(async (): Promise<void> => {

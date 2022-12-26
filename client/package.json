@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "ts-mocha -p tsconfig.json src/**/test/*.test.ts",
     "server": "cd .. && cd server && dotnet run",
-    "cypress-tests": "run-p dev server"
+    "cypress-tests": "run-p dev server",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -25,12 +26,12 @@
     "react-router-dom": "^6.5.0"
   },
   "devDependencies": {
-    "cypress": "^12.1.0",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
     "@vitejs/plugin-react": "^2.2.0",
+    "cypress": "^12.1.0",
     "eslint": "^8.30.0",
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.26.0",
