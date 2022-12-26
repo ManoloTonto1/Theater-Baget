@@ -1,5 +1,5 @@
 import {
-	Card, Grid, Slide 
+	Card, Grid
 } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Step from '@mui/material/Step';
@@ -11,24 +11,27 @@ import {
 } from '@mui/system';
 import React from 'react';
 import CharityList from './CharityList';
+import Confirm from './Confirm';
 import PayDetails from './PayDetails';
+import PostDonation from './PostDonation';
 import type {
-	Charity 
+	Charity, Data 
 } from './types';
 
 function Donate(): JSX.Element{
 	const [currentStep, setCurrentStep] = React.useState(0);
 	const [chosenCharity, setChosenCharity] = React.useState<Charity | null>(null);
-	const [animationIn, setAnimationIn] = React.useState(true);
-	const [isAnimationDone,setAnimationDone] = React.useState(false);
-	
+	const [data,setData] = React.useState<Data | null>(null);
 	const nextStep = React.useCallback(async () => {
-		setAnimationIn(false);
 		setCurrentStep((current) => current + 1);
 	}, []);
+	const setDonationDetails = React.useCallback(async (data : Data)=>{
+		setData(data);
+		nextStep();
+	},[nextStep]);
 	
 	const previousStep = React.useCallback(async() => {
-		setCurrentStep((current)=> current--);	
+		setCurrentStep((current)=> current - 1);	
 	}, []);
 	
 	return (
@@ -68,24 +71,40 @@ function Donate(): JSX.Element{
 								</Step>
 							</Stepper>
 						</Card>
-						<Slide in={animationIn}
-							direction={animationIn ? 'left' : 'right'}>
-							<Grid container
-								spacing={3}
-								pt={2}
-							>
-								{currentStep === 0 && (
-									<CharityList
-										setChosenCharity={setChosenCharity}
-										nextStep={nextStep} />)
-								}
-								{currentStep === 1 && (
-									<PayDetails
-										chosenCharity={chosenCharity}
-										nextStep={nextStep} />)
-								}
-							</Grid>
-						</Slide>
+						<Grid container
+							spacing={3}
+							pt={2}>
+							{currentStep === 0 && (
+								<CharityList
+									setChosenCharity={setChosenCharity}
+									nextStep={nextStep} />
+							)
+							}
+							{currentStep === 1 && (
+								<PayDetails
+									chosenCharity={chosenCharity}
+									nextStep={setDonationDetails} 
+									previousStep={previousStep}
+								/>
+							)
+							}
+							{currentStep === 2 && data && (
+								<Confirm
+									chosenCharity={chosenCharity}
+									previousStep={previousStep}
+									nextStep={nextStep} 
+									data={data}
+								/>
+							)
+							}
+							{currentStep === 3 && data &&(
+								<PostDonation
+									chosenCharity={chosenCharity}
+									data={data}
+								/>								
+							)
+							}
+						</Grid>
 					</CardContent>
 				</Card>
 			</Box>
