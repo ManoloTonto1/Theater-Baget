@@ -58,30 +58,68 @@ public class EncryptionTools {
 
 	public static string UnMix(string toUnMix, bool getUserId) {
 		string result = "";
+		List<string> dencryptedResults = new List<string>();
+
 		if(toUnMix.Contains("??@&B%#A!*G^$!!"))
 		{
 			string[] pieces = toUnMix.Split("??@&B%#A!*G^$!!");
+			dencryptedResults = DeconstructSplitStrings(pieces[1], Int32.Parse(pieces[0]), 0);
 		}
 
 		if(toUnMix.Contains("!!@&B%#A!*G^$??"))
 		{
 			string[] pieces = toUnMix.Split("!!@&B%#A!*G^$??");
+			dencryptedResults = DeconstructSplitStrings(pieces[0], Int32.Parse(pieces[1]), 1);
 		}
 
 		if(!toUnMix.Contains("??@&B%#A!*G^$!!") && !toUnMix.Contains("!!@&B%#A!*G^$??"))
-		{
-			
-		}
+			dencryptedResults = DeconstructSplitStrings(toUnMix, 0, 2);
+
+		if(getUserId)
+			result = dencryptedResults[0];
+		
+		if(!getUserId)
+			result = dencryptedResults[1];
+		
 		return result;
 	}
 
-    public bool CheckId(string userId) {
+	public static List<string> DeconstructSplitStrings(string encrypted, int difference, int bigger) {
+		List<string> result = new List<string>(){"", ""};
+		char[] encryptedSplit = encrypted.ToCharArray();
 
+
+		for(int i = 0; i < encrypted.Length - difference; i++)
+		{
+			if(i%2 == 0 || i == 0)
+				result[0] += encryptedSplit[i].ToString();
+
+			if(i%2 != 0)
+				result[1] += encryptedSplit[i].ToString();
+
+			if(i == encrypted.Length - difference && difference != 0)
+				for(int j = encrypted.Length - difference; j < encrypted.Length; j++)
+				{
+					result[bigger] += encryptedSplit[j].ToString();
+				}
+		}
+
+		return result;
+	}
+
+    public bool CheckId(string userId, string encrypted) {
+		string dencryptedUserId = GetId(encrypted);
+		return userId.Equals(dencryptedUserId);
     }
 
-    public string GetKey() {
-
+    public string GetKey(string encrypted) {
+		return UnMix(encrypted, false);
     }
+
+	public string GetId(string encrypted) {
+		return UnMix(encrypted, true);
+	}
+		
 
     public string encryptSHA256() {
 
