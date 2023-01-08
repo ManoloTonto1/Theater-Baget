@@ -1,7 +1,10 @@
+using System.Security.Cryptography;
+using System.Text;
 public class EncryptionTools {
 
-    public string GenerateKey(int userId) {
-
+    public static string GenerateKey(int userId) {
+		Random random = new Random();
+		return Mix(encryptSHA256(userId.ToString()), encryptSHA256(random.Next(100000, 69696969).ToString()));
     }
 
 	// mixes the 2 strings for encryption
@@ -12,24 +15,20 @@ public class EncryptionTools {
 		char[] userIdSplit = userId.ToCharArray();
 		char[] keySplit = key.ToCharArray();
 
-		if(userIdSplit.Length > keySplit.Length)
-		{
+		if(userIdSplit.Length > keySplit.Length) {
 			diff = userIdSplit.Length - keySplit.Length;
 
 			result+= diff + "??@&B%#A!*G^$!!" + formatSplitStrings(userIdSplit, keySplit);
 		} 
 		
-		if(userIdSplit.Length < keySplit.Length)
-		{
+		if(userIdSplit.Length < keySplit.Length) {
 			diff = keySplit.Length - userIdSplit.Length;
 
 			result+= formatSplitStrings(keySplit, userIdSplit) + "!!@&B%#A!*G^$??" + diff;
 		}
 
-		if(userIdSplit.Length == keySplit.Length) 
-		{
-			for(int i = 0; i < userIdSplit.Length; i++)
-			{
+		if(userIdSplit.Length == keySplit.Length) {
+			for(int i = 0; i < userIdSplit.Length; i++) {
 				result+= userIdSplit[i].ToString() + keySplit[i].ToString();
 			}
 		}
@@ -40,14 +39,11 @@ public class EncryptionTools {
 	public static string formatSplitStrings(char[] bigger, char[] smaller) {
 		string result = "";
 
-		for(int i = 0; i < smaller.Length; i++)
-		{
+		for(int i = 0; i < smaller.Length; i++) {
 			result += bigger[i].ToString() + smaller[i].ToString();
 			
-			if(i == smaller.Length - 1)
-			{
-				for(int j = smaller.Length; j < bigger.Length; j++)
-				{
+			if(i == smaller.Length - 1) {
+				for(int j = smaller.Length; j < bigger.Length; j++) {
 					result += bigger[j].ToString();
 				}
 			}
@@ -60,14 +56,12 @@ public class EncryptionTools {
 		string result = "";
 		List<string> dencryptedResults = new List<string>();
 
-		if(toUnMix.Contains("??@&B%#A!*G^$!!"))
-		{
+		if(toUnMix.Contains("??@&B%#A!*G^$!!")) {
 			string[] pieces = toUnMix.Split("??@&B%#A!*G^$!!");
 			dencryptedResults = DeconstructSplitStrings(pieces[1], Int32.Parse(pieces[0]), 0);
 		}
 
-		if(toUnMix.Contains("!!@&B%#A!*G^$??"))
-		{
+		if(toUnMix.Contains("!!@&B%#A!*G^$??")) {
 			string[] pieces = toUnMix.Split("!!@&B%#A!*G^$??");
 			dencryptedResults = DeconstructSplitStrings(pieces[0], Int32.Parse(pieces[1]), 1);
 		}
@@ -89,44 +83,50 @@ public class EncryptionTools {
 		char[] encryptedSplit = encrypted.ToCharArray();
 
 
-		for(int i = 0; i < encrypted.Length - difference; i++)
-		{
+		for(int i = 0; i < encrypted.Length - difference; i++) {
 			if(i%2 == 0 || i == 0)
 				result[0] += encryptedSplit[i].ToString();
 
 			if(i%2 != 0)
 				result[1] += encryptedSplit[i].ToString();
 
-			if(i == encrypted.Length - difference && difference != 0)
-				for(int j = encrypted.Length - difference; j < encrypted.Length; j++)
-				{
+			if(i == encrypted.Length - difference && difference != 0) {
+				for(int j = encrypted.Length - difference; j < encrypted.Length; j++) {
 					result[bigger] += encryptedSplit[j].ToString();
 				}
+			}
 		}
 
 		return result;
 	}
 
-    public bool CheckId(string userId, string encrypted) {
+    public static bool CheckId(string userId, string encrypted) {
 		string dencryptedUserId = GetId(encrypted);
 		return userId.Equals(dencryptedUserId);
     }
 
-    public string GetKey(string encrypted) {
+    public static string GetKey(string encrypted) {
 		return UnMix(encrypted, false);
     }
 
-	public string GetId(string encrypted) {
+	public static string GetId(string encrypted) {
 		return UnMix(encrypted, true);
 	}
 		
 
-    public string encryptSHA256() {
+	//reference source: https://www.c-sharpcorner.com/article/compute-sha256-hash-in-c-sharp/
+    public static string encryptSHA256(string dataToEncrypt) {
+		// Create a SHA256   
+		using (SHA256 sha256Hash = SHA256.Create()) {  
+			// ComputeHash - returns byte array  
+			byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(dataToEncrypt));  
 
-    }
-
-    public string encryptSHA512()
-    {
-
+			// Convert byte array to a string   
+			StringBuilder builder = new StringBuilder();  
+			for (int i = 0; i < bytes.Length; i++) {  
+				builder.Append(bytes[i].ToString("x2"));  
+			}  
+			return builder.ToString();  
+		}  
     }
 }
