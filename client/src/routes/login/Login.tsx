@@ -25,7 +25,7 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
 	const { children, value, index, ...other } = props;
-	
+
 	return (
 		<Box
 			role="tabpanel"
@@ -36,7 +36,7 @@ function TabPanel(props: TabPanelProps) {
 		>
 			{value === index && (
 				<Box sx={{
-					p: 3 
+					p: 0 
 				}}>
 					{children}
 				</Box>
