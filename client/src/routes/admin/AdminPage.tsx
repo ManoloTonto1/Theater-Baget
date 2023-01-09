@@ -11,9 +11,6 @@ import {
 	Typography
 } from '@mui/material';
 import React from 'react';
-import {
-	useNavigate 
-} from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import img from '../../assets/poster.png';
 
