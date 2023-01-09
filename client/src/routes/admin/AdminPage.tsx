@@ -22,7 +22,7 @@ import {
 import UserContext from '../../context/UserContext';
 import img from '../../assets/poster.png';
 
-function ErrorPage() : JSX.Element{
+function AdminPage() : JSX.Element{
 	const { theme } = React.useContext(UserContext);
 	const navigate = useNavigate();
 	return(
@@ -85,4 +85,4 @@ function ErrorPage() : JSX.Element{
 	);
 }
     
-export default ErrorPage;
+export default AdminPage;
