@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using server.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<theaterContext>(options =>
@@ -25,5 +26,6 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();

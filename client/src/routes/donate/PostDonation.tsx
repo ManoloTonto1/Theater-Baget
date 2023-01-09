@@ -10,11 +10,8 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import {
 	green, red
 } from '@mui/material/colors';
-import axios from 'axios';
 import React from 'react';
-import {
-	postDonation
-} from '../../api/apiRoutes';
+
 import type {
 	Charity, Data
 } from './types';
@@ -32,6 +29,7 @@ enum states {
 import {
 	useNavigate 
 } from 'react-router-dom';
+import API from '../../api/apiRoutes';
 
 function PostDonation(props: props): JSX.Element {
 	const [state, setState] = React.useState<states>(states.inProgress);
@@ -39,20 +37,13 @@ function PostDonation(props: props): JSX.Element {
 	React.useEffect(() => {
 		const req = async (): Promise<void> => {
 			setState(states.inProgress);
-			axios({
-				headers: {
-					'Authorization': `Bearer ${import.meta.env.VITE_DONATE_TOKEN}`
-				},
-				method: 'POST',
-				url: postDonation,
-				data: {
-					Email: 'test@email.com',
-					Hoeveelheid: props.data.amount,
-					Doel: props.chosenCharity?.id,
-					Tekst: props.data.comment
-
-				}
-			}).then((res) => {
+			if (!props.chosenCharity?.id) return; 
+			API('donate').Donate(
+				'test@email.com',
+				props.data.amount,
+				props.chosenCharity?.id,
+				props.data.comment
+			).then((res) => {
 				if (res.status !== 200) {
 					setState(states.failed);
 					return;
