@@ -18,7 +18,7 @@ const buttons = [
 	{
 		label: 'Ticket Kopen',
 		icon: <LocalActivityIcon sx={iconStyles} />,
-		path: '/tickets'
+		path: '/programma'
 	},
 	{
 		label: 'Doneren',
