@@ -88,8 +88,8 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
                         Console.Write("\r\n");
 
                     //write the value to the console
-                    if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
-                        Console.Write(xlRange.Cells[i, j].Value2.ToString() + "\t");
+                    if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j] != null)
+                        Console.Write(xlRange.Cells[i, j].ToString() + "\t");
                 }
             }
 
