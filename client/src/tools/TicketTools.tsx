@@ -5,13 +5,34 @@ import Typography from '@mui/material/Typography';
 import Monki from '../assets/gorilla.jfif';
 import CardMedia from '@mui/material/CardMedia';
 
-export function getTickets(token: string/* jwt token */) {
+export function getUserTickets(token: string/* jwt token */) {
     var tickets = [];
 
     // check if user is allowed to see tickets
     //
 
     //do get request for all users tickets
+    //
+
+    // check if they have any tickets
+    //
+
+    //convert them into card
+    for (let index = 0; index < 2; index++) {
+        tickets.push(generateTickets("JAN 08 2023", "zo - 19:30", "Monki in paris", "013 - Tilburg", Monki))
+    }
+
+    // return the tickets
+    return tickets;
+}
+
+export function getTicketsByDate(/*date: Date */) {
+    var tickets = [];
+
+    //do get request for tickets with this date
+    //
+
+    // check if there are any tickets with the date
     //
 
     //convert them into card
