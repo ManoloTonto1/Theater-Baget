@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers;
-[Route("/zalen")]
+[Route("api/zalen")]
 [ApiController]
 public class ZalenController : ControllerBase, IController<Zaal>
 {

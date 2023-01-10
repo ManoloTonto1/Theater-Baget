@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers;
-[Route("/betrokkenen")]
+[Route("api//betrokkenen")]
 [ApiController]
 public class BetrokkenenController : ControllerBase, IController<Betrokkene>
 {

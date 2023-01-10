@@ -26,9 +26,9 @@ const BearerToken = {
  * @typedef {Data}
  * @template T
  */
-type Data<T> = {
+export type Data<T> = {
     [key: string]: T
-}
+} 
 /**
  * Chooses the api route depending on the context of the application.
  *
@@ -76,14 +76,14 @@ interface ApiModule {
      * @param {Data<unknown>} data
      * @returns {Promise<AxiosResponse<any, any>>}
      */
-    Update(id: string, data: Data<unknown>): Promise<AxiosResponse<any, any>>
+    Update(id: string, data: any): Promise<AxiosResponse<any, any>>
     /**
      * Description placeholder
      *
      * @param {Data<unknown>} data
      * @returns {Promise<AxiosResponse<any, any>>}
      */
-    Create(data: Data<unknown>): Promise<AxiosResponse<any, any>>
+    Create(data: Data<unknown> | any): Promise<AxiosResponse<any, any>>
 }
 
 interface DonateModule {
@@ -120,7 +120,7 @@ const API = <T extends string>(route: T): T extends 'donate' ? DonateModule : Ap
 				url: ApiModule.route + 'count'
 			});
 		},
-		Update: (id: string, data: Data<unknown>): Promise<AxiosResponse<any, any>> => {
+		Update: (id: string, data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				method: 'PUT',
 				url: ApiModule.route + id,
@@ -128,7 +128,7 @@ const API = <T extends string>(route: T): T extends 'donate' ? DonateModule : Ap
 				data: data
 			});
 		},
-		Create: (data: Data<unknown>): Promise<AxiosResponse<any, any>> => {
+		Create: (data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				method: 'POST',
 				headers: BearerToken,

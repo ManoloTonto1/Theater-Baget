@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers;
-[Route("/donaties")]
+[Route("api/donaties")]
 [ApiController]
 public class DonatiesController : ControllerBase, IController<Donatie>
 {

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers;
-[Route("/reserveringen")]
+[Route("api/reserveringen")]
 [ApiController]
 public class ReserveringenController : ControllerBase, IController<Reservering>
 {
