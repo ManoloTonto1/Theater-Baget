@@ -44,7 +44,9 @@ function AdminPage() : JSX.Element{
 								}}>Programma uploaden (Excell)</Typography>
 								<Button variant="contained" component="label">
                                 Upload
-									<input hidden accept="image/*"
+									<input hidden accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+										multiple type="file" ></input>
+									<input hidden accept="application/vnd.ms-excel"
 										multiple type="file" />
 								</Button>
 							</Card>
