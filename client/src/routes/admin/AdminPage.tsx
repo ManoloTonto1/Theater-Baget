@@ -13,9 +13,13 @@ import {
 import React from 'react';
 import UserContext from '../../context/UserContext';
 import img from '../../assets/poster.png';
+import API from '../../api/apiRoutes';
 
 function AdminPage() : JSX.Element{
 	const { theme } = React.useContext(UserContext);
+	const uploadFile = React.useCallback(() => {
+		API('programmering/excel').Create('monki' as any);
+	}, []);
 	return(
 		<ThemeProvider theme={theme.theme}>
 			<Box style={{
@@ -45,7 +49,7 @@ function AdminPage() : JSX.Element{
 								<Button variant="contained" component="label">
                                 Upload
 									<input hidden accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-										multiple type="file" />
+										multiple type="file" onClick={uploadFile} />
 								</Button>
 							</Card>
 						</Grid>

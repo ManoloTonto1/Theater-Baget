@@ -66,7 +66,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
 
         return CreatedAtAction("Get", new { data.id }, data);
     }
-    [HttpPost]
+    [HttpPost("/excel")]
     public async Task<ActionResult> PostExcel(Programmering data)
     {
         //Create COM Objects. Create a COM object for everything that is referenced
