@@ -2,14 +2,12 @@ import React from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import TextField from '@mui/material/TextField';
 import { Container } from '@mui/system';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-import { red } from '@mui/material/colors';
+import { getTickets } from '../../tools/TicketTools';
+
 
 /* source date picker: https://mui.com/x/react-date-pickers/custom-components/ */
 function ProgrammaOverzicht() {
@@ -21,10 +19,11 @@ function ProgrammaOverzicht() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-        }}>
+            }}>
             <Card elevation={4} sx={{ 
                     height: 485,
 					p: 1,
+                    marginRight: 4,
 				}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <StaticDatePicker
@@ -37,30 +36,14 @@ function ProgrammaOverzicht() {
                         },
                         }}
                     />
-                    </LocalizationProvider>
+                </LocalizationProvider>
             </Card>
             <Card elevation={4} sx={{ 
                     height: 485,
 					p: 1,
+                    overflowY: 'scroll',
 				}}>
-                <Card
-                    sx={{
-                        width: 600,
-                        height: 160,
-                        backgroundColor: '#003304',
-                        display: 'flex',
-                    }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <CardContent sx={{ flex: '1 0 auto' }}>
-                            <Typography component="div" variant="h5">
-                                Live From Space
-                            </Typography>
-                            <Typography variant="subtitle1" color="text.secondary" component="div">
-                                Mac Miller
-                            </Typography>
-                        </CardContent>
-                    </Box>
-                </Card>
+                {getTickets("safgsafgfdsgsdfgsdfegds")}
             </Card>
         </Container>
     );
