@@ -90,7 +90,7 @@ export default function Topbar(): JSX.Element {
 										}}>
 								Donate
 									</Button>
-									{user.userData.email != null ? (
+									{user.userData.email == null ? (
 
 										<Button onClick={() :void=>navigate('/login')}
 											color='secondary' startIcon={<PersonIcon />}
@@ -98,7 +98,7 @@ export default function Topbar(): JSX.Element {
                                 Login
 										</Button>
 									): (
-										<Button onClick={() :Promise<boolean>=>validate(user)}
+										<Button onClick={() :void=>validate(user)}
 											color='secondary' startIcon={<PersonIcon />}
 											variant='contained'>
 											(temporary) validate token
