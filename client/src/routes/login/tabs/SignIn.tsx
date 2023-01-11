@@ -13,12 +13,28 @@ import {
 	TextField
 } from '@mui/material';
 
-function SignIn() {
+import UserContext from '../../../context/UserContext';
 
+import {
+	buildRequestParams 
+} from '../../../components/RequestBuilder';
+
+import { 
+	useNavigate 
+} from 'react-router-dom';
+import { 
+	Typography 
+} from '@mui/material';
+
+function SignIn() {
+	const { user } = React.useContext(UserContext);
+	const navigate = useNavigate();
+	
 	// general values
 	const [password, setPassword] = React.useState('');
 	const [email, setEmail] = React.useState('');
 	const [rememberMe, setRememberMe] = React.useState(false);
+	const [errorText, setErrorText] = React.useState('');
 
 	const handlePassword = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setPassword(e.target.value);
@@ -30,6 +46,35 @@ function SignIn() {
 
 	const signIn = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		(async () => {
+
+			const params = buildRequestParams({
+				email: email,
+				password: password,
+				persistentLogin: rememberMe,
+			});
+
+			const request = await fetch(`api/signin?${params}`, {
+			  method: 'POST'
+			});
+
+			const response = await request.json();
+		  
+			if(response != 'Invalid Credentials') {
+				
+				user.setUser({
+					email: email,
+					persistentLogin: rememberMe,
+					token: response
+				});
+				
+				navigate('/');
+			} else {
+				setErrorText(response);
+			}
+		})();
+
 	};
 
 	return (
@@ -43,6 +88,7 @@ function SignIn() {
 				sx={{
 					p: 2
 				}}>
+				<Typography color='red' align='center'>{errorText}</Typography>
 				<FormGroup sx={{
 					'& .MuiTextField-root': {
 						m: 1
@@ -55,6 +101,7 @@ function SignIn() {
 					variant='standard' type='email'
 					required onChange={handleEmail}
 					value={email}
+					error={errorText?true:false}
 					/>
 
 					<TextField sx={{
@@ -65,6 +112,7 @@ function SignIn() {
 					type='password'
 					onChange={handlePassword}
 					value={password}
+					error={errorText?true:false}
 					required
 					/>
 

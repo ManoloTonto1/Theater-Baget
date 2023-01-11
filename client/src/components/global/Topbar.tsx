@@ -20,6 +20,9 @@ import PaidIcon from '@mui/icons-material/Paid';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Tooltip from '@mui/material/Tooltip';
 import useWindowSize from '../../hooks/useWindowSize';
+import { 
+	validate 
+} from '../jwt';
 
 export default function Topbar(): JSX.Element {
 	const windowSize = useWindowSize();
@@ -29,7 +32,7 @@ export default function Topbar(): JSX.Element {
 		navigate(-1);
 	}, [navigate]);
 
-	const { theme } = React.useContext(UserContext);
+	const { user, theme } = React.useContext(UserContext);
 	return (
 		<ThemeProvider theme={theme.theme}>
 			<Box sx={{
@@ -87,11 +90,21 @@ export default function Topbar(): JSX.Element {
 										}}>
 								Donate
 									</Button>
-									<Button onClick={() :void=>navigate('/login')}
-										color='secondary' startIcon={<PersonIcon />}
-										variant='contained'>
+									{user.userData.email != null ? (
+
+										<Button onClick={() :void=>navigate('/login')}
+											color='secondary' startIcon={<PersonIcon />}
+											variant='contained'>
                                 Login
-									</Button>
+										</Button>
+									): (
+										<Button onClick={() :Promise<boolean>=>validate(user)}
+											color='secondary' startIcon={<PersonIcon />}
+											variant='contained'>
+											(temporary) validate token
+										</Button>
+									)
+									}
 								</>
 							)
 								:

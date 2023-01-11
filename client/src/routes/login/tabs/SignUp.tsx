@@ -19,7 +19,10 @@ import React, {
 	useCallback 
 } from 'react';
 
+import UserContext from '../../../context/UserContext';
+
 function SignUp () {
+	const { user } = React.useContext(UserContext);
 
 	// general values
 	const [password, setPassword] = React.useState('');
@@ -41,7 +44,19 @@ function SignUp () {
 		e.preventDefault();
 
 		if (password === confirmPassword) {
-			// login geslaagd
+			
+			// user.setUser(
+			// 	encode(JSON.stringify({
+			// 		email: email,
+			// 		persistentLogin: rememberMe,
+			// 		pwd: password,
+			// 		bdate: geboorteDatum,
+			// 		fname: voornaam,
+			// 		tussenv: tussenvoegsel,
+			// 		lname: achternaam
+			// 	}))
+			// );
+
 			return;
 		}
 		setPasswordsMatch(false);
@@ -86,7 +101,7 @@ function SignUp () {
 				<FormGroup>
 					<Box sx={{
 						'& .MuiTextField-root': { 
-							m: 1, 
+							p: '5px', 
 							width: '29%' 
 						},
 					}}>

@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data.SQLite;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<theaterContext>(options =>
@@ -25,5 +27,27 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+Database db = new Database();
+
+app.MapPost("signin", (string email, string password) => {
+    
+    var request = db.authenticate(email, password);
+ 
+    if(request) {
+        var token = db.CreateToken(email);
+        return Results.Json(token);
+    }
+    return Results.BadRequest("Invalid Credentials");
+});
+
+app.MapPost("validate", (string token) => {
+    bool result = db.ValidateToken(token);
+
+    if(result) {
+        return Results.Json(result);
+    }
+    return Results.BadRequest("Invalid Token");
+});
 
 app.Run();

@@ -34,7 +34,7 @@ const BandsById = React.lazy(() => import('./routes/bands/BandsById'));
 const Donate = React.lazy(() => import('./routes/donate/Donate'));
 
 function App() : JSX.Element {
-	const { theme } = React.useContext(UserContext);
+	const { user, theme } = React.useContext(UserContext);
 	const location = useLocation();
 	return (
 		<ThemeProvider theme={theme.theme} >
