@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers;
-[Route("/gebruikers")]
+[Route("api/gebruikers")]
 [ApiController]
 public class GebruikerenController : ControllerBase, IController<Gebruiker>
 {
