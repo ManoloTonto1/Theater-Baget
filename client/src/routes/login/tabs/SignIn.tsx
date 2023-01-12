@@ -48,25 +48,28 @@ function SignIn() {
 		e.preventDefault();
 
 		(async () => {
-
-			const params = buildRequestParams({
-				email: email,
-				password: password,
-				persistentLogin: rememberMe,
-			});
-
-			const request = await fetch(`api/signin?${params}`, {
-			  method: 'POST'
+			
+			const request = await fetch('api/signin', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					email: email,
+					password: password,
+					persistentLogin: rememberMe,
+			  })
 			});
 
 			const response = await request.json();
 		  
-			if(response != 'Invalid Credentials') {
+			if(request.ok) {
+
+				localStorage.setItem('token', response);
 				
 				user.setUser({
 					email: email,
-					persistentLogin: rememberMe,
-					token: response
+					persistentLogin: rememberMe
 				});
 				
 				navigate('/');

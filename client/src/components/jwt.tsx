@@ -5,24 +5,21 @@ import {
 
 export const validate = async (user:any) => {
 	const params = buildRequestParams({
-		token: user.userData.token,
+		token: localStorage.getItem('token'),
 	});
 
-	const request = await fetch(`api/validate?${params}`, {
-		method: 'POST'
-	});
-
-	const response = await request.json();
-	console.log(response);
+	const request = await fetch(`api/validate?${params}`);
       
-	if(response == true) {
-		return true;
-	} else {
+	if (!request.ok) { 
+        // clear user
+
+        localStorage.removeItem('token');
+
 		user.setUser(
 			{
 			}
-		);
-            
-		return false;
-	}
+		); 
+		return false; 
+	} 
+	return true;
 };

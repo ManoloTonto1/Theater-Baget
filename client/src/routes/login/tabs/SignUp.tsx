@@ -45,17 +45,7 @@ function SignUp () {
 
 		if (password === confirmPassword) {
 			
-			// user.setUser(
-			// 	encode(JSON.stringify({
-			// 		email: email,
-			// 		persistentLogin: rememberMe,
-			// 		pwd: password,
-			// 		bdate: geboorteDatum,
-			// 		fname: voornaam,
-			// 		tussenv: tussenvoegsel,
-			// 		lname: achternaam
-			// 	}))
-			// );
+			// TODO sign up logica
 
 			return;
 		}
@@ -101,8 +91,8 @@ function SignUp () {
 				<FormGroup>
 					<Box sx={{
 						'& .MuiTextField-root': { 
-							p: '5px', 
-							width: '29%' 
+							m: '5px',
+							width: '27%' 
 						},
 					}}>
 
