@@ -13,7 +13,7 @@ module.exports = {
 	],
 	'parser': '@typescript-eslint/parser',
 	'parserOptions': {
-		'project': ['./client/tsconfig.json','./client/tsconfig.node.json','./client/cypress/tsconfig.json'],
+		'project': ['./client/tsconfig.json', './client/tsconfig.node.json', './client/cypress/tsconfig.json'],
 		'ecmaFeatures': {
 			'jsx': true
 		},
@@ -27,7 +27,7 @@ module.exports = {
 		'@typescript-eslint'
 	],
 	'rules': {
-		'no-mixed-spaces-and-tabs': 0,
+		'no-mixed-spaces-and-tabs': 1,
 		'indent': [
 			'error',
 			'tab'
@@ -75,6 +75,5 @@ module.exports = {
 		}],
 		"@typescript-eslint/consistent-type-imports": "warn",
 		"@typescript-eslint/consistent-type-exports": "warn",
-		'@typescript-eslint/explicit-function-return-type': 'warn',
 	}
 };
