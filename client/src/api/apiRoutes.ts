@@ -83,7 +83,7 @@ interface ApiModule {
      * @param {Data<unknown>} data
      * @returns {Promise<AxiosResponse<any, any>>}
      */
-    Create(data: Data<unknown> | any): Promise<AxiosResponse<any, any>>
+    Create(data: Data<unknown> | any,requestType?: string): Promise<AxiosResponse<any, any>>
 }
 
 interface DonateModule {
@@ -128,10 +128,19 @@ const API = <T extends string>(route: T): T extends 'donate' ? DonateModule : Ap
 				data: data
 			});
 		},
-		Create: (data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
+		Create: (data: Data<unknown> | unknown, requestType?: string): Promise<AxiosResponse<any, any>> => {
+			let headers = BearerToken;
+
+			if (requestType === 'excel') {
+				headers = {
+					'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+					Authorization: BearerToken.Authorization
+				};
+			}
+			
 			return axios({
 				method: 'POST',
-				headers: BearerToken,
+				headers: headers,
 				url: ApiModule.route,
 				data: data
 			});

@@ -5,7 +5,9 @@ import {
 	Box,
 	Button,
 	Card,
+	Chip,
 	Container,
+	Fade,
 	Grid, 
 	TextField,
 	Typography
@@ -17,9 +19,26 @@ import API from '../../api/apiRoutes';
 
 function AdminPage() : JSX.Element{
 	const { theme } = React.useContext(UserContext);
-	const uploadFile = React.useCallback(() => {
-		API('programmering/excel').Create('monki' as any);
+	const [file, setFile] = React.useState<null | ArrayBuffer>(null);
+	const [fileURL, setFileURL] = React.useState('');
+
+	const uploadFile = React.useCallback((e: React.FormEvent<HTMLInputElement>) => {
+		const target = e.target as HTMLInputElement;
+		if (!target.files) {
+			return;
+		}
+		const file = target.files[0];
+		const reader = new FileReader();
+		reader.readAsArrayBuffer(file);
+		reader.onload = () => {
+			setFileURL(file.name);
+			setFile(reader.result as ArrayBuffer);
+		};
 	}, []);
+	const submitFile = React.useCallback(() => {
+		API('programmeringen/excel').Create(file,'excel');
+	}, [file]);
+
 	return(
 		<ThemeProvider theme={theme.theme}>
 			<Box style={{
@@ -39,18 +58,39 @@ function AdminPage() : JSX.Element{
 						}}>
 						<Grid item>
 							<Card sx={{
-								width: 250,
-								height: 80,
+								width: 300,
 								p: 3
 							}}>
 								<Typography sx={{
 									mb: 2
-								}}>Programma uploaden (Excell)</Typography>
+								}}>Programma uploaden (Excel)</Typography>
 								<Button variant="contained" component="label">
                                 Upload
-									<input hidden accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-										multiple type="file" onClick={uploadFile} />
+									<input hidden
+										accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+										multiple type="file"
+										onChange={uploadFile} />
 								</Button>
+								{fileURL ?
+									<Fade in>
+										<Box>
+											<Box display={'flex'}>
+												<Typography>File Chosen:</Typography>
+												<Chip sx={{
+													ml:2
+												}} size='small'
+												color='info'
+												label={fileURL} />
+											</Box>
+											<Button variant='contained' onClick={submitFile}>
+												Submit
+											</Button>
+
+										</Box>
+
+									</Fade>
+									: null}
+
 							</Card>
 						</Grid>
 						<Grid item>

@@ -3,13 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;           
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Excel = Microsoft.Office.Interop.Excel;
+using System.Text;
 
 namespace server.Controllers;
-[Route("api/programmeeringen")]
+[Route("api/programmeringen")]
 [ApiController]
 public class ProgrammeringenController : ControllerBase, IController<Programmering>
 {
@@ -66,52 +65,25 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
 
         return CreatedAtAction("Get", new { data.id }, data);
     }
-    [HttpPost("/excel")]
-    public async Task<ActionResult> PostExcel(Programmering data)
+
+    [HttpPost("excel")]
+    public async Task<ActionResult> PostExcel()
     {
+
+        var fh = new FileHandler();
+        fh.transformExcelToData(Request.Body);
+
+        return Ok();
         //Create COM Objects. Create a COM object for everything that is referenced
-            Excel.Application xlApp = new Excel.Application();
-            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"C:\Users\wilms\Documents\Informatica\programmering.xlsx");
-            Excel._Worksheet xlWorksheet = (Excel._Worksheet)xlWorkbook.Sheets[1];
-            Excel.Range xlRange = xlWorksheet.UsedRange;
+        // make a new file then 
+        // write bytes to the file
+        // var file
 
-            int rowCount = xlRange.Rows.Count;
-            int colCount = xlRange.Columns.Count;
+        // context.Programmering.Add(data);
+        // await context.SaveChangesAsync();
 
-            //iterate over the rows and columns and print to the console as it appears in the file
-            for (int i = 1; i <= rowCount; i++)
-            {
-                for (int j = 1; j <= colCount; j++)
-                {
-                    //new line
-                    if (j == 1)
-                        Console.Write("\r\n");
+        // return CreatedAtAction("Get", new { data.id }, data);
 
-                    //write the value to the console
-                    if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j] != null)
-                        Console.Write(xlRange.Cells[i, j].ToString() + "\t");
-                }
-            }
-
-            //cleanup
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            //release com objects to fully kill excel process from running in the background
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(xlWorksheet);
-
-            //close and release
-            xlWorkbook.Close();
-            Marshal.ReleaseComObject(xlWorkbook);
-
-            //quit and release
-            xlApp.Quit();
-            Marshal.ReleaseComObject(xlApp);
-        context.Programmering.Add(data);
-        await context.SaveChangesAsync();
-
-        return CreatedAtAction("Get", new { data.id }, data);
     }
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(int id, Programmering data)
