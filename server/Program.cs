@@ -1,5 +1,7 @@
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data.SQLite;
+using Microsoft.AspNetCore.Builder;
 using server.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +29,5 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
-
 
 app.Run();

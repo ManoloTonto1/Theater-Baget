@@ -36,7 +36,7 @@ const Admin = React.lazy(() => import('./routes/admin/AdminPage'));
 const ProgrammaOverzicht = React.lazy(() => import('./routes/programma/ProgrammaOverzicht'));
 
 function App() : JSX.Element {
-	const { theme } = React.useContext(UserContext);
+	const { user, theme } = React.useContext(UserContext);
 	const location = useLocation();
 	return (
 		<ThemeProvider theme={theme.theme} >
