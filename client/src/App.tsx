@@ -14,7 +14,6 @@ import ErrorPage from './components/ErrorPage';
 import Footer from './components/global/Footer';
 import LoadingPage from './components/global/LoadingPage';
 import Topbar from './components/global/Topbar';
-import BegunstigersPortaal from './routes/programma/BegunstigersPortaal';
 
 const Login = React.lazy(() => import('./routes/login/Login'));
 const Homepage = React.lazy(() => import('./routes/home/HomePage'));
