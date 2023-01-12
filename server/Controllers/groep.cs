@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers;
-[Route("/groepen")]
+[Route("api/groepen")]
 [ApiController]
 public class GroepenController : ControllerBase, IController<Groep>
 {

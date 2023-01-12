@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers;
-[Route("/bestellingen")]
+[Route("api/bestellingen")]
 [ApiController]
 public class BestellingenController : ControllerBase, IController<Bestelling>
 {

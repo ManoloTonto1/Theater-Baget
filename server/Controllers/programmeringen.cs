@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace server.Controllers;
-[Route("/programmeeringen")]
+[Route("api/programmeeringen")]
 [ApiController]
 public class ProgrammeringenController : ControllerBase, IController<Programmering>
 {
