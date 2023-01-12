@@ -1,25 +1,25 @@
-import UserContext from '../context/UserContext';
-import { 
-	buildRequestParams 
-} from './RequestBuilder';
+import API from '../api/apiRoutes';
 
 export const validate = async (user:any) => {
-	const params = buildRequestParams({
-		token: localStorage.getItem('token'),
-	});
 
-	const request = await fetch(`api/validate?${params}`);
-      
-	if (!request.ok) { 
-        // clear user
-
-        localStorage.removeItem('token');
-
+	API('validate').Create(
+		{
+			token: localStorage.getItem('token'),
+		}
+	).then((res) => {
+		if(res.status == 200) {
+			return true;
+		}
+	}).catch((err) => {
+		console.log(err);
+		// clear user
+    
+		localStorage.removeItem('token');
+    
 		user.setUser(
 			{
 			}
 		); 
 		return false; 
-	} 
-	return true;
+	});
 };

@@ -30,33 +30,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-Database db = new Database();
-Jwt jwt = new Jwt();
-
-app.MapPost("signin", ([FromBody] validate_data data) => {
-    
-    var request = db.authenticate(data.email, data.password);
- 
-    if(request) {
-        var token = jwt.CreateToken(data.email);
-        return Results.Json(token);
-    }
-    return Results.BadRequest("Invalid Credentials");
-});
-
-app.MapGet("validate", (string token) => {
-    bool result = jwt.ValidateToken(token);
-
-    if(result) {
-        return Results.Json(result);
-    }
-    return Results.BadRequest("Invalid Token");
-});
-
 app.Run();
-
-public class validate_data {
-    public string email {get; set;}
-    public string password {get; set;}
-    public bool persistentLogin {get; set;}
-}

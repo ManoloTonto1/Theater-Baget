@@ -11,6 +11,8 @@ import {
 	Link,
 	Slide,
 	TextField
+	, 
+	Typography 
 } from '@mui/material';
 
 import UserContext from '../../../context/UserContext';
@@ -22,9 +24,8 @@ import {
 import { 
 	useNavigate 
 } from 'react-router-dom';
-import { 
-	Typography 
-} from '@mui/material';
+
+import API from '../../../api/apiRoutes';
 
 function SignIn() {
 	const { user } = React.useContext(UserContext);
@@ -46,26 +47,17 @@ function SignIn() {
 
 	const signIn = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
-		(async () => {
-			
-			const request = await fetch('api/signin', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email: email,
-					password: password,
-					persistentLogin: rememberMe,
-			  })
-			});
-
-			const response = await request.json();
-		  
-			if(request.ok) {
-
-				localStorage.setItem('token', response);
+		API('signin').Create(
+			{
+				email: email,
+				password: password,
+				persistentLogin: rememberMe,
+			}
+		).then((res) => {
+			if(res.status == 200) {
+				console.log(res.data);
+				localStorage.setItem('token', res.data);
+				console.log(localStorage.getItem('token'));
 				
 				user.setUser({
 					email: email,
@@ -73,10 +65,10 @@ function SignIn() {
 				});
 				
 				navigate('/');
-			} else {
-				setErrorText(response);
 			}
-		})();
+		}).catch(() => {
+			setErrorText('Invalid Credentials');
+		});
 
 	};
 
