@@ -2,7 +2,7 @@ import React from 'react';
 
 function ProfielSettings() {
 	return (
-		<div>ProfielSettings</div>
+		<div>settings</div>
 	);
 }
 

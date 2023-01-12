@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Monki from '../assets/gorilla.jfif';
 import CardMedia from '@mui/material/CardMedia';
 
-export function getUserTickets(token: string/* jwt token */) {
+export function getUserTickets() {
     var tickets = [];
 
     // check if user is allowed to see tickets
