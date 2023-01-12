@@ -14,6 +14,7 @@ import ErrorPage from './components/ErrorPage';
 import Footer from './components/global/Footer';
 import LoadingPage from './components/global/LoadingPage';
 import Topbar from './components/global/Topbar';
+import BegunstigersPortaal from './routes/programma/BegunstigersPortaal';
 
 const Login = React.lazy(() => import('./routes/login/Login'));
 const Homepage = React.lazy(() => import('./routes/home/HomePage'));
@@ -34,6 +35,7 @@ const BandsById = React.lazy(() => import('./routes/bands/BandsById'));
 const Donate = React.lazy(() => import('./routes/donate/Donate'));
 const Admin = React.lazy(() => import('./routes/admin/AdminPage'));
 const ProgrammaOverzicht = React.lazy(() => import('./routes/programma/ProgrammaOverzicht'));
+const BegunstigersPortaal = React.lazy(() => import('./routes/programma/BegunstigersPortaal'));
 
 function App() : JSX.Element {
 	const { theme } = React.useContext(UserContext);
@@ -105,6 +107,9 @@ function App() : JSX.Element {
 					</Suspense>} />
 					<Route path={'/programma'} element={<Suspense fallback={<LoadingPage />}>
 						<ProgrammaOverzicht />
+					</Suspense>} />
+					<Route path={'/begunstigersportaal'} element={<Suspense fallback={<LoadingPage />}>
+						<BegunstigersPortaal />
 					</Suspense>} />
 				</Routes >
 				<Footer/>
