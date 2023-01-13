@@ -11,7 +11,7 @@ public class theaterContext : DbContext
     public DbSet<Bestelling> Bestelling { get; set; } = default!;
     public DbSet<Betaling> Betaling { get; set; } = default!;
     public DbSet<Betrokkene> Betrokkene { get; set; } = default!;
-    public DbSet<Donatie> Donaties { get; set; } = default!;
+    public DbSet<Donatie> Donatie { get; set; } = default!;
     public DbSet<Groep> Groep { get; set; } = default!;
     public DbSet<Interesse> Interesse { get; set; } = default!;
     public DbSet<EncryptionKey> Key { get; set; } = default!;

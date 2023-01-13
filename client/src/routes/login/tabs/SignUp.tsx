@@ -19,7 +19,10 @@ import React, {
 	useCallback 
 } from 'react';
 
+import UserContext from '../../../context/UserContext';
+
 function SignUp () {
+	const { user } = React.useContext(UserContext);
 
 	// general values
 	const [password, setPassword] = React.useState('');
@@ -41,7 +44,9 @@ function SignUp () {
 		e.preventDefault();
 
 		if (password === confirmPassword) {
-			// login geslaagd
+			
+			// TODO sign up logica
+
 			return;
 		}
 		setPasswordsMatch(false);
@@ -86,8 +91,8 @@ function SignUp () {
 				<FormGroup>
 					<Box sx={{
 						'& .MuiTextField-root': { 
-							m: 1, 
-							width: '29%' 
+							m: '5px',
+							width: '27%' 
 						},
 					}}>
 

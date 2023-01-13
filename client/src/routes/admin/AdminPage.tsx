@@ -13,6 +13,7 @@ import {
 import React from 'react';
 import UserContext from '../../context/UserContext';
 import img from '../../assets/poster.png';
+import API from '../../api/apiRoutes';
 
 function AdminPage() : JSX.Element{
 	const { theme } = React.useContext(UserContext);
@@ -45,7 +46,8 @@ function AdminPage() : JSX.Element{
 								<Button variant="contained" component="label">
                                 Upload
 									<input hidden accept="image/*"
-										multiple type="file" />
+										multiple type="file"
+									/>
 								</Button>
 							</Card>
 						</Grid>

@@ -11,14 +11,31 @@ import {
 	Link,
 	Slide,
 	TextField
+	, 
+	Typography 
 } from '@mui/material';
 
-function SignIn() {
+import UserContext from '../../../context/UserContext';
 
+import {
+	buildRequestParams 
+} from '../../../components/RequestBuilder';
+
+import { 
+	useNavigate 
+} from 'react-router-dom';
+
+import API from '../../../api/apiRoutes';
+
+function SignIn() {
+	const { user } = React.useContext(UserContext);
+	const navigate = useNavigate();
+	
 	// general values
 	const [password, setPassword] = React.useState('');
 	const [email, setEmail] = React.useState('');
 	const [rememberMe, setRememberMe] = React.useState(false);
+	const [errorText, setErrorText] = React.useState('');
 
 	const handlePassword = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setPassword(e.target.value);
@@ -30,6 +47,29 @@ function SignIn() {
 
 	const signIn = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		API('signin').Create(
+			{
+				email: email,
+				password: password,
+				persistentLogin: rememberMe,
+			}
+		).then((res) => {
+			if(res.status == 200) {
+				console.log(res.data);
+				localStorage.setItem('token', res.data);
+				console.log(localStorage.getItem('token'));
+				
+				user.setUser({
+					email: email,
+					persistentLogin: rememberMe
+				});
+				
+				navigate('/');
+			}
+		}).catch(() => {
+			setErrorText('Invalid Credentials');
+		});
+
 	};
 
 	return (
@@ -43,6 +83,7 @@ function SignIn() {
 				sx={{
 					p: 2
 				}}>
+				<Typography color='red' align='center'>{errorText}</Typography>
 				<FormGroup sx={{
 					'& .MuiTextField-root': {
 						m: 1
@@ -55,6 +96,7 @@ function SignIn() {
 					variant='standard' type='email'
 					required onChange={handleEmail}
 					value={email}
+					error={errorText?true:false}
 					/>
 
 					<TextField sx={{
@@ -65,6 +107,7 @@ function SignIn() {
 					type='password'
 					onChange={handlePassword}
 					value={password}
+					error={errorText?true:false}
 					required
 					/>
 
