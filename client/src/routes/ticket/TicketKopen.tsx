@@ -104,7 +104,7 @@ function TicketKopen() {
 								</Typography>
 								<Ticket {...data} />
 								<SeatChoice
-									columns={15}
+									columns={10}
 									rows={10}
 									selection={selection}
 									setSelection={setSelection}
