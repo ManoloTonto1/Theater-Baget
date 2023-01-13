@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import type {
 	Dayjs 
@@ -23,28 +24,55 @@ import {
 import {
 	Box, Grid, Typography 
 } from '@mui/material';
+import type {
+	$TSfixMeAny 
+} from '../../components/global/globalTypes';
 
 function BegunstigersPortaal() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs(''));
 
 	return (
-		<Container>
-			<Grid sx={{
-				height: '100vh',
-				width: '100%',
-				justifyContent: 'Center',
-				allignItems: 'Center'
-			}}>
-				<Typography>
-				Begunstigersportaal!
-				</Typography>
+		<Container style={{
+			height: '120vh',
+			justifyContent: 'center',
+			alignItems: 'center',
+		}}>
+			<Grid container
+				direction="column"
+				alignItems="center"
+				justifyContent="center"
+				sx={{
+					minWidth: '100%'
+				}}>
+				<Box sx={{
+					my: 3
+				}}>
+					<Typography variant= "h2" style={{
+						background: '-webkit-linear-gradient(180deg, rgba(213,0,0,1) 0%, rgba(255,235,59,1) 90%)',
+						webkitBackgroundClip: 'text',
+						WebkitTextFillColor: 'transparent',
+					} as $TSfixMeAny}>
+				Begunstigersportaal
+					</Typography>
+				</Box>
+				<Card elevation={4}
+					sx={{
+						width: '93%',
+						my:3
+					}}>
+					<Typography variant= "h5">
+						Welkom in  het begunstigersportaal! Namens het hele team van theater Laak bedanken wij u voor de steun die u geeft aan ons. Deze omgeving is speciaal voor u. Hier kunt u eerder de programmering inzien en kunt u vervroegd kaartjes kopen!
+					</Typography>
+				</Card>
 			</Grid>
-			<Container style={{
-				height: '80vh',
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-			}}>
+			<Grid container
+				direction="column"
+				alignItems="center"
+				justifyContent="center"
+				sx={{
+					minHeight: '60%',
+					height: '68vh'
+				}}>
 				<Card elevation={4} sx={{
 					height: 485,
 					p: 1,
@@ -69,7 +97,7 @@ function BegunstigersPortaal() {
 				}}>
 					{getTickets('safgsafgfdsgsdfgsdfegds')}
 				</Card>
-			</Container>
+			</Grid>
 		</Container>
 	);
 }
