@@ -1,148 +1,98 @@
 import {
-	Box, Card, Container, FormGroup, TextField 
+	Card, CardContent, Container, Step, StepLabel, Stepper
 } from '@mui/material';
 
 import React, {
-	useCallback,
-	useState 
 } from 'react';
-import { 
-	DatePicker, 
-	LocalizationProvider 
-} from '@mui/x-date-pickers';
 
-import type { 
-	Dayjs 
-} from 'dayjs';
-import dayjs from 'dayjs';
-
-import { 
-	AdapterDayjs 
-} from '@mui/x-date-pickers/AdapterDayjs';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import {
+	Ticket 
+} from '../../components/Ticket';
+import {
+	useParams 
+} from 'react-router-dom';
+import LoadingPage from '../../components/global/LoadingPage';
+import API from '../../api/apiRoutes';
+import type {
+	Programma 
+} from '../../components/global/globalTypes';
+import SeatChoice from './SeatChoice';
 
 function TicketKopen() {
+	const { id } = useParams();
+	const [data, setData] = React.useState<null | Programma>(null);
+	const [currentStep, setCurrentStep] = React.useState(0);
 
-	const buyTicket = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault(); 
-	}, []);
-    
-	const [cardNumber, setCardNumber] = useState(0);
-	const [cardHolder, setCardHolder] = useState('');
-	const [expDate, setExpDate] = useState<Dayjs | null>(dayjs());
-	const [stoel, setStoel] = useState(''); 
-
-	const handleCardNumber = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setCardNumber(parseInt(e.target.value));
-	}, []);
-
-	const handleCardHolder = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setCardHolder(e.target.value);
-	}, []);
-
-	const handleStoel = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setStoel(e.target.value);
-	}, []);
-
+	React.useEffect(() => {
+		API('programmeringen')
+			.Get(id)
+			.then((res) => {
+				setData(res.data);
+			});
+	}, [id]);
 	return (
-		<Container style={{
-			height: '80vh',
-			display: 'flex',
-			justifyContent: 'center',
-			alignItems: 'center',
-		}}>
+		<Container
+			sx={{
+				height: '80vh',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
+				my:4
+			}}
+		>
+			{data ? (
+				<Card
+					elevation={4}
+					sx={{
+						width: '100%',
+						maxHeight: '80vh',
+						overflow: 'auto',
 
-			<Box
-				onSubmit={buyTicket}
-				component={'form'}>
-				<Card elevation={4} sx={{ 
-					width: 750,
-					p: 4,
-				}} >
-
-					<FormGroup sx={{
-						'& .MuiTextField-root': {
-							m: 1,
-						}, textAlign: 'center',
-					}}>
-						<Box sx={{
-							'& .MuiTextField-root': { 
-								m: 1, 
-								width: '30%'
-							},
-						}}>
-							<TextField sx={{
-								mb: 2
-							}}
-							label='Card holder'
-							variant='standard' type='text'
-							required
-							value={cardHolder}
-							onChange={handleCardHolder}
-							/>
-							<TextField sx={{
-								mb: 2
-							}}
-							label='Card number'
-							variant='standard' type='number'
-							onChange={handleCardNumber}
-							required
-							/>
-							<LocalizationProvider dateAdapter={AdapterDayjs}>
-								<DatePicker
-									label="Expiration Date"
-									value={expDate}
-									onChange={(newValue) => {
-										setExpDate(newValue);
-									}}
-									renderInput={(params) => <TextField sx={{
-										m:1
-									}} variant='standard'
-									{...params} />}
-								/>
-							</LocalizationProvider>
-						</Box>
-					</FormGroup>
-					<FormGroup sx={{
-						'& .MuiTextField-root': {
-							m: 1
-						}, textAlign: 'center', p:1.5
-					}}>
-					</FormGroup>
-					<FormGroup 
+					}}
+				>
+					<Card elevation={4}
 						sx={{
-							p:2,    
+							zIndex:10000,
+							p:1,
+							position: 'sticky',
+							top: 0,
+							bgcolor: 'background.default',
 						}}>
+						<Stepper activeStep={currentStep} alternativeLabel>
+							<Step>
+								<StepLabel>Stoelen Kiezen</StepLabel>
+							</Step>
+							<Step>
+								<StepLabel>Betaal gegevens</StepLabel>
+							</Step>
+							<Step>
+								<StepLabel>Bestelling bevestigen</StepLabel>
+							</Step>
+						</Stepper>
+					</Card>
+					<CardContent>
+						{currentStep === 0 && (
+							<>
+								<Typography
+									variant="h4"
+									sx={{
+										pb: 2,
+									}}
+								>
+							Bestelling
+								</Typography>
+								<Ticket {...data} />
+								<SeatChoice columns={15} rows={10} />
+							</>
+						)}
 
-						<Typography variant='h6'>
-                            Stoelen selecteren
-                            
-						</Typography>
-
-						{/* dit deel moet nog */}
-							
-					</FormGroup>
-					<Box sx={{
-						display: 'flex',
-						m:2
-					}}>
-						<Button 
-							type='submit' 
-							variant='contained' 
-							sx={{
-								mr:2
-							}}>
-                            Betalen
-						</Button>
-						<Button variant='text' color='secondary'>
-                            Cancel
-						</Button>
-					</Box>
+					</CardContent>
 				</Card>
-			</Box>
+			) : (
+				<LoadingPage />
+			)}
 		</Container>
-
 	);
 }
 
