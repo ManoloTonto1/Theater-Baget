@@ -112,7 +112,7 @@ function ProgrammaOverzicht() {
 					}}>
 						<CardContent>
 							<Typography variant='h4' mb={2}>
-                                Tickets:
+                                Shows:
 							</Typography>
 							{data.map((card) => {
 								return <Ticket key={card.name} {...card} />;
