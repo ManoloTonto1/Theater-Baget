@@ -52,12 +52,13 @@ public class BestellingenController : ControllerBase, IController<Bestelling>
         return await context.Bestelling.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Bestelling data)
+    public async Task<ActionResult> Post(Data<Bestelling> data)
     {
-        context.Bestelling.Add(data);
-        await context.SaveChangesAsync();
+        // context.Bestelling.Add(data);
+        // await context.SaveChangesAsync();
 
-        return CreatedAtAction("Get", new { id = data.factuurNr }, data);
+        // return CreatedAtAction("Get", new { id = data.factuurNr }, data);
+        return Ok();
     }
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(int id, Bestelling data)

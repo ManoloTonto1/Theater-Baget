@@ -52,12 +52,13 @@ public class GebruikerenController : ControllerBase, IController<Gebruiker>
         return await context.Gebruiker.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Gebruiker data)
+    public async Task<ActionResult> Post(Data<Gebruiker> data)
     {
-        context.Gebruiker.Add(data);
-        await context.SaveChangesAsync();
+        // context.Gebruiker.Add(data);
+        // await context.SaveChangesAsync();
 
-        return CreatedAtAction("Get", new { data.id }, data);
+        // return CreatedAtAction("Get", new { data.id }, data);
+        return Ok();
     }
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(int id, Gebruiker data)

@@ -2,17 +2,19 @@ import React from 'react';
 import {
 	Box, Grow, Card, CardMedia, CardContent, Typography, Button
 } from '@mui/material';
-import Monki from '../../assets/gorilla.jfif';
 import {
 	useNavigate 
 } from 'react-router-dom';
+import type {
+	EventProps 
+} from './Event';
 
-function LeftCard() : JSX.Element {
+function LeftCard(props:EventProps) : JSX.Element {
 	scrollTo(0, 0);
 	const navigate = useNavigate();
 	const goToPayPage = React.useCallback(() => {
-		navigate('/ticket');  
-	},[navigate]);
+		navigate(`/tickets/${props.data.id}`);  
+	},[navigate,props]);
 	return (
 		<Box sx={{
 			m: 2,
@@ -26,7 +28,7 @@ function LeftCard() : JSX.Element {
 						m: 2
 					}}>
 						<CardMedia component='img'
-							src={Monki}
+							src={props.data.afbeelding}
 							sx={{
 								width: '100%',
 								borderRadius: 1,
@@ -37,15 +39,10 @@ function LeftCard() : JSX.Element {
 						<Typography variant={'body2'} sx={{
 							color: 'text.secondary'
 						}}>
-                            April 69, 2022
+							{props.data.datum}
 						</Typography>
 						<Typography variant='h3'>
-                            Monki in paris
-						</Typography>
-						<Typography variant={'body1'} sx={{
-							color: 'text.secondary'
-						}}>
-                            Nice and cozy before your mom comes to me
+							{props.data.titel}
 						</Typography>
 					</CardContent>
 					<Box sx={{

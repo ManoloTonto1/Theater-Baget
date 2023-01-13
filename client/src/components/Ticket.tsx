@@ -6,14 +6,16 @@ import CardMedia from '@mui/material/CardMedia';
 import {
 	CardActionArea, Grid 
 } from '@mui/material';
-
-export type TicketsProps = {
+export type TicketData = {
 	date: string,
 	time: string,
 	name: string,
 	location: string,
-	image: string
+	image: string,
 }
+export type TicketsProps = {
+	onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, data:TicketData)=>void
+} & TicketData
 export function Ticket(props:TicketsProps) {
 
 	const newDate = props.date.split(' ');
@@ -26,8 +28,12 @@ export function Ticket(props:TicketsProps) {
 			backgroundRepeat: 'no-repeat',
 			backgroundSize: 30000,
 			marginBottom: 2,
-		}}>
-			<CardActionArea>
+		}}
+		onClick={(e)=>props.onClick(e,{
+			...props
+		})}
+		>
+			<CardActionArea >
 				<Grid container>
 					<Grid item>
 						<CardMedia

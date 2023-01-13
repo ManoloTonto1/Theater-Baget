@@ -52,12 +52,13 @@ public class DonatiesController : ControllerBase, IController<Donatie>
         return await context.Donatie.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Donatie data)
+    public async Task<ActionResult> Post(Data<Donatie> data)
     {
-        context.Donatie.Add(data);
-        await context.SaveChangesAsync();
+        // context.Donatie.Add(data);
+        // await context.SaveChangesAsync();
 
-        return CreatedAtAction("Get", new { id = data.factuurNr }, data);
+        // return CreatedAtAction("Get", new { id = data.factuurNr }, data);
+        return Ok();
     }
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(int id, Donatie data)

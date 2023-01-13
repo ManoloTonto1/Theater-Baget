@@ -11,9 +11,10 @@ import {
 	LocalizationProvider 
 } from '@mui/x-date-pickers';
 
-import dayjs, { 
+import type { 
 	Dayjs 
 } from 'dayjs';
+import dayjs from 'dayjs';
 
 import { 
 	AdapterDayjs 
@@ -45,19 +46,16 @@ function TicketKopen() {
 	}, []);
 
 	return (
-		<Box style={{
-			width: '100%',
-			height: '100vh',
-		}}
-		onSubmit={buyTicket}
-		component={'form'}>
-			<Container style={{
-				height: '100vh',
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-			}}>
+		<Container style={{
+			height: '80vh',
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+		}}>
 
+			<Box
+				onSubmit={buyTicket}
+				component={'form'}>
 				<Card elevation={4} sx={{ 
 					width: 750,
 					p: 4,
@@ -142,9 +140,9 @@ function TicketKopen() {
 						</Button>
 					</Box>
 				</Card>
-			</Container>
+			</Box>
+		</Container>
 
-		</Box>
 	);
 }
 

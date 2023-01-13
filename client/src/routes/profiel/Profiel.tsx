@@ -1,5 +1,7 @@
-import { Box, Card, Container, Grid, Tab, Tabs, Typography } from '@mui/material';
-import { max } from 'cypress/types/lodash';
+import {
+	Box, Card, Container, Grid, Tab, Tabs, Typography 
+} from '@mui/material';
+
 import React from 'react';
 import ProfielSettings from './settings/ProfielSettings';
 import ProfielTickets from './tickets/ProfielTickets';
@@ -17,19 +19,21 @@ function TabPanel(props: TabPanelProps) {
 	const { children, value, index, ...other } = props;
   
 	return (
-	  <div
-		role="tabpanel"
-		hidden={value !== index}
-		id={`vertical-tabpanel-${index}`}
-		aria-labelledby={`vertical-tab-${index}`}
-		{...other}
+	 <Box
+			role="tabpanel"
+			hidden={value !== index}
+			id={`vertical-tabpanel-${index}`}
+			aria-labelledby={`vertical-tab-${index}`}
+			{...other}
 	  >
-		{value === index && (
-		  <Box sx={{ p: 3 }}>
-			<Typography>{children}</Typography>
+			{value === index && (
+		  <Box sx={{
+					p: 3 
+				}}>
+					<Typography>{children}</Typography>
 		  </Box>
-		)}
-	  </div>
+			)}
+	  </Box>
 	);
 }
 
@@ -50,11 +54,11 @@ function Profiel() {
 
 	return (
 		<Container style={{
-            height: '80vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
+			height: '80vh',
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+		}}>
 			<Card elevation={4} sx={{ 
 				height: 485,
 				width: 500,
@@ -111,7 +115,7 @@ function Profiel() {
 
 			<Card elevation={4} sx={{ 
 				height: 485,
-				width: "fit-content",
+				width: 'fit-content',
 				minWidth: 500,
 				p: 1,
 			}}>
@@ -127,7 +131,6 @@ function Profiel() {
 			</Card>
 
 		</Container>
-
 
 	);
 }

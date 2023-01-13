@@ -1,17 +1,16 @@
-import { Box } from '@mui/material';
 import React from 'react';
-import { getUserTickets } from '../../../tools/TicketTools';
+import {
+	Box 
+} from '@mui/material';
 
 function ProfielTickets() {
 	return (
 		<Box sx={{
-            alignContent: 'center',
+			alignContent: 'center',
 			width: 700,
 			overflowY: 'scroll',
-        }}>
-			{getUserTickets()}
-			{getUserTickets()}
-			{getUserTickets()}
+		}}>
+
 		</Box>
 	);
 }

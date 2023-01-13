@@ -52,9 +52,9 @@ public class BetrokkenenController : ControllerBase, IController<Betrokkene>
         return await context.Betrokkene.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Betrokkene data)
+    public async Task<ActionResult> Post(Data<Betrokkene> data)
     {
-        context.Betrokkene.Add(data);
+        // context.Betrokkene.Add(data);
         await context.SaveChangesAsync();
 
         return CreatedAtAction("Get", new { data.id }, data);
