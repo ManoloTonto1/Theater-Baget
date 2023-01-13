@@ -28,17 +28,17 @@ function BegunstigersPortaal() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs(''));
 
 	return (
-		<Container style={{
-			justifyContent: 'center'
-		}}>
-			<Box sx={{
+		<Container>
+			<Grid sx={{
 				height: '100vh',
 				width: '100%',
+				justifyContent: 'Center',
+				allignItems: 'Center'
 			}}>
 				<Typography>
 				Begunstigersportaal!
 				</Typography>
-			</Box>
+			</Grid>
 			<Container style={{
 				height: '80vh',
 				display: 'flex',
