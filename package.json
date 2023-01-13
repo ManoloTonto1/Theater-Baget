@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "theater-baget",
   "version": "1.0.0",
   "description": "Theater Baget is my team's project for the 4th semester at De Haagse Hogeschool",

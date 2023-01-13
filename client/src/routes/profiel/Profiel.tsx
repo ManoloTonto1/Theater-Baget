@@ -1,9 +1,11 @@
-import { Box, Card, Container, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Card, Container, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { max } from 'cypress/types/lodash';
 import React from 'react';
 import ProfielSettings from './settings/ProfielSettings';
 import ProfielTickets from './tickets/ProfielTickets';
 import Logout from './logout/Logout';
+import Monki from '../../assets/gorilla.jfif';
+import Avatar from '@mui/material/Avatar';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -59,6 +61,38 @@ function Profiel() {
 				p: 1,
 				marginRight: 4,
 			}}>
+				<Card elevation={4} sx={{
+					marginBottom: 2,
+					display: 'flex',
+					justifyContent: 'center'
+				}}>
+					<Grid container>
+						<Avatar
+							alt="Remy Sharp"
+							src={Monki}
+							sx={{
+								width: 100,
+								height: 100,
+								m: 2
+							}} />
+						<Box sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							flexDirection:'column'
+						}}>
+							<Typography>
+								Naam: akasha
+							</Typography>
+							<Typography>
+								Email: pidip@furrie.ninja
+							</Typography>
+							<Typography>
+								Leeftijd: dood
+							</Typography>
+						</Box>
+					</Grid>
+					
+				</Card>
 				<Tabs
 					orientation="vertical"
 					variant="fullWidth"
