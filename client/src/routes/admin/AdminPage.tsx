@@ -67,7 +67,7 @@ function AdminPage() : JSX.Element{
 								<Button variant="contained" component="label">
                                 Upload
 									<input hidden
-										accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+										accept=".csv"
 										multiple type="file"
 										onChange={uploadFile} />
 								</Button>

@@ -2,8 +2,10 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.IO;
-public class FileHandler {
+using CsvHelper;
+using System.Globalization;
 
+public class FileHandler {
     byte[]? readStream(Stream incomingData){
         byte[] bytes = new byte[incomingData.Length + 10];
         for (int i = 0; i < incomingData.Length; i++)
@@ -32,44 +34,13 @@ public class FileHandler {
             return;
         }
         createFile(bytes);
-        Excel.Application xlApp = new Excel.Application();
-            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open("/excel");
-            Excel._Worksheet xlWorksheet = (Excel._Worksheet)xlWorkbook.Sheets[1];
-            Excel.Range xlRange = xlWorksheet.UsedRange;
 
-            int rowCount = xlRange.Rows.Count;
-            int colCount = xlRange.Columns.Count;
+        using (var reader = new StreamReader("/excel"))
+        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        {
+        var records = csv.GetRecords<Programmering>();
+        }
 
-            //iterate over the rows and columns and print to the console as it appears in the file
-            for (int i = 1; i <= rowCount; i++)
-            {
-                for (int j = 1; j <= colCount; j++)
-                {
-                    //new line
-                    if (j == 1)
-                        Console.Write("\r\n");
-
-                    //write the value to the console
-                    if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j] != null)
-                        Console.Write(xlRange.Cells[i, j].ToString() + "\t");
-                }
-            }
-
-            //cleanup
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            //release com objects to fully kill excel process from running in the background
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(xlWorksheet);
-
-            //close and release
-            xlWorkbook.Close();
-            Marshal.ReleaseComObject(xlWorkbook);
-
-            //quit and release
-            xlApp.Quit();
-            Marshal.ReleaseComObject(xlApp);
         
         if(!File.Exists("/excel")){
             return;

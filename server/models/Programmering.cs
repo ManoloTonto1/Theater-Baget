@@ -4,6 +4,7 @@ public class Programmering {
     public string omschrijving { get; set; } = "";
     public DateTime datum { get; set; }
     public string afbeelding { get; set; } = "";
+    public int ZaalNr { get; set; }
     public Zaal? zaal { get; set; }
     public List<Betrokkene>? betrokkenen { get; set; }
     public List<Groep>? groepen { get; set; }
