@@ -16,6 +16,16 @@ import useWindowSize from '../../hooks/useWindowSize';
 const charities: Charity[] = [
 	{
 		id: 1,
+		name: 'Theater Baget',
+		image: 'https://www.laaktheater.nl/public/images/app/og-image.png',
+		description: ` Theater Baget geeft de ultieme theater ervaring.
+						Hier kan je genieten van de voorstellingen 
+						van allerlei soorten artiesten, bands en acteurs.
+						Theater Baget leeft door de donaties die worden gemaakt.
+                        `,
+	},
+	{
+		id: 2,
 		name: 'Dieren Lot',
 		image: 'https://www.dier.nu/resources/images/logo.svg',
 		description: ` Nog veel te veel dieren leiden
@@ -27,7 +37,7 @@ const charities: Charity[] = [
                         `,
 	},
 	{
-		id: 2,
+		id: 3,
 		name: 'War Child',
 		image: 'https://www.warchild.nl/static/images/logo-warchild.svg',
 		description: `Veel kinderen in oorlog doen ’s nachts geen oog dicht.
@@ -36,7 +46,7 @@ const charities: Charity[] = [
            Nachtmerries spoken door hun hoofd. En overdag? Dan gaat de nachtmerrie door. `
 	},
 	{
-		id: 3,
+		id: 4,
 		name: 'De Haagse Hogeschool',
 		// eslint-disable-next-line max-len
 		image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Haagse_Hogeschool_logo_vector.svg/2560px-Haagse_Hogeschool_logo_vector.svg.png',
@@ -48,7 +58,7 @@ const charities: Charity[] = [
             in Zoetermeer (Dutch Innovation Park) en in Delft op de campus van de TU Delft. `
 	},
 	{
-		id: 6,
+		id: 5,
 		name: 'Muziek Speelplaats',
 		image: 'https://demuziekspeelplaats.nl/wp-content/uploads/2019/09/cropped-logo_demuziekspeelplaats-1.png',
 		description: `Stichting de Muziekspeelplaats wil muziek zoveel mogelijk toegankelijk maken voor ieder kind.

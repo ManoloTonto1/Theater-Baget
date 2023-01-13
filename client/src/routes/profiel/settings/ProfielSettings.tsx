@@ -1,8 +1,19 @@
-import { Box, Button, FormGroup, TextField, Typography } from '@mui/material';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs, { Dayjs } from 'dayjs';
-import React, { useCallback } from 'react';
+import {
+	Box, Button, FormGroup, TextField, Typography 
+} from '@mui/material';
+import {
+	DatePicker, LocalizationProvider 
+} from '@mui/x-date-pickers';
+import {
+	AdapterDayjs 
+} from '@mui/x-date-pickers/AdapterDayjs';
+import type {
+	Dayjs 
+} from 'dayjs';
+import dayjs from 'dayjs';
+import React, {
+	useCallback 
+} from 'react';
 
 function ProfielSettings() {
 	const [naam, setNaam] = React.useState('');
@@ -29,12 +40,12 @@ function ProfielSettings() {
 	}, []);
 
 	return (
-		<FormGroup>
-			<Typography variant="h5" sx={{ 
-				m: 1
-			}}>
+		<FormGroup sx = {{
+			width: 500
+		}} >
+			<Typography variant="h5">
                 Gegevens aanpassen
-            </Typography>
+			</Typography>
 			
 			<TextField sx={{ 
 				m: 1, mb: 2 

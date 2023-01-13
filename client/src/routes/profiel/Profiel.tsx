@@ -1,13 +1,18 @@
 import {
 	Box, Card, Container, Grid, Tab, Tabs, Typography 
 } from '@mui/material';
-
 import React from 'react';
 import ProfielSettings from './settings/ProfielSettings';
 import ProfielTickets from './tickets/ProfielTickets';
 import Logout from './logout/Logout';
 import Monki from '../../assets/gorilla.jfif';
 import Avatar from '@mui/material/Avatar';
+import type {
+	ProfileCardProps 
+} from '../../components/ProfileCard';
+import {
+	ProfileCard 
+} from '../../components/ProfileCard';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -47,13 +52,29 @@ function a11yProps(index: number) {
 // source for tabs: https://mui.com/material-ui/react-tabs/ en de login page
 function Profiel() {
 	const [value, setValue] = React.useState(0);
+	const [data, setData] = React.useState<never[] | ProfileCardProps[]>([]);
+	React.useEffect(() => {
+		// API('gebruiker').Get(value)
+		// 	.then((res) => {
+		// 		if (res.status != 200) {
+		// 			return;
+		// 		}
+
+		// 	});
+		setData([{
+			image: Monki,
+			name: 'akasha monka',
+			email: 'gekkefred@ninja.ninja',
+			ageGroep: 'dood'
+		}]);
+	}, [value]);
   
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 	  setValue(newValue);
 	};
 
 	return (
-		<Container style={{
+		<Container sx={{
 			height: '80vh',
 			display: 'flex',
 			justifyContent: 'center',
@@ -65,38 +86,9 @@ function Profiel() {
 				p: 1,
 				marginRight: 4,
 			}}>
-				<Card elevation={4} sx={{
-					marginBottom: 2,
-					display: 'flex',
-					justifyContent: 'center'
-				}}>
-					<Grid container>
-						<Avatar
-							alt="Remy Sharp"
-							src={Monki}
-							sx={{
-								width: 100,
-								height: 100,
-								m: 2
-							}} />
-						<Box sx={{
-							display: 'flex',
-							justifyContent: 'center',
-							flexDirection:'column'
-						}}>
-							<Typography>
-								Naam: akasha
-							</Typography>
-							<Typography>
-								Email: pidip@furrie.ninja
-							</Typography>
-							<Typography>
-								Leeftijd: dood
-							</Typography>
-						</Box>
-					</Grid>
-					
-				</Card>
+				{data.map((card) => {
+					return <ProfileCard key={card.name} {...card} />;
+				})}
 				<Tabs
 					orientation="vertical"
 					variant="fullWidth"
@@ -115,9 +107,13 @@ function Profiel() {
 
 			<Card elevation={4} sx={{ 
 				height: 485,
-				width: 'fit-content',
+				width: '600px',
+				overflowY: 'auto',
+				scrollbarWidth: 'thin',
+				alignContent: 'center',
 				minWidth: 500,
-				p: 1,
+				display: 'flex',
+				justifyContent: 'center'
 			}}>
 				<TabPanel value={value} index={0}>
 					<ProfielTickets />
@@ -131,7 +127,6 @@ function Profiel() {
 			</Card>
 
 		</Container>
-
 	);
 }
 
