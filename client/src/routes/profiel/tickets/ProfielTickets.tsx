@@ -60,7 +60,6 @@ function ProfielTickets() {
 	return (
 		<Box sx={{
 			p: 1,
-			overflowY: 'auto',
 			scrollbarWidth: 'thin',
 		}}>
 			<CardContent>
