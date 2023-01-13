@@ -101,28 +101,28 @@ interface ExternalModule {
 const API = <T extends string>(route: T): T extends 'external' ? ExternalModule : ApiModule => {
 	const ApiModule: ApiModule = {
 		route: '',
-		Get: (id?: string) => {
+		Get: async (id?: string) => {
 			return axios({
 				headers: BearerToken,
 				method: 'GET',
 				url: id ? ApiModule.route + id : ApiModule.route
 			});
 		},
-		GetAll: () => {
+		GetAll: async () => {
 			return axios({
 				headers: BearerToken,
 				method: 'GET',
 				url: `${ApiModule.route}`
 			});
 		},
-		TotalRows: (): Promise<AxiosResponse<any, any>> => {
+		TotalRows: async (): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				headers: BearerToken,
 				method: 'GET',
 				url: ApiModule.route + 'count'
 			});
 		},
-		Update: (id: string, data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
+		Update: async (id: string, data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				method: 'PUT',
 				url: ApiModule.route + id,
@@ -130,7 +130,7 @@ const API = <T extends string>(route: T): T extends 'external' ? ExternalModule 
 				data: data
 			});
 		},
-		Create: (data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
+		Create: async (data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				method: 'POST',
 				headers: BearerToken,
@@ -141,7 +141,7 @@ const API = <T extends string>(route: T): T extends 'external' ? ExternalModule 
 
 	};
 	const DonateModule: ExternalModule = {
-		Donate: (Email:string,Hoeveelheid:number,Doel:number,Tekst:string): Promise<AxiosResponse<any, any>> => {
+		Donate: async (Email:string,Hoeveelheid:number,Doel:number,Tekst:string): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				method: 'POST',
 				headers: {
@@ -156,7 +156,7 @@ const API = <T extends string>(route: T): T extends 'external' ? ExternalModule 
 				}
 			});
 		},
-		Pay: (amount: number, reference: string, url:string): Promise<AxiosResponse<any, any>> => {
+		Pay: async (amount: number, reference: string, url:string): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				method: 'POST',
 				headers: {

@@ -17,9 +17,7 @@ import {
 import {
 	StaticDatePicker 
 } from '@mui/x-date-pickers/StaticDatePicker';
-import type { 
-	TicketData
-} from '../../components/Ticket';
+
 import {
 	Ticket,
 } from '../../components/Ticket';
@@ -29,49 +27,28 @@ import API from '../../api/apiRoutes';
 import {
 	Typography 
 } from '@mui/material';
-import Monki from '../../assets/gorilla.jfif';
-import Baget from '../../assets/baguette.png';
-import Post from '../../assets/poster.png';
 import {
 	useNavigate 
 } from 'react-router-dom';
+import type {
+	Programma 
+} from '../../components/global/globalTypes';
 
 /* source date picker: https://mui.com/x/react-date-pickers/custom-components/ */
 function ProgrammaOverzicht() {
 	const navigate = useNavigate();
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
-	const [data,setData] = React.useState<never[] | TicketData[]>([]);
+	const [data,setData] = React.useState<never[] | Programma[]>([]);
 	React.useEffect(() => {
-		// API('programmeringen').Get(value)
-		// 	.then((res) => {
-		// 		if (res.status != 200) {
-		// 			return;
-		// 		}
+		API('programmeringen').GetAll()
+			.then((res) => {
+				if (res.status != 200) {
+					return;
+				}
+				setData(res.data);
 
-		// 	});
-		setData([{
-			date: 'JAN 08 2023',
-			time: 'zo - 19:30',
-			name: 'Monki in paris',
-			location: '013 - Tilburg',
-			image: Monki
-		},
-		{
-			date: 'JAN 08 2023',
-			time: 'zo - 19:30',
-			name: 'Baget',
-			location: '013 - Tilburg',
-			image: Baget
-		},
-		{
-			date: 'JAN 08 2023',
-			time: 'zo - 19:30',
-			name: 'Baget',
-			location: '013 - Tilburg',
-			image: Post
-		}
-		]);
-	}, [value]);
+			});
+	}, []);
     
 	return (
 		<Container sx={{
@@ -119,8 +96,8 @@ function ProgrammaOverzicht() {
                                 Tickets:
 							</Typography>
 							{data.map((card) => {
-								return <Ticket key={card.name} {...card}
-									onClick={(e,data)=>navigate(`/tickets/${data.name}`)} />;
+								return <Ticket key={card.id} {...card}
+									onClick={(e,data)=>navigate(`/tickets/${data.id}`)} />;
 							})}
 						</CardContent>
 					</Card>

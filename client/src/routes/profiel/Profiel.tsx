@@ -74,57 +74,51 @@ function Profiel() {
 	};
 
 	return (
-		<Container sx={{
-			height: '80vh',
-			display: 'flex',
-			justifyContent: 'center',
-			alignItems: 'center',
+		<Container maxWidth={'xl'} sx={{
+			my:4
 		}}>
-			<Card elevation={4} sx={{ 
-				height: 485,
-				width: 500,
-				p: 1,
-				marginRight: 4,
-			}}>
-				{data.map((card) => {
-					return <ProfileCard key={card.name} {...card} />;
-				})}
-				<Tabs
-					orientation="vertical"
-					variant="fullWidth"
-					value={value}
-					onChange={handleChange}
-					aria-label="Vertical tabs"
-					sx={{ 
-						borderRight: 1, 
-						borderColor: 'divider' 
+			<Grid container spacing={3}>
+				<Grid item lg={6}
+					xs={12}>
+					<Card elevation={4}>
+						{data.map((card) => {
+							return <ProfileCard key={card.name} {...card} />;
+						})}
+						<Tabs
+							orientation="vertical"
+							variant="fullWidth"
+							value={value}
+							onChange={handleChange}
+							aria-label="Vertical tabs"
+							sx={{ 
+								borderRight: 1, 
+								borderColor: 'divider' 
+							}}>
+							<Tab label="Tickets" {...a11yProps(0)} />
+							<Tab label="Settings" {...a11yProps(1)} />
+							<Tab label="Log out" {...a11yProps(2)} />
+						</Tabs>
+					</Card>
+				</Grid>
+				<Grid item lg={6}
+					xs={12}>
+					<Card elevation={4} sx={{
+						maxHeight: '80vh',
+						overflowY: 'auto',
+						scrollbarWidth: 'thin',
 					}}>
-					<Tab label="Tickets" {...a11yProps(0)} />
-					<Tab label="Settings" {...a11yProps(1)} />
-					<Tab label="Log out" {...a11yProps(2)} />
-				</Tabs>
-			</Card>
-
-			<Card elevation={4} sx={{ 
-				height: 485,
-				width: '600px',
-				overflowY: 'auto',
-				scrollbarWidth: 'thin',
-				alignContent: 'center',
-				minWidth: 500,
-				display: 'flex',
-				justifyContent: 'center'
-			}}>
-				<TabPanel value={value} index={0}>
-					<ProfielTickets />
-				</TabPanel>
-				<TabPanel value={value} index={1}>
-					<ProfielSettings />
-				</TabPanel>
-				<TabPanel value={value} index={2}>
-					<Logout />
-				</TabPanel>
-			</Card>
+						<TabPanel value={value} index={0}>
+							<ProfielTickets />
+						</TabPanel>
+						<TabPanel value={value} index={1}>
+							<ProfielSettings />
+						</TabPanel>
+						<TabPanel value={value} index={2}>
+							<Logout />
+						</TabPanel>
+					</Card>
+				</Grid>
+			</Grid>
 
 		</Container>
 	);

@@ -12,6 +12,7 @@ import type {
 export type TicketsProps = {
 	onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, data:Programma)=>void
 } & Programma
+
 export function Ticket(props:TicketsProps) {
 	const datum = new Date(props.datum);
 	const newDate = datum.toString().split(' ');
