@@ -20,42 +20,56 @@ import {
 import {
 	getTickets 
 } from '../../tools/TicketTools';
+import {
+	Box, Grid, Typography 
+} from '@mui/material';
 
 function BegunstigersPortaal() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs(''));
 
 	return (
 		<Container style={{
-			height: '80vh',
-			display: 'flex',
-			justifyContent: 'center',
-			alignItems: 'center',
+			justifyContent: 'center'
 		}}>
-			<Card elevation={4} sx={{ 
-				height: 485,
-				p: 1,
-				marginRight: 4,
+			<Box sx={{
+				height: '100vh',
+				width: '100%',
 			}}>
-				<LocalizationProvider dateAdapter={AdapterDayjs}>
-					<StaticDatePicker
-						onChange={(newValue) => setValue(newValue)}
-						value={value}
-						renderInput={(params) => <TextField {...params} />}
-						componentsProps={{
-							actionBar: {
-								actions: ['today'],
-							},
-						}}
-					/>
-				</LocalizationProvider>
-			</Card>
-			<Card elevation={4} sx={{ 
-				height: 485,
-				p: 1,
-				overflowY: 'scroll',
+				<Typography>
+				Begunstigersportaal!
+				</Typography>
+			</Box>
+			<Container style={{
+				height: '80vh',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
 			}}>
-				{getTickets('safgsafgfdsgsdfgsdfegds')}
-			</Card>
+				<Card elevation={4} sx={{
+					height: 485,
+					p: 1,
+					marginRight: 4,
+				}}>
+					<LocalizationProvider dateAdapter={AdapterDayjs}>
+						<StaticDatePicker
+							onChange={(newValue) => setValue(newValue)}
+							value={value}
+							renderInput={(params) => <TextField {...params} />}
+							componentsProps={{
+								actionBar: {
+									actions: ['today'],
+								},
+							}} />
+					</LocalizationProvider>
+				</Card>
+				<Card elevation={4} sx={{
+					height: 485,
+					p: 1,
+					overflowY: 'scroll',
+				}}>
+					{getTickets('safgsafgfdsgsdfgsdfegds')}
+				</Card>
+			</Container>
 		</Container>
 	);
 }
