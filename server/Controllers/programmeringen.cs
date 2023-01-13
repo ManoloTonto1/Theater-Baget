@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers;
-[Route("api/programmeeringen")]
+[Route("api/programmeringen")]
 [ApiController]
 public class ProgrammeringenController : ControllerBase, IController<Programmering>
 {

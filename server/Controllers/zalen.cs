@@ -60,7 +60,7 @@ public class ZalenController : ControllerBase, IController<Zaal>
         return CreatedAtAction("Get", new { id = data.zaalNr }, data);
     }
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, Zaal data)
+    public async Task<ActionResult> Put(int id, [FromBody]Zaal data)
     {
         if (id != data.zaalNr)
         {
