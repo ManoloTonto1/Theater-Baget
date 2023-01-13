@@ -5,6 +5,7 @@ function Logout() {
 	return (
 		<Box sx={{
             alignContent: 'center',
+            width: 450
         }}>
             <Typography variant="h3" align="center" sx={{
                 marginBottom: 1,

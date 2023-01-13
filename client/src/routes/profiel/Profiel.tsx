@@ -69,22 +69,23 @@ function Profiel() {
 						borderRight: 1, 
 						borderColor: 'divider' 
 					}}>
-					<Tab label="Item One" {...a11yProps(0)} />
-					<Tab label="Item Two" {...a11yProps(1)} />
-					<Tab label="Item Three" {...a11yProps(2)} />
+					<Tab label="Tickets" {...a11yProps(0)} />
+					<Tab label="Settings" {...a11yProps(1)} />
+					<Tab label="Log out" {...a11yProps(2)} />
 				</Tabs>
 			</Card>
 
 			<Card elevation={4} sx={{ 
 				height: 485,
-				width: 500,
+				width: "fit-content",
+				minWidth: 500,
 				p: 1,
 			}}>
 				<TabPanel value={value} index={0}>
-					<ProfielSettings />
+					<ProfielTickets />
 				</TabPanel>
 				<TabPanel value={value} index={1}>
-					<ProfielTickets />
+					<ProfielSettings />
 				</TabPanel>
 				<TabPanel value={value} index={2}>
 					<Logout />
