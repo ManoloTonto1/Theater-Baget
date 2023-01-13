@@ -5,11 +5,12 @@ import {
 	Tooltip 
 } from '@mui/material';
 type props = {
-  id: string;
-  setSelection: React.Dispatch<React.SetStateAction<never[] | string[]>>;
+    id: string;
+    setSelection: React.Dispatch<React.SetStateAction<never[] | string[]>>;
+    selection: string[];
 };
 function Seat(props: props) {
-	const[isSelected,setSelected] =React.useState(false);
+	const[isSelected,setSelected] = React.useState(props.selection.find((val) => val === props.id) === props.id);
 	const addToSelection = React.useCallback(() => {
 		props.setSelection(current => {
 			if (current.find((val) => val === props.id)) {

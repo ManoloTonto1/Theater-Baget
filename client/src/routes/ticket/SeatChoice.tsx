@@ -1,25 +1,30 @@
 import React from 'react';
 import {
-	Box, Fade, Grid 
+	Box, Fade, Grid
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Seat from './Seat';
 type props = {
-  rows: number;
-  columns: number;
+    rows: number;
+    columns: number;
+    selection: never[] | string[];
+    setSelection: React.Dispatch<React.SetStateAction<string[] | never[]>>;
 };
-function SeatChoice({ rows, columns }: props) {
-	const [selection,setSelection]= React.useState<never[] | string[]>([]);
+function SeatChoice({ rows, columns, selection, setSelection }: props) {
 	const [seats, setSeats] = React.useState<never[] | JSX.Element[]>([]);
 
 	const renderSeats = React.useCallback(() => {
 		const seats = [];
 		for (let i = 0; i < columns + 1; i++) {
 			seats.push(
-				<Grid item xs={1}
-					display={'flex'} justifyContent={'center'}
-					key={`chip${i}`}>
+				<Grid
+					item
+					xs={1}
+					display={'flex'}
+					justifyContent={'center'}
+					key={`chip${i}`}
+				>
 					{i ? <Chip label={i} color={'primary'} /> : <></>}
 				</Grid>
 			);
@@ -43,11 +48,12 @@ function SeatChoice({ rows, columns }: props) {
 						xs={1}
 						display={'flex'}
 						justifyContent={'center'}
-						key={String.fromCharCode(65 + i) + (j+1)}
+						key={String.fromCharCode(65 + i) + (j + 1)}
 					>
 						<Seat
-							id={String.fromCharCode(65 + i) + (j+1)}
+							id={String.fromCharCode(65 + i) + (j + 1)}
 							setSelection={setSelection}
+							selection={selection}
 						/>
 					</Grid>
 				);
@@ -55,7 +61,7 @@ function SeatChoice({ rows, columns }: props) {
 		}
 
 		return seats;
-	}, [columns, rows]);
+	}, [columns, rows, selection, setSelection]);
 	React.useEffect(() => {
 		setSeats([]);
 		setSeats(renderSeats());
@@ -66,9 +72,14 @@ function SeatChoice({ rows, columns }: props) {
 				mt: 4,
 			}}
 		>
-			<Typography sx={{
-				mb:2
-			}} variant="h4">Stoel Selectie:</Typography>
+			<Typography
+				sx={{
+					mb: 2,
+				}}
+				variant="h4"
+			>
+                Stoel Selectie:
+			</Typography>
 			{selection.map((selected) => {
 				return (
 					<Fade in key={selected}>

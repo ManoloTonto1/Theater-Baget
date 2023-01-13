@@ -13,11 +13,10 @@ import {
 import React from 'react';
 
 import type {
-	Charity, Data
+	Data
 } from './types';
 
 type props = {
-    chosenCharity: Charity | null
     data: Data;
 }
 enum states {
@@ -31,18 +30,16 @@ import {
 } from 'react-router-dom';
 import API from '../../api/apiRoutes';
 
-function PostDonation(props: props): JSX.Element {
+function PostBetaling(props: props): JSX.Element {
 	const [state, setState] = React.useState<states>(states.inProgress);
 	const navigate = useNavigate();
 	React.useEffect(() => {
 		const req = async (): Promise<void> => {
 			setState(states.inProgress);
-			if (!props.chosenCharity?.id) return; 
-			API('external').Donate(
-				'test@email.com',
+			API('external').Pay(
 				props.data.amount,
-				props.chosenCharity?.id,
-				props.data.comment
+				crypto.randomUUID(),
+				''
 			).then((res) => {
 				if (res.status !== 200) {
 					setState(states.failed);
@@ -93,7 +90,7 @@ function PostDonation(props: props): JSX.Element {
 					</Grow>
 					<Grid item xs={12}>
 						<Typography variant='h3' align='center'>
-                            Donatie Gelukt
+                            betaling Gelukt
 						</Typography>
 						<Typography variant='h3' align='center'>
                             Dank u wel!
@@ -144,4 +141,4 @@ function PostDonation(props: props): JSX.Element {
 	);
 }
 
-export default PostDonation;
+export default PostBetaling;
