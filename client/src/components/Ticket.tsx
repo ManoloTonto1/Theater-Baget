@@ -20,6 +20,7 @@ export function Ticket(props:TicketsProps) {
 	return (
 		<Card sx={{
 			width: '100%',
+			minWidth: 500,
 			heigh: '100%',
 			backgroundImage: `url(${props.image})`,
 			backgroundPosition: 'center',

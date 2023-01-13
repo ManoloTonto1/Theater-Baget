@@ -113,7 +113,6 @@ function Profiel() {
 				height: 485,
 				width: "fit-content",
 				minWidth: 500,
-				p: 1,
 			}}>
 				<TabPanel value={value} index={0}>
 					<ProfielTickets />
