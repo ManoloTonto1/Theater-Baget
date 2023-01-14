@@ -1,5 +1,5 @@
 import {
-	Box, Card, Container, Grid, Tab, Tabs, Typography 
+	Box, Card, Container, Grid, Tab, Tabs, Typography
 } from '@mui/material';
 import React from 'react';
 import ProfielSettings from './settings/ProfielSettings';
@@ -8,10 +8,10 @@ import Logout from './logout/Logout';
 import Monki from '../../assets/gorilla.jfif';
 import Avatar from '@mui/material/Avatar';
 import type {
-	ProfileCardProps 
+	ProfileCardProps
 } from '../../components/ProfileCard';
 import {
-	ProfileCard 
+	ProfileCard
 } from '../../components/ProfileCard';
 
 interface TabPanelProps {
@@ -22,27 +22,27 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
 	const { children, value, index, ...other } = props;
-  
+
 	return (
-	  <div
+		<Box
 			role="tabpanel"
 			hidden={value !== index}
 			id={`vertical-tabpanel-${index}`}
 			aria-labelledby={`vertical-tab-${index}`}
 			{...other}
-	  >
+		>
 			{value === index && (
-		  <Box sx={{
-					p: 3 
+				<Box sx={{
+					p: 3
 				}}>
 					<Typography>{children}</Typography>
-		  </Box>
+				</Box>
 			)}
-	  </div>
+		</Box>
 	);
 }
 
-function a11yProps(index: number) {
+function a11yAccesibilityProps(index: number) {
 	return {
 		id: `vertical-tab-${index}`,
 		'aria-controls': `vertical-tabpanel-${index}`,
@@ -68,63 +68,57 @@ function Profiel() {
 			ageGroep: 'dood'
 		}]);
 	}, [value]);
-  
+
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-	  setValue(newValue);
+		setValue(newValue);
 	};
 
 	return (
-		<Container sx={{
-			height: '80vh',
-			display: 'flex',
-			justifyContent: 'center',
-			alignItems: 'center',
+		<Container maxWidth={'xl'} sx={{
+			my: 4
 		}}>
-			<Card elevation={4} sx={{ 
-				height: 485,
-				width: 500,
-				p: 1,
-				marginRight: 4,
-			}}>
-				{data.map((card) => {
-					return <ProfileCard key={card.name} {...card} />;
-				})}
-				<Tabs
-					orientation="vertical"
-					variant="fullWidth"
-					value={value}
-					onChange={handleChange}
-					aria-label="Vertical tabs"
-					sx={{ 
-						borderRight: 1, 
-						borderColor: 'divider' 
+			<Grid container spacing={3}>
+				<Grid item lg={6}
+					xs={12}>
+					<Card elevation={4}>
+						{data.map((card) => {
+							return <ProfileCard key={card.name} {...card} />;
+						})}
+						<Tabs
+							orientation="vertical"
+							variant="fullWidth"
+							value={value}
+							onChange={handleChange}
+							aria-label="Vertical tabs"
+							sx={{
+								borderRight: 1,
+								borderColor: 'divider'
+							}}>
+							<Tab label="Tickets" {...a11yAccesibilityProps(0)} />
+							<Tab label="Settings" {...a11yAccesibilityProps(1)} />
+							<Tab label="Log out" {...a11yAccesibilityProps(2)} />
+						</Tabs>
+					</Card>
+				</Grid>
+				<Grid item lg={6}
+					xs={12}>
+					<Card elevation={4} sx={{
+						maxHeight: '80vh',
+						overflowY: 'auto',
+						scrollbarWidth: 'thin',
 					}}>
-					<Tab label="Tickets" {...a11yProps(0)} />
-					<Tab label="Settings" {...a11yProps(1)} />
-					<Tab label="Log out" {...a11yProps(2)} />
-				</Tabs>
-			</Card>
-
-			<Card elevation={4} sx={{ 
-				height: 485,
-				width: '600px',
-				overflowY: 'auto',
-				scrollbarWidth: 'thin',
-				alignContent: 'center',
-				minWidth: 500,
-				display: 'flex',
-				justifyContent: 'center'
-			}}>
-				<TabPanel value={value} index={0}>
-					<ProfielTickets />
-				</TabPanel>
-				<TabPanel value={value} index={1}>
-					<ProfielSettings />
-				</TabPanel>
-				<TabPanel value={value} index={2}>
-					<Logout />
-				</TabPanel>
-			</Card>
+						<TabPanel value={value} index={0}>
+							<ProfielTickets />
+						</TabPanel>
+						<TabPanel value={value} index={1}>
+							<ProfielSettings />
+						</TabPanel>
+						<TabPanel value={value} index={2}>
+							<Logout />
+						</TabPanel>
+					</Card>
+				</Grid>
+			</Grid>
 
 		</Container>
 	);

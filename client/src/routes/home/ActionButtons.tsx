@@ -49,6 +49,8 @@ export function ActionButtons(): JSX.Element {
 								bgcolor:'primary.main'
 							}}>
 								<CardActionArea
+									LinkComponent={'a'}
+									href={`/#${data.path}`}
 									onClick={() : void => goToPage(data.path)}
 									sx={{
 										p: 1,

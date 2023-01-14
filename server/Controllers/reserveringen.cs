@@ -52,10 +52,10 @@ public class ReserveringenController : ControllerBase, IController<Reservering>
         return await context.Reservering.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Reservering data)
+    public async Task<ActionResult> Post(Data<Reservering> data)
     {
-        context.Reservering.Add(data);
-        await context.SaveChangesAsync();
+        // context.Reservering.Add(data);
+        // await context.SaveChangesAsync();
 
         return CreatedAtAction("Get", new { data.id }, data);
     }

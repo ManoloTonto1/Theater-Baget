@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Any;
+
 namespace server.Controllers;
 
 public interface IController<T>
@@ -7,7 +9,7 @@ public interface IController<T>
     public Task<ActionResult<IEnumerable<T>>> GetAll();
     public Task<ActionResult<int>> GetCount();
     public Task<ActionResult> Put(int id, T data);
-    public Task<ActionResult> Post([FromBody] T data);
+    public Task<ActionResult> Post([FromBody] Data<T> data);
     public Task<ActionResult> Delete(int id);
     public bool Exists(int id);
 }

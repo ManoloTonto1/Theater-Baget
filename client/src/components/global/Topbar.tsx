@@ -22,7 +22,7 @@ import Tooltip from '@mui/material/Tooltip';
 import useWindowSize from '../../hooks/useWindowSize';
 import { 
 	validate 
-} from '../jwt';
+} from '../../api/jwt';
 
 export default function Topbar(): JSX.Element {
 	const windowSize = useWindowSize();

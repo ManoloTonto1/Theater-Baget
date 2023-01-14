@@ -6,7 +6,6 @@ import React from 'react';
 function Logout() {
 	return (
 		<Box sx={{
-			width: 450,
 			display: 'flex',
 			justifyItems: 'center',
 			alignItems: 'center',
@@ -25,9 +24,8 @@ function Logout() {
 			</Typography>
 			<Button variant="contained" size="large"
 				sx={{
-					margin: 2,
-					marginTop: 3,
-					width: 11/12
+					mt:4,
+					width: '100%'
 				}}>Log uit</Button>
 		</Box>
 	);

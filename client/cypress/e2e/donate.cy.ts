@@ -29,7 +29,7 @@ describe('Donate', () => {
 		cy.get('input[name="comment"]').click().type('{selectAll} ');
 		cy.get('button').contains('next').should('be.disabled');
 	});
-	it('donation with no moeny', () => {
+	it('donation with no money', () => {
 		cy.get('button').contains('Nog veel').click();
 		cy.get('input[name="comment"]').click().type('{selectAll} ');
 		cy.get('button').contains('next').should('be.disabled');

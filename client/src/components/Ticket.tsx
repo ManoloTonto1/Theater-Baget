@@ -6,70 +6,87 @@ import CardMedia from '@mui/material/CardMedia';
 import {
 	CardActionArea, Grid 
 } from '@mui/material';
-
+import type {
+	Programma 
+} from './global/globalTypes';
+import truncateString from '../api/truncateString';
 export type TicketsProps = {
-	date: string,
-	time: string,
-	name: string,
-	location: string,
-	image: string
-}
-export function Ticket(props:TicketsProps) {
+	onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, data:Programma)=>void
+} & Programma
 
-	const newDate = props.date.split(' ');
+export function Ticket(props:TicketsProps) {
+	const datum = new Date(props.datum);
+	const newDate = datum.toString().split(' ');
 	return (
-		<Card sx={{
-			width: '100%',
-			minWidth: 500,
-			heigh: '100%',
-			backgroundImage: `url(${props.image})`,
-			backgroundPosition: 'center',
-			backgroundRepeat: 'no-repeat',
-			backgroundSize: 30000,
-			marginBottom: 2,
-		}}>
-			<CardActionArea>
+		<Card
+			sx={{
+				width: '100%',
+				height: '100%',
+				backgroundImage: `url(${props.afbeelding})`,
+				backgroundPosition: 'center',
+				backgroundRepeat: 'no-repeat',
+				backgroundSize: 30000,
+				marginBottom: 2,
+				backgroundColor: 'rgba(0,0,0,0.7)',
+				backgroundBlendMode: 'multiply'		
+			}}
+			onClick={
+				props.onClick
+					? (e) =>
+						props.onClick(e, {
+							...props,
+						})
+					: undefined
+			}
+		>
+			<CardActionArea
+				LinkComponent={'a'}
+				href={`/#/bestellen/${props.id}`}>
 				<Grid container>
 					<Grid item>
 						<CardMedia
 							component="img"
 							sx={{
-								height:120,
+								height: 120,
 								width: 200,
 								p: 1,
 								marginRight: 1,
 								borderRadius: 3,
-								// filter: 'blur(5px)'
 							}}
-							image={props.image}
-							alt={props.name}
+							image={props.afbeelding}
+							alt={props.titel}
 						/>
 					</Grid>
-					<Grid item >
+					<Grid item>
 						<Box
 							sx={{
-								height:'100%',
+								height: '100%',
 								display: 'flex',
 								flexDirection: 'column',
 								justifyContent: 'center',
-							}}>
-							<Grid container > 
-								<Grid item sx={{
-									mr: 2,
-								}}>
-									<Box sx={{
-										alignItems: 'center',
-										textAlign: 'center',
-
-									}}>
+							}}
+						>
+							<Grid container>
+								<Grid
+									item
+									sx={{
+										mr: 2,
+									}}
+								>
+									<Box
+										sx={{
+											alignItems: 'center',
+											textAlign: 'center',
+										}}
+									>
 										<Typography variant="h5" lineHeight={1}>
-											{newDate[0]}
-										</Typography>
-										<Typography variant="h4" lineHeight={1}>
 											{newDate[1]}
 										</Typography>
-										<Typography variant="h5" lineHeight={1}>
+										<Typography variant="h4" lineHeight={1}>
 											{newDate[2]}
+										</Typography>
+										<Typography variant="h5" lineHeight={1}>
+											{newDate[3]}
 										</Typography>
 									</Box>
 								</Grid>
@@ -77,23 +94,19 @@ export function Ticket(props:TicketsProps) {
 									<Box sx={{
 									}}>
 										<Typography variant="body1">
-											{props.time}
+											{datum.toUTCString()}
 										</Typography>
-										<Typography variant="h6">
-											{props.name}
+										<Typography variant="h6">{props.titel}</Typography>
+										<Typography variant="body2" >
+											{truncateString(props.omschrijving,50)}
 										</Typography>
-										<Typography variant="body2">
-											{props.location}
-										</Typography>
-
 									</Box>
 								</Grid>
 							</Grid>
 						</Box>
 					</Grid>
 				</Grid>
-
 			</CardActionArea>
-
-		</Card>);
+		</Card>
+	);
 }
