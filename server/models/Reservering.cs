@@ -7,5 +7,5 @@ public class Reservering {
     public Gebruiker? owner { get; set; }
     public Zaal? zaal { get; set; }
     public Programmering? programmering { get; set; }
-    public Bestelling? bestelling { get; set; }
+     public Bestelling? bestelling { get; set; }
 }

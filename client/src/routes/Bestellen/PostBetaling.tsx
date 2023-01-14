@@ -36,9 +36,10 @@ function PostBetaling(props: props): JSX.Element {
 	React.useEffect(() => {
 		const req = async (): Promise<void> => {
 			setState(states.inProgress);
+			const ref = crypto.randomUUID();
 			API('external').Pay(
 				props.data.amount,
-				crypto.randomUUID(),
+				ref,
 				''
 			).then((res) => {
 				if (res.status !== 200) {
