@@ -8,6 +8,15 @@ using server.Controllers;
 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "Client",
+                      policy =>
+                      {
+                          policy.WithOrigins("https://manolotonto1.github.io/",
+                          "https://manolotonto1.github.io/Theater-Baget/");
+                      });
+});
 builder.Services.AddDbContext<theaterContext>(options =>
     options.UseSqlite("Data Source=database.db"));
 // Add services to the container.
@@ -26,8 +35,8 @@ if (app.Environment.IsDevelopment())
 // enable if you want t use HTTPS, remember to change the Proxy in the client.
 // app.UseHttpsRedirection();
 
+app.UseCors();
 app.UseAuthorization();
-
 app.MapControllers();
 
 JsonSerializerOptions options = new()
