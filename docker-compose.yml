@@ -1,3 +1,4 @@
+version: '3.3'
 services:
   server: 
     container_name: TheaterBagetServer
@@ -9,3 +10,4 @@ services:
 
 volumes:
   db-data:
+    external: false
