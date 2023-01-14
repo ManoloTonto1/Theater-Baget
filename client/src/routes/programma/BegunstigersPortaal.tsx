@@ -19,9 +19,6 @@ import {
 	StaticDatePicker 
 } from '@mui/x-date-pickers/StaticDatePicker';
 import {
-	getTickets 
-} from '../../tools/TicketTools';
-import {
 	Box, Grid, Typography 
 } from '@mui/material';
 import type {
@@ -95,7 +92,7 @@ function BegunstigersPortaal() {
 					p: 1,
 					overflowY: 'scroll',
 				}}>
-					{getTickets('safgsafgfdsgsdfgsdfegds')}
+					
 				</Card>
 			</Grid>
 		</Container>
