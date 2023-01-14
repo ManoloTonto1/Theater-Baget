@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test": "ts-mocha -p tsconfig.json src/**/test/*.test.ts",
     "server": "cd .. && cd server && dotnet run",

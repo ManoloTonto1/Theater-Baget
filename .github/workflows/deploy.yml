@@ -18,11 +18,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
-          
+
       - run: npm ci
         working-directory: ./client
 
       - name: Build project
+        working-directory: ./client
         run: npm run build
 
       - name: Upload production-ready build files
