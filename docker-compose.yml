@@ -1,0 +1,8 @@
+services:
+  server: 
+    container_name: Suggestie_Service
+    build: ./SuggestieMicroservice
+    ports:
+      - "8080:80"
+    volumes:
+      - db:/database.db
