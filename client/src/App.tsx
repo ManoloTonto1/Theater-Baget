@@ -21,7 +21,7 @@ const Event = React.lazy(() => import('./routes/event/Event'));
 const Interesses = React.lazy(() => import('./routes/Interesses/Interesses'));
 const IntressesFeedback = React.lazy(() => import('./routes/Interesses/feedback/IntressesFeedback'));
 const IntressesSuggestie = React.lazy(() => import('./routes/Interesses/suggestie/IntressesSuggestie'));
-const TicketKopen = React.lazy(() => import('./routes/ticket/TicketKopen'));
+const TicketKopen = React.lazy(() => import('./routes/Bestellen/TicketKopen'));
 const Profiel = React.lazy(()=> import('./routes/profiel/Profiel'));
 const ProfielBands = React.lazy(()=> import('./routes/profiel/bands/ProfielBands'));
 const ProfielSettings =React.lazy(()=>import('./routes/profiel/settings/ProfielSettings'));
@@ -55,7 +55,7 @@ function App() : JSX.Element {
 					<Route path={'/login'} element={<Suspense fallback={<LoadingPage />}>
 						<Login />
 					</Suspense>} />
-					<Route path={'/tickets/:id'} element={<Suspense fallback={<LoadingPage />}>
+					<Route path={'/bestellen/:id'} element={<Suspense fallback={<LoadingPage />}>
 						<TicketKopen />
 					</Suspense>} />
 					<Route path={'/intresses/'} element={<Suspense fallback={<LoadingPage />}>

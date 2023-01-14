@@ -9,6 +9,7 @@ import {
 import type {
 	Programma 
 } from './global/globalTypes';
+import truncateString from '../api/truncateString';
 export type TicketsProps = {
 	onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, data:Programma)=>void
 } & Programma
@@ -20,12 +21,14 @@ export function Ticket(props:TicketsProps) {
 		<Card
 			sx={{
 				width: '100%',
-				heigh: '100%',
+				height: '100%',
 				backgroundImage: `url(${props.afbeelding})`,
 				backgroundPosition: 'center',
 				backgroundRepeat: 'no-repeat',
 				backgroundSize: 30000,
 				marginBottom: 2,
+				backgroundColor: 'rgba(0,0,0,0.7)',
+				backgroundBlendMode: 'multiply'		
 			}}
 			onClick={
 				props.onClick
@@ -36,7 +39,9 @@ export function Ticket(props:TicketsProps) {
 					: undefined
 			}
 		>
-			<CardActionArea>
+			<CardActionArea
+				LinkComponent={'a'}
+				href={`/#/bestellen/${props.id}`}>
 				<Grid container>
 					<Grid item>
 						<CardMedia
@@ -92,8 +97,8 @@ export function Ticket(props:TicketsProps) {
 											{datum.toUTCString()}
 										</Typography>
 										<Typography variant="h6">{props.titel}</Typography>
-										<Typography variant="body2">
-											{props.omschrijving}
+										<Typography variant="body2" >
+											{truncateString(props.omschrijving,50)}
 										</Typography>
 									</Box>
 								</Grid>

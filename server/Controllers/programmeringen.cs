@@ -12,6 +12,8 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     public ProgrammeringenController(theaterContext _context)
     {
         context = _context;
+        // Seeds the Db
+        new Seed(_context);
     }
     [HttpDelete("{id}")]
 

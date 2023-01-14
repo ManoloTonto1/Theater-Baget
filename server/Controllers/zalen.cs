@@ -8,10 +8,12 @@ public class ZalenController : ControllerBase, IController<Zaal>
 {
     private readonly theaterContext context;
 
+
     public ZalenController(theaterContext _context)
     {
         context = _context;
     }
+
     [HttpDelete("{id}")]
 
     public async Task<ActionResult> Delete(int id)
@@ -61,7 +63,7 @@ public class ZalenController : ControllerBase, IController<Zaal>
         return Ok();
     }
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, [FromBody]Zaal data)
+    public async Task<ActionResult> Put(int id, [FromBody] Zaal data)
     {
         if (id != data.zaalNr)
         {

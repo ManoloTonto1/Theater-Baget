@@ -12,8 +12,9 @@ import type {
 function LeftCard(props:EventProps) : JSX.Element {
 	scrollTo(0, 0);
 	const navigate = useNavigate();
-	const goToPayPage = React.useCallback(() => {
-		navigate(`/tickets/${props.data.id}`);  
+	const goToPayPage = React.useCallback((e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+		e.preventDefault();
+		navigate(`/bestellen/${props.data.id}`);  
 	},[navigate,props]);
 	return (
 		<Box sx={{
@@ -50,6 +51,8 @@ function LeftCard(props:EventProps) : JSX.Element {
 						mb: 2
 					}}>
 						<Button
+							LinkComponent={'a'}
+							href={`/#/bestellen/${props.data.id}`}
 							onClick={goToPayPage}
 							variant={'contained'}>
                             Tickets Kopen

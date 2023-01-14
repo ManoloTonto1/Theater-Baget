@@ -97,7 +97,10 @@ function ProgrammaOverzicht() {
 							</Typography>
 							{data.map((card) => {
 								return <Ticket key={card.id} {...card}
-									onClick={(e,data)=>navigate(`/tickets/${data.id}`)} />;
+									onClick={(e, data) => {
+										e.preventDefault();
+										navigate(`/bestellen/${data.id}`);
+									}} />;
 							})}
 						</CardContent>
 					</Card>

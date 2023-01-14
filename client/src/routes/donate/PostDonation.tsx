@@ -93,7 +93,7 @@ function PostDonation(props: props): JSX.Element {
 					</Grow>
 					<Grid item xs={12}>
 						<Typography variant='h3' align='center'>
-                            Donatie Gelukt
+							Donatie Gelukt
 						</Typography>
 						<Typography variant='h3' align='center'>
                             Dank u wel!

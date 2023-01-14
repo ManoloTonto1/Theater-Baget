@@ -53,7 +53,9 @@ function Homepage(): JSX.Element {
 						mb:4
 					}}>
 					{
-						data ? data.map((card,index) => {
+						data ? data.map((card, index) => {
+							const datum = new Date(card.datum);
+							const newDate = datum.toString().split(' ');
 							return (
 								<Grow in timeout={index * 100}
 									key={card.zaalNr}>
@@ -61,12 +63,19 @@ function Homepage(): JSX.Element {
 										xs={12}
 										sm={3}
 									>
-										<Card elevation={10}>
-											<CardActionArea onClick={() : void =>navigate(`event/${card.id}`)}>
+										<Card elevation={10} 
+										>
+											<CardActionArea
+												component={'a'}
+												href={`#/event/${card.id}`}
+												onClick={(e): void => {
+													e.preventDefault();
+													navigate(`event/${card.id}`);
+												}}>
 
 												<CardMedia
 													component="img"
-													height=""
+													height={300}
 													image={card.afbeelding}
 													alt="gorilla"
 												/>
@@ -76,7 +85,8 @@ function Homepage(): JSX.Element {
 														{card.titel}
 													</Typography>
 													<Typography variant="body2" color="text.secondary">
-														{card.datum}
+														{newDate[1]} {newDate[2]}, {newDate[3]}
+														
 													</Typography>
 													<Typography variant="body2" color="text.secondary">
 														{card.omschrijving}
