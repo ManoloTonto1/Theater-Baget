@@ -2,10 +2,9 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 WORKDIR /App
 
 # Copy everything
-COPY . ./server/
+COPY ./server .
 # Restore as distinct layers
 RUN dotnet restore
-RUN dotnet ef database update
 # Build and publish a release
 RUN dotnet publish -c Release -o out
 
@@ -13,4 +12,5 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /App
 COPY --from=build-env /App/out .
+COPY ./server/database.db .
 ENTRYPOINT ["dotnet", "server.dll"]

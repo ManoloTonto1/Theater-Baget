@@ -1,8 +1,11 @@
 services:
   server: 
-    container_name: Suggestie_Service
-    build: ./SuggestieMicroservice
+    container_name: TheaterBagetServer
+    build: ./
     ports:
       - "8080:80"
     volumes:
-      - db:/database.db
+      - db-data:/database.db
+
+volumes:
+  db-data:

@@ -66,10 +66,11 @@ function Homepage(): JSX.Element {
 										<Card elevation={10} 
 										>
 											<CardActionArea
-												component={'a'}
+												LinkComponent={'a'}
 												href={`#/event/${card.id}`}
 												onClick={(e): void => {
 													e.preventDefault();
+													e.stopPropagation();
 													navigate(`event/${card.id}`);
 												}}>
 
