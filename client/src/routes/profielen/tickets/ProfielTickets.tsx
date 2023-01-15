@@ -8,11 +8,11 @@ import dayjs from 'dayjs';
 import React from 'react';
 import {
 	Ticket 
-} from '../../../../components/Ticket';
+} from '../../../components/Ticket';
 import type {
 	Programma 
-} from '../../../../components/global/globalTypes';
-import API from '../../../../api/apiRoutes';
+} from '../../../components/global/globalTypes';
+import API from '../../../api/apiRoutes';
 
 function ProfielTickets() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());

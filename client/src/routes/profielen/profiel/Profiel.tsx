@@ -2,9 +2,9 @@ import {
 	Box, Card, Container, Grid, Tab, Tabs, Typography
 } from '@mui/material';
 import React from 'react';
-import ProfielSettings from './settings/ProfielSettings';
-import ProfielTickets from './tickets/ProfielTickets';
-import Logout from './logout/Logout';
+import ProfielSettings from '../settings/ProfielSettings';
+import ProfielTickets from '../tickets/ProfielTickets';
+import Logout from '../logout/Logout';
 import Monki from '../../../assets/gorilla.jfif';
 import Avatar from '@mui/material/Avatar';
 import type {
