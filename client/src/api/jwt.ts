@@ -23,3 +23,9 @@ export const validate = async (user:any) => {
 		return false; 
 	});
 };
+
+export const signout = (user:any) => {
+	localStorage.removeItem('token');
+	user.setUser({
+	});
+};

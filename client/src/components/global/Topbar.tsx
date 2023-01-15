@@ -21,6 +21,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Tooltip from '@mui/material/Tooltip';
 import useWindowSize from '../../hooks/useWindowSize';
 import {
+	signout,
 	validate
 } from '../../api/jwt';
 
@@ -113,10 +114,15 @@ export default function Topbar(): JSX.Element {
 											Login
 										</Button>
 									) : (
-										<Button onClick={(): Promise<void> => validate(user)}
+										// <Button onClick={(): Promise<void> => validate(user)}
+										// 	color='secondary' startIcon={<PersonIcon />}
+										// 	variant='contained'>
+										// 	My Account
+										// </Button>
+										<Button onClick={(): Promise<void> => signout(user)}
 											color='secondary' startIcon={<PersonIcon />}
 											variant='contained'>
-											My Account
+											Log out
 										</Button>
 									)
 									}
