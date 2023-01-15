@@ -4,6 +4,8 @@ import {
 import React from 'react';
 import ProfielSettings from '../settings/ProfielSettings';
 import ProfielTickets from '../tickets/ProfielTickets';
+import BandlidShows from '../bandlidProfiel/shows/BandlidShows';
+import BandlidBands from '../bandlidProfiel/bands/BandlidBands';
 import Logout from '../logout/Logout';
 import Monki from '../../../assets/gorilla.jfif';
 import Avatar from '@mui/material/Avatar';
@@ -53,6 +55,9 @@ function a11yAccesibilityProps(index: number) {
 function Profiel() {
 	const [value, setValue] = React.useState(0);
 	const [data, setData] = React.useState<never[] | ProfileCardProps[]>([]);
+
+	// important!!! needs logic
+	const isBandLid = true;
 	React.useEffect(() => {
 		// API('gebruiker').Get(value)
 		// 	.then((res) => {
@@ -94,9 +99,11 @@ function Profiel() {
 								borderRight: 1,
 								borderColor: 'divider'
 							}}>
-							<Tab label="Tickets" {...a11yAccesibilityProps(0)} />
+							<Tab label="Log out" {...a11yAccesibilityProps(0)} />
 							<Tab label="Settings" {...a11yAccesibilityProps(1)} />
-							<Tab label="Log out" {...a11yAccesibilityProps(2)} />
+							<Tab label="Tickets" {...a11yAccesibilityProps(2)} />
+							{ isBandLid && <Tab label="Bands" {...a11yAccesibilityProps(3)} />}
+							{ isBandLid && <Tab label="Shows" {...a11yAccesibilityProps(4)} />}
 						</Tabs>
 					</Card>
 				</Grid>
@@ -114,14 +121,24 @@ function Profiel() {
 						justifyContent: 'center'
 					}}>
 						<TabPanel value={value} index={0}>
-							<ProfielTickets />
+							<Logout />
 						</TabPanel>
 						<TabPanel value={value} index={1}>
 							<ProfielSettings />
 						</TabPanel>
 						<TabPanel value={value} index={2}>
-							<Logout />
+							<ProfielTickets />
 						</TabPanel>
+						{ isBandLid &&
+							<TabPanel value={value} index={3}>
+								<BandlidBands />
+							</TabPanel>
+						}
+						{ isBandLid &&
+							<TabPanel value={value} index={4}>
+								<BandlidShows />
+							</TabPanel>
+						}
 					</Card>
 				</Grid>
 			</Grid>
