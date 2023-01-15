@@ -62,7 +62,9 @@ function ProfielTickets() {
 			p: 1,
 			scrollbarWidth: 'thin',
 		}}>
-			<CardContent>
+			<CardContent sx={{
+				marginTop: 10
+			}}>
 				<Typography variant='h4' mb={2}>
 					Tickets:
 				</Typography>

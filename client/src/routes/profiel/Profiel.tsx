@@ -24,7 +24,7 @@ function TabPanel(props: TabPanelProps) {
 	const { children, value, index, ...other } = props;
 
 	return (
-		<div
+		<Box
 			role="tabpanel"
 			hidden={value !== index}
 			id={`vertical-tabpanel-${index}`}
@@ -38,11 +38,11 @@ function TabPanel(props: TabPanelProps) {
 					<Typography>{children}</Typography>
 				</Box>
 			)}
-		</div>
+		</Box>
 	);
 }
 
-function a11yProps(index: number) {
+function a11yAccesibilityProps(index: number) {
 	return {
 		id: `vertical-tab-${index}`,
 		'aria-controls': `vertical-tabpanel-${index}`,
@@ -74,24 +74,13 @@ function Profiel() {
 	};
 
 	return (
-		<Container sx={{
-			height: '100vh',
-			display: 'flex',
-			justifyContent: 'center',
-			alignItems: 'center',
+		<Container maxWidth={'xl'} sx={{
+			my: 4
 		}}>
-			<Grid container sx={{
-				height: '100%',
-				marginTop: 6
-			}}>
+			<Grid container spacing={3}>
 				<Grid item lg={6}
-					sm={12}
-					xs={12}
-				>
-					<Card elevation={4} sx={{
-						p: 1,
-						marginRight: 4,
-					}}>
+					xs={12}>
+					<Card elevation={4}>
 						{data.map((card) => {
 							return <ProfileCard key={card.name} {...card} />;
 						})}
@@ -105,9 +94,9 @@ function Profiel() {
 								borderRight: 1,
 								borderColor: 'divider'
 							}}>
-							<Tab label="Tickets" {...a11yProps(0)} />
-							<Tab label="Settings" {...a11yProps(1)} />
-							<Tab label="Log out" {...a11yProps(2)} />
+							<Tab label="Tickets" {...a11yAccesibilityProps(0)} />
+							<Tab label="Settings" {...a11yAccesibilityProps(1)} />
+							<Tab label="Log out" {...a11yAccesibilityProps(2)} />
 						</Tabs>
 					</Card>
 				</Grid>
@@ -118,9 +107,10 @@ function Profiel() {
 				>
 					<Card elevation={4} sx={{
 						maxHeight: 500,
+						minHeight: 500,
 						overflowY:'auto',
 						scrollbarWidth: 'thin',
-						alignContent: 'center',
+						alignItems: 'center',
 						display: 'flex',
 						justifyContent: 'center'
 					}}>
