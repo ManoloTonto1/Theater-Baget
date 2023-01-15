@@ -8,11 +8,11 @@ import dayjs from 'dayjs';
 import React from 'react';
 import {
 	Ticket 
-} from '../../../components/Ticket';
+} from '../../../../components/Ticket';
 import type {
 	Programma 
-} from '../../../components/global/globalTypes';
-import API from '../../../api/apiRoutes';
+} from '../../../../components/global/globalTypes';
+import API from '../../../../api/apiRoutes';
 
 function ProfielTickets() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
@@ -34,7 +34,7 @@ function ProfielTickets() {
 			scrollbarWidth: 'thin',
 		}}>
 			<CardContent sx={{
-				marginTop: 10
+				marginTop: 100
 			}}>
 				<Typography variant='h4' mb={2}>
 					Tickets:

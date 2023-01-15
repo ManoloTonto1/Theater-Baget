@@ -5,14 +5,14 @@ import React from 'react';
 import ProfielSettings from './settings/ProfielSettings';
 import ProfielTickets from './tickets/ProfielTickets';
 import Logout from './logout/Logout';
-import Monki from '../../assets/gorilla.jfif';
+import Monki from '../../../assets/gorilla.jfif';
 import Avatar from '@mui/material/Avatar';
 import type {
 	ProfileCardProps
-} from '../../components/ProfileCard';
+} from '../../../components/ProfileCard';
 import {
 	ProfileCard
-} from '../../components/ProfileCard';
+} from '../../../components/ProfileCard';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
