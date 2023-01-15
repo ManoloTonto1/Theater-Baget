@@ -101,11 +101,17 @@ function Profiel() {
 					</Card>
 				</Grid>
 				<Grid item lg={6}
-					xs={12}>
+					sm={12}
+					xs={12}
+				>
 					<Card elevation={4} sx={{
-						maxHeight: '80vh',
-						overflowY: 'auto',
+						maxHeight: 500,
+						minHeight: 500,
+						overflowY:'auto',
 						scrollbarWidth: 'thin',
+						alignItems: 'center',
+						display: 'flex',
+						justifyContent: 'center'
 					}}>
 						<TabPanel value={value} index={0}>
 							<ProfielTickets />
@@ -119,7 +125,6 @@ function Profiel() {
 					</Card>
 				</Grid>
 			</Grid>
-
 		</Container>
 	);
 }
