@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Controllers;
 
+var policy = "Client";
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "Client",
+    options.AddPolicy(name: policy,
                       policy =>
                       {
                           policy.AllowAnyOrigin()
@@ -18,6 +20,7 @@ builder.Services.AddCors(options =>
                           .AllowAnyMethod();
                       });
 });
+
 builder.Services.AddDbContext<theaterContext>(options =>
     options.UseSqlite("Data Source=database.db"));
 // Add services to the container.
@@ -26,6 +29,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -36,7 +40,8 @@ if (app.Environment.IsDevelopment())
 // enable if you want t use HTTPS, remember to change the Proxy in the client.
 // app.UseHttpsRedirection();
 
-app.UseCors("Client");
+app.UseCors(policy);
+
 app.UseAuthorization();
 app.MapControllers();
 
