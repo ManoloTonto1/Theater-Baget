@@ -18,6 +18,7 @@ import axios from 'axios';
  * @type {{ 'Content-Type': string; Authorization: string; }}
  */
 const BearerToken = {
+	'Access-Control-Allow-Origin':'*',
 	'Content-Type': 'application/json',
 	Authorization: `Bearer ${localStorage.getItem('token')}`
 };

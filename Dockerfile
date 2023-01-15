@@ -13,4 +13,5 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /App
 COPY --from=build-env /App/out .
 COPY ./server/database.db .
+EXPOSE 80
 ENTRYPOINT ["dotnet", "server.dll"]
