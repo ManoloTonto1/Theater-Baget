@@ -38,7 +38,7 @@ export type Data<T> = {
  */
 const apiEndPoint = import.meta.env.MODE === 'development' ?
 	'/api'
-	: 'https://theater-baget-t24oktgp5q-ew.a.run.app';
+	: 'https://theater-baget-t24oktgp5q-ew.a.run.app/api';
 
 /**
  * The module of the api route
