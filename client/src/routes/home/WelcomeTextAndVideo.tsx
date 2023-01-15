@@ -80,11 +80,15 @@ function WelcomeTextAndVideo() :JSX.Element {
 				mb: 8,
 			}}
 		>
-			<Grid item xs={12}
+			<Grid item
+				lg={6}
+				xs={12}
 				sm={6}>
 				<WelcomeText/>
 			</Grid>
-			<Grid item xs={6}
+			<Grid item
+				lg={6}
+				xs={12}
 				height={'inherit'}>
 				<Video/>
 			</Grid>
