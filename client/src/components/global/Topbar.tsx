@@ -98,7 +98,7 @@ export default function Topbar(): JSX.Element {
                                 Login
 										</Button>
 									): (
-										<Button onClick={() :Promise<void> => validate(user)}
+										<Button onClick={() :Promise<boolean> => validate(user)}
 											color='secondary' startIcon={<PersonIcon />}
 											variant='contained'>
 											My Account

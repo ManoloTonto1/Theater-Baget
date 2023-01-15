@@ -1,6 +1,7 @@
 import API from '../api/apiRoutes';
 
 export const validate = async (user:any) => {
+    let result = false;
 
 	API('validate').Create(
 		{
@@ -8,10 +9,10 @@ export const validate = async (user:any) => {
 		}
 	).then((res) => {
 		if(res.status == 200) {
-			return true;
+			result = true;
 		}
-	}).catch((err) => {
-		console.log(err);
+	}).catch(() => {
+        
 		// clear user
     
 		localStorage.removeItem('token');
@@ -20,6 +21,8 @@ export const validate = async (user:any) => {
 			{
 			}
 		); 
-		return false; 
+		result = false; 
 	});
+
+    return result;
 };
