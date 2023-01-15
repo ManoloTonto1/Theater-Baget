@@ -19,7 +19,7 @@ import UserContext from '../../../context/UserContext';
 
 import {
 	buildRequestParams 
-} from '../../../components/RequestBuilder';
+} from '../../../api/RequestBuilder';
 
 import { 
 	useNavigate 

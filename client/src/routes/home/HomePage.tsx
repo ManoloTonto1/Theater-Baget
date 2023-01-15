@@ -8,7 +8,6 @@ import {
 } from '@mui/system';
 import React from 'react';
 import UserContext from '../../context/UserContext';
-import Monki from '../../assets/gorilla.jfif';
 import {
 	useNavigate 
 } from 'react-router-dom';
@@ -16,66 +15,21 @@ import {
 	ActionButtons 
 } from './ActionButtons';
 import WelcomeTextAndVideo from './WelcomeTextAndVideo';
-type TCard = {
-		naam: string,
-		datum: string,
-		omschrijving: string,
-		afbeelding:string
-		
-}[]
+import API from '../../api/apiRoutes';
+import type {
+	Programma 
+} from '../../components/global/globalTypes';
+import LoadingPage from '../../components/global/LoadingPage';
 
-const cards: TCard = [
-	{
-		naam: 'niggas in paris',
-		afbeelding: Monki,
-		datum: '69th of your mom',
-		omschrijving:'SUPER GAAF'
-	},
-	{
-		naam: 'niggas in paris',
-		afbeelding: Monki,
-		datum: '69th of your mom',
-		omschrijving:'SUPER GAAF'
-	},
-	{
-		naam: 'niggas in paris',
-		afbeelding: Monki,
-		datum: '69th of your mom',
-		omschrijving:'SUPER GAAF'
-	},
-	{
-		naam: 'niggas in paris',
-		afbeelding: Monki,
-		datum: '69th of your mom',
-		omschrijving:'SUPER GAAF'
-	},
-	{
-		naam: 'niggas in paris',
-		afbeelding: Monki,
-		datum: '69th of your mom',
-		omschrijving:'SUPER GAAF'
-	},
-	{
-		naam: 'niggas in paris',
-		afbeelding: Monki,
-		datum: '69th of your mom',
-		omschrijving:'SUPER GAAF'
-	},
-	{
-		naam: 'niggas in paris',
-		afbeelding: Monki,
-		datum: '69th of your mom',
-		omschrijving:'SUPER GAAF'
-	},
-	{
-		naam: 'niggas in paris',
-		afbeelding: Monki,
-		datum: '69th of your mom',
-		omschrijving:'SUPER GAAF'
-	},
-];
+function Homepage(): JSX.Element {
+	const [data, setData] = React.useState<null | Programma[]>(null);
 
-function Homepage() :JSX.Element {
+	React.useEffect(()=> {
+		API('programmeringen').GetAll()
+			.then((res) => {
+				setData(res.data);
+			});
+	},[]);
 	const { theme } = React.useContext(UserContext);
 	const navigate = useNavigate();
 	return (
@@ -99,30 +53,41 @@ function Homepage() :JSX.Element {
 						mb:4
 					}}>
 					{
-						cards.map((card,index) => {
+						data ? data.map((card, index) => {
+							const datum = new Date(card.datum);
+							const newDate = datum.toString().split(' ');
 							return (
 								<Grow in timeout={index * 100}
-									key={card.naam}>
+									key={card.zaalNr}>
 									<Grid item
 										xs={12}
 										sm={3}
 									>
-										<Card elevation={10}>
-											<CardActionArea onClick={() : void =>navigate('event/1')}>
+										<Card elevation={10} 
+										>
+											<CardActionArea
+												LinkComponent={'a'}
+												href={`#/event/${card.id}`}
+												onClick={(e): void => {
+													e.preventDefault();
+													e.stopPropagation();
+													navigate(`event/${card.id}`);
+												}}>
 
 												<CardMedia
 													component="img"
-													height=""
+													height={300}
 													image={card.afbeelding}
 													alt="gorilla"
 												/>
 												<CardContent>
 													<Typography gutterBottom variant="h5"
 														component="div">
-														{card.naam}
+														{card.titel}
 													</Typography>
 													<Typography variant="body2" color="text.secondary">
-														{card.datum}
+														{newDate[1]} {newDate[2]}, {newDate[3]}
+														
 													</Typography>
 													<Typography variant="body2" color="text.secondary">
 														{card.omschrijving}
@@ -134,7 +99,7 @@ function Homepage() :JSX.Element {
 									</Grid>
 								</Grow>
 							);
-						})
+						}): <LoadingPage/>
 					}
 				</Grid>
 			</Container>

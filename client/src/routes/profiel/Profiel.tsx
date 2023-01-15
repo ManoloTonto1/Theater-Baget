@@ -100,7 +100,6 @@ function Profiel() {
 						</Tabs>
 					</Card>
 				</Grid>
-
 				<Grid item lg={6}
 					sm={12}
 					xs={12}

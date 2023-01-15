@@ -40,9 +40,7 @@ function ProfielSettings() {
 	}, []);
 
 	return (
-		<FormGroup sx = {{
-			width: 500
-		}} >
+		<FormGroup>
 			<Typography variant="h5">
                 Gegevens aanpassen
 			</Typography>

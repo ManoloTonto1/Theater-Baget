@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Any;
 
 namespace server.Controllers;
 [Route("api/programmeringen")]
@@ -11,6 +12,8 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     public ProgrammeringenController(theaterContext _context)
     {
         context = _context;
+        // Seeds the Db
+        new Seed(_context);
     }
     [HttpDelete("{id}")]
 
@@ -52,12 +55,21 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
         return await context.Programmering.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Programmering data)
+    public async Task<ActionResult> Post([FromBody] Data<Programmering> data)
     {
-        context.Programmering.Add(data);
+        var date = DateTime.Parse(data.datum);
+        var newData = new Programmering
+        {
+            titel = data.titel,
+            datum = date,
+            afbeelding = data.afbeelding,
+            omschrijving = data.omschrijving,
+
+    };
+        context.Programmering.Add(newData);
         await context.SaveChangesAsync();
 
-        return CreatedAtAction("Get", new { data.id }, data);
+        return CreatedAtAction("Get", new { data.id }, newData);
     }
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(int id, Programmering data)

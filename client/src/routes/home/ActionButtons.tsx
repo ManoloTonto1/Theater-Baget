@@ -28,7 +28,8 @@ const buttons = [
 ];
 export function ActionButtons(): JSX.Element {
 	const navigate = useNavigate();
-	const goToPage = React.useCallback((location:string) : void => {
+	const goToPage = React.useCallback((e:React.MouseEvent<HTMLAnchorElement, MouseEvent>,location:string) : void => {
+		e.preventDefault();
 		navigate(location);	
 	},[navigate]);
 	return (
@@ -49,7 +50,9 @@ export function ActionButtons(): JSX.Element {
 								bgcolor:'primary.main'
 							}}>
 								<CardActionArea
-									onClick={() : void => goToPage(data.path)}
+									LinkComponent={'a'}
+									href={`#${data.path}`}
+									onClick={(e) : void => goToPage(e,data.path)}
 									sx={{
 										p: 1,
 										display: 'flex',

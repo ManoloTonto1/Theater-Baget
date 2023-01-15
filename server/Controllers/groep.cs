@@ -52,10 +52,10 @@ public class GroepenController : ControllerBase, IController<Groep>
         return await context.Groep.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Groep data)
+    public async Task<ActionResult> Post(Data<Groep> data)
     {
-        context.Groep.Add(data);
-        await context.SaveChangesAsync();
+        // context.Groep.Add(data);
+        // await context.SaveChangesAsync();
 
         return CreatedAtAction("Get", new { data.id }, data);
     }

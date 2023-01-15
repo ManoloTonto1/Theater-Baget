@@ -20,9 +20,9 @@ import PaidIcon from '@mui/icons-material/Paid';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Tooltip from '@mui/material/Tooltip';
 import useWindowSize from '../../hooks/useWindowSize';
-import { 
-	validate 
-} from '../jwt';
+import {
+	validate
+} from '../../api/jwt';
 
 export default function Topbar(): JSX.Element {
 	const windowSize = useWindowSize();
@@ -39,11 +39,11 @@ export default function Topbar(): JSX.Element {
 				flexGrow: 1
 			}}>
 				<AppBar position="static" sx={{
-					bgcolor:'primary.main'
+					bgcolor: 'primary.main'
 				}}>
 					<Toolbar sx={{
 						display: 'flex',
-						justifyContent:'space-between',
+						justifyContent: 'space-between',
 					}}>
 						<Box display={'flex'}>
 							{location.pathname !== '/' && (
@@ -57,10 +57,19 @@ export default function Topbar(): JSX.Element {
 									</IconButton>
 								</Tooltip>
 							)}
-							<Box component={'a'} onClick={() :void => navigate('/')}
+							<Box
+								
+								component={'a'}
+								href={'#/'}
+								onClick={(e): void => {
+									e.preventDefault();
+									navigate('/');
+								}}
 								sx={{
 									display: 'flex',
-									alignItems: 'center'
+									alignItems: 'center',
+									color: 'inherit',
+									textDecoration:'none'
 								}}>
 								<img style={{
 									borderRadius: '50px',
@@ -75,30 +84,36 @@ export default function Topbar(): JSX.Element {
 								flexGrow={1}>
 									Theater Baget
 								</Typography>
-							</Box>	
+							</Box>
 						</Box>
-				
+
 						<Box sx={{
 							display: 'flex',
 						}}>
 							{windowSize.innerWidth > 600 ? (
 								<>
-									<Button onClick={() :void => navigate('/donate')}
+									<Button
+										LinkComponent={'a'}
+										href={'#/donate'}
+										onClick={(e): void => {
+											e.preventDefault();
+											navigate('/donate');
+										}}
 										color='secondary' startIcon={<PaidIcon />}
 										variant='contained' sx={{
 											mr: 2
 										}}>
-								Donate
+										Donate
 									</Button>
 									{localStorage.getItem('token') == null ? (
 
-										<Button onClick={() :void=>navigate('/login')}
+										<Button onClick={(): void => navigate('/login')}
 											color='secondary' startIcon={<PersonIcon />}
 											variant='contained'>
-                                Login
+											Login
 										</Button>
-									): (
-										<Button onClick={() :Promise<void> => validate(user)}
+									) : (
+										<Button onClick={(): Promise<void> => validate(user)}
 											color='secondary' startIcon={<PersonIcon />}
 											variant='contained'>
 											My Account
@@ -143,7 +158,7 @@ export default function Topbar(): JSX.Element {
 					</Toolbar>
 				</AppBar>
 			</Box>
-            
+
 		</ThemeProvider>
 	);
 }

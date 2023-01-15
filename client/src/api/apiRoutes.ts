@@ -5,6 +5,7 @@
  * @body {Email string, Hoeveelheid number, Doel string, Tekst string}
  */
 export const postDonation = 'https://ikdoneer.azurewebsites.net/api/donatie/';
+const postPay = 'https://fakepay.azurewebsites.net/';
 export const getCharities = 'https://ikdoneer.azurewebsites.net/api/goededoelen/';
 import type {
 	AxiosResponse
@@ -17,6 +18,7 @@ import axios from 'axios';
  * @type {{ 'Content-Type': string; Authorization: string; }}
  */
 const BearerToken = {
+	'Access-Control-Allow-Origin':'*',
 	'Content-Type': 'application/json',
 	Authorization: `Bearer ${localStorage.getItem('token')}`
 };
@@ -34,7 +36,9 @@ export type Data<T> = {
  *
  * @type {("/api" | "{cloud provider link}")}
  */
-const apiEndPoint = import.meta.env.MODE === 'development' ? '/api' : '';
+const apiEndPoint = import.meta.env.MODE === 'development' ?
+	'/api'
+	: 'https://theater-baget-t24oktgp5q-ew.a.run.app/api';
 
 /**
  * The module of the api route
@@ -86,8 +90,9 @@ interface ApiModule {
     Create(data: Data<unknown> | any): Promise<AxiosResponse<any, any>>
 }
 
-interface DonateModule {
+interface ExternalModule {
     Donate(Email: string, Hoeveelheid: number, Doel: number, Tekst: string): Promise<AxiosResponse<any, any>>;
+	Pay(amount: number, reference: string, url:string): Promise<AxiosResponse<any, any>>;
 }
 
 /**
@@ -96,31 +101,31 @@ interface DonateModule {
  * @param {string} route
  * @returns {ApiModule}
  */
-const API = <T extends string>(route: T): T extends 'donate' ? DonateModule : ApiModule => {
+const API = <T extends string>(route: T): T extends 'external' ? ExternalModule : ApiModule => {
 	const ApiModule: ApiModule = {
 		route: '',
-		Get: (id?: string) => {
+		Get: async (id?: string) => {
 			return axios({
 				headers: BearerToken,
 				method: 'GET',
 				url: id ? ApiModule.route + id : ApiModule.route
 			});
 		},
-		GetAll: () => {
+		GetAll: async () => {
 			return axios({
 				headers: BearerToken,
 				method: 'GET',
 				url: `${ApiModule.route}`
 			});
 		},
-		TotalRows: (): Promise<AxiosResponse<any, any>> => {
+		TotalRows: async (): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				headers: BearerToken,
 				method: 'GET',
 				url: ApiModule.route + 'count'
 			});
 		},
-		Update: (id: string, data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
+		Update: async (id: string, data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				method: 'PUT',
 				url: ApiModule.route + id,
@@ -128,7 +133,7 @@ const API = <T extends string>(route: T): T extends 'donate' ? DonateModule : Ap
 				data: data
 			});
 		},
-		Create: (data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
+		Create: async (data: Data<unknown> | unknown): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				method: 'POST',
 				headers: BearerToken,
@@ -138,14 +143,14 @@ const API = <T extends string>(route: T): T extends 'donate' ? DonateModule : Ap
 		},
 
 	};
-	const DonateModule: DonateModule = {
-		Donate: (Email:string,Hoeveelheid:number,Doel:number,Tekst:string): Promise<AxiosResponse<any, any>> => {
+	const DonateModule: ExternalModule = {
+		Donate: async (Email:string,Hoeveelheid:number,Doel:number,Tekst:string): Promise<AxiosResponse<any, any>> => {
 			return axios({
 				method: 'POST',
 				headers: {
 					'Authorization': `Bearer ${import.meta.env.VITE_DONATE_TOKEN}`
 				},
-				url: ApiModule.route,
+				url: postDonation,
 				data: {
 					Email,
 					Hoeveelheid,
@@ -154,10 +159,23 @@ const API = <T extends string>(route: T): T extends 'donate' ? DonateModule : Ap
 				}
 			});
 		},
+		Pay: async (amount: number, reference: string, url:string): Promise<AxiosResponse<any, any>> => {
+			return axios({
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				},
+				url: postPay,
+				data: {
+					amount,
+					reference,
+					url
+				}
+			});
+		},
 	};
     
-	if (route === 'donate') {
-		ApiModule.route = postDonation;
+	if (route === 'external') {
 		return DonateModule as any;
 	}
 	ApiModule.route = apiEndPoint + '/' + route + '/';

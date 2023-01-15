@@ -1,4 +1,4 @@
-import API from '../api/apiRoutes';
+import API from './apiRoutes';
 
 export const validate = async (user:any) => {
 

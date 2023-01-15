@@ -21,7 +21,7 @@ function LoadingPage(){
 					height:'68vh'
 				}}
 			>
-				<CircularProgress />
+				<CircularProgress/>
 				<Typography sx={{
 					py: 3
 				}}
