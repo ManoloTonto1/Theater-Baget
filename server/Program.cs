@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment())
 // enable if you want t use HTTPS, remember to change the Proxy in the client.
 // app.UseHttpsRedirection();
 
-app.UseCors();
+app.UseCors("Client");
 app.UseAuthorization();
 app.MapControllers();
 
