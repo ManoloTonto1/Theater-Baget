@@ -13,8 +13,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "Client",
                       policy =>
                       {
-                          policy.WithOrigins("https://manolotonto1.github.io/",
-                          "https://manolotonto1.github.io/Theater-Baget/");
+                          policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
                       });
 });
 builder.Services.AddDbContext<theaterContext>(options =>
