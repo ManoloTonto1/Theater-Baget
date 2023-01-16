@@ -10,7 +10,7 @@ import {
 	Ticket 
 } from '../../../../components/Ticket';
 import type {
-	Programma 
+	Groep
 } from '../../../../components/global/globalTypes';
 import API from '../../../../api/apiRoutes';
 import Monki from '../../../../assets/gorilla.jfif';
@@ -20,7 +20,7 @@ import {
 
 function BandlidBands() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
-	const [data, setData] = React.useState<never[] | Programma[]>([]);
+	const [data, setData] = React.useState<never[] | Groep[]>([]);
 	React.useEffect(() => {
 		//API('groepen').GetAll()
 		//.then((res) => {
@@ -33,14 +33,14 @@ function BandlidBands() {
 
 		setData([{
 			id: 1,
-			name: 'akashamonka',
-			image: Monki,
+			naam: 'akashamonka',
+			afbeelding: Monki,
 			omschrijving: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt',
 			link: 'dood'
 		},{
 			id: 1,
-			name: 'akashamonka',
-			image: Monki,
+			naam: 'akashamonka',
+			afbeelding: Monki,
 			omschrijving: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididu',
 			link: 'dood'
 		}]);

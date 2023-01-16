@@ -14,3 +14,11 @@ export type Programma = {
     titel: string;
     zaalNr: string;
 }
+
+export type Groep = {
+    id: number;
+    naam: string;
+    afbeelding: string;
+    omschrijving: string;
+    link: string;
+}

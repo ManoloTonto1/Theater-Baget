@@ -1,18 +1,13 @@
 import {
-	Card, Grid, Avatar, Box, Typography, Accordion, AccordionDetails, AccordionSummary 
+	Card, Grid, Avatar, Box, Typography, Accordion, AccordionDetails, AccordionSummary, Button 
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import type {
+	Groep
+} from '../components/global/globalTypes';
 import React from 'react';
 
-export type BandCardProps = {
-    id: number,
-    name: string,
-    image: string,
-    omschrijving: string,
-    link: string
-}
-
-export function BandCard(props:BandCardProps) {
+export function BandCard(props:Groep) {
 	return (
 		<Card elevation={4} sx={{
 			marginBottom: 2,
@@ -22,8 +17,8 @@ export function BandCard(props:BandCardProps) {
 		}}>
 			<Grid container>
 				<Avatar
-					alt={props.name}
-					src={props.image}
+					alt={props.naam}
+					src={props.afbeelding}
 					sx={{
 						width: 100,
 						height: 100,
@@ -35,11 +30,11 @@ export function BandCard(props:BandCardProps) {
 					flexDirection: 'column'
 				}}>
 					<Typography>
-                        Naam: {props.name}
+                        Naam: {props.naam}
 					</Typography>
-					<Typography>
-						<a href={props.link}>website</a>
-					</Typography>
+					<Button variant="contained" href={props.link}>
+  						Link
+					</Button>
 				</Box>
 				<Accordion sx={{
 					width: '100%'
