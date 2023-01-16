@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace server.Controllers;
 [Route("api/groepen")]
 [ApiController]
-public class GroepenController : ControllerBase, IController<Groep>
+public class GroepenController : ControllerBase, IController<Groep,GroepData>
 {
     private readonly theaterContext context;
 
@@ -39,6 +39,12 @@ public class GroepenController : ControllerBase, IController<Groep>
         var value = await context.Groep.FindAsync(id);
         return value == null ? NotFound() : value;
     }
+    [HttpGet("{name}")]
+    public async Task<ActionResult<Groep>> GetByName(string name)
+    {
+        var value = await context.Groep.Where(g => g.naam == name).FirstAsync();
+        return value == null ? NotFound() : value;
+    }
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Groep>>> GetAll()
     {
@@ -52,13 +58,21 @@ public class GroepenController : ControllerBase, IController<Groep>
         return await context.Groep.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Data<Groep> data)
+    public async Task<ActionResult> Post([FromBody] GroepData data)
     {
-        // context.Groep.Add(data);
-        // await context.SaveChangesAsync();
+        var newData = new Groep
+        {
+            naam = data.naam,
+            afbeelding = data.afbeelding,
+            omschrijving = data.omschrijving,
+            websiteUrl = data.websiteUrl
+        };
+        context.Groep.Add(newData);
+        await context.SaveChangesAsync();
 
-        return CreatedAtAction("Get", new { data.id }, data);
+        return CreatedAtAction("Get", new { newData.id }, newData);
     }
+
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(int id, Groep data)
     {

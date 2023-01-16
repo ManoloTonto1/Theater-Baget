@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore;
 namespace server.Controllers;
 [Route("api/zalen")]
 [ApiController]
-public class ZalenController : ControllerBase, IController<Zaal>
+public class ZalenController : ControllerBase, IController<Zaal,ZaalData>
 {
     private readonly theaterContext context;
-
+    private readonly Jwt auth;
 
     public ZalenController(theaterContext _context)
     {
         context = _context;
+        auth = new Jwt();
     }
 
     [HttpDelete("{id}")]
@@ -54,14 +55,28 @@ public class ZalenController : ControllerBase, IController<Zaal>
         return await context.Zaal.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Data<Zaal> data)
+    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody]ZaalData data)
     {
-        // context.Zaal.Add(data);
-        // await context.SaveChangesAsync();
+        if(token == null || token == ""){
+            return Unauthorized();
+        }
+        var role = auth.getRoleFromToken(token);
+        if (role == null || role != level.medewerker || role != level.admin)
+        {
+            return Unauthorized();
+        }
+        var newData = new Zaal{
+            eersterangsAantal = data.eersterangsAantal,
+            tweederangsAantal = data.tweederangsAantal,
+            derderangsAantal = data.derderangsAantal,
+            soort = data.soort,
+        };
+        context.Zaal.Add(newData);
+        await context.SaveChangesAsync();
 
-        // return CreatedAtAction("Get", new { id = data.zaalNr }, data);
-        return Ok();
+        return CreatedAtAction("Get", new { id = data.zaalNr }, data);
     }
+    
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(int id, [FromBody] Zaal data)
     {

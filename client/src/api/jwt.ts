@@ -1,25 +1,32 @@
 import API from './apiRoutes';
+import React from 'react';
+import UserContext, {
+	level 
+} from '../context/UserContext';
 
-export const validate = async (user:any) => {
-
-	API('validate').Create(
-		{
-			token: localStorage.getItem('token'),
-		}
-	).then((res) => {
-		if(res.status == 200) {
-			return true;
-		}
-	}).catch((err) => {
-		console.log(err);
-		// clear user
-    
-		localStorage.removeItem('token');
-    
-		user.setUser(
+function JWT() {
+	const [isValid, setValid] = React.useState(false);
+	const { user, role } = React.useContext(UserContext);
+	React.useEffect(() => {
+		API('validate').Create(
 			{
+				token: localStorage.getItem('token'),
 			}
-		); 
-		return false; 
+		).then((res) => {
+			if(res.status == 200) {
+				setValid(true);
+			}
+		}).catch((err) => {
+			console.log(err);
+			localStorage.removeItem('token');
+		
+			user.setUser(null); 
+			role.setRole(level.bezoeker);
+			setValid(false); 
+		});
 	});
-};
+	return isValid;
+   
+}
+
+export default JWT;

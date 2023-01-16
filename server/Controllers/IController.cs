@@ -3,13 +3,13 @@ using Microsoft.OpenApi.Any;
 
 namespace server.Controllers;
 
-public interface IController<T>
+public interface IController<T,DT>
 {
     public Task<ActionResult<T>> Get(int id);
     public Task<ActionResult<IEnumerable<T>>> GetAll();
     public Task<ActionResult<int>> GetCount();
     public Task<ActionResult> Put(int id, T data);
-    public Task<ActionResult> Post([FromBody] Data<T> data);
+    public Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token,[FromBody] DT data);
     public Task<ActionResult> Delete(int id);
     public bool Exists(int id);
 }

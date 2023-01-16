@@ -5,7 +5,7 @@ using Microsoft.OpenApi.Any;
 namespace server.Controllers;
 [Route("api/programmeringen")]
 [ApiController]
-public class ProgrammeringenController : ControllerBase, IController<Programmering>
+public class ProgrammeringenController : ControllerBase, IController<Programmering,ProgrammeringData>
 {
     private readonly theaterContext context;
 
@@ -55,7 +55,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
         return await context.Programmering.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] Data<Programmering> data)
+    public async Task<ActionResult> Post([FromBody] ProgrammeringData data)
     {
         var date = DateTime.Parse(data.datum);
         var newData = new Programmering
@@ -69,7 +69,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
         context.Programmering.Add(newData);
         await context.SaveChangesAsync();
 
-        return CreatedAtAction("Get", new { data.id }, newData);
+        return CreatedAtAction("Get", new { newData.id }, newData);
     }
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(int id, Programmering data)
