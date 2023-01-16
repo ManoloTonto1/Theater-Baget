@@ -15,6 +15,8 @@ import type {
 import {
 	ProfileCard
 } from '../../../components/ProfileCard';
+import API from '../../../api/apiRoutes';
+import UserContext from '../../../context/UserContext';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -55,24 +57,10 @@ function a11yAccesibilityProps(index: number) {
 function Profiel() {
 	const [value, setValue] = React.useState(0);
 	const [data, setData] = React.useState<never[] | ProfileCardProps[]>([]);
+	const { user, role } = React.useContext(UserContext);
 
 	// important!!! needs logic
-	const isBandLid = true;
-	React.useEffect(() => {
-		// API('gebruiker').Get(value)
-		// 	.then((res) => {
-		// 		if (res.status != 200) {
-		// 			return;
-		// 		}
-
-		// 	});
-		setData([{
-			image: Monki,
-			name: 'akasha monka',
-			email: 'gekkefred@ninja.ninja',
-			ageGroep: 'dood'
-		}]);
-	}, [value]);
+	const isBandLid = role.role == 
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
@@ -114,17 +102,31 @@ function Profiel() {
 					<Card elevation={4} sx={{
 						maxHeight: 500,
 						minHeight: 500,
-						overflowY:'auto',
-						scrollbarWidth: 'thin',
-						alignItems: 'center',
-						display: 'flex',
-						justifyContent: 'center'
+						
 					}}>
 						<TabPanel value={value} index={0}>
-							<Logout />
+							<Box sx={{
+								width: '100%',
+								height: '100%',
+								scrollbarWidth: 'thin',
+								alignItems: 'center',
+								display: 'flex',
+								justifyContent: 'center'
+							}}>
+								<Logout />
+							</Box>	
 						</TabPanel>
 						<TabPanel value={value} index={1}>
-							<ProfielSettings />
+							<Box sx={{
+								width: '100%',
+								height: '100%',
+								scrollbarWidth: 'thin',
+								alignItems: 'center',
+								display: 'flex',
+								justifyContent: 'center'
+							}}>
+								<ProfielSettings />
+							</Box>
 						</TabPanel>
 						<TabPanel value={value} index={2}>
 							<ProfielTickets />

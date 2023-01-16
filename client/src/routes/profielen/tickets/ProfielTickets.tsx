@@ -13,29 +13,30 @@ import type {
 	Programma 
 } from '../../../components/global/globalTypes';
 import API from '../../../api/apiRoutes';
+import UserContext from '../../../context/UserContext';
+import { any } from 'cypress/types/bluebird';
 
 function ProfielTickets() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 	const [data, setData] = React.useState<never[] | Programma[]>([]);
+	const {user} = React.useContext(UserContext);
 	React.useEffect(() => {
 		API('programmeringen').GetAll()
 			.then((res) => {
 				if (res.status != 200) {
 					return;
 				}
-				setData(res.data);
-
+				setData(res.data.find(re => re.owner.id = user.userData.id));
 			});
 	}, []);
+	
 
 	return (
 		<Box sx={{
 			p: 1,
 			scrollbarWidth: 'thin',
 		}}>
-			<CardContent sx={{
-				marginTop: 100
-			}}>
+			<CardContent>
 				<Typography variant='h4' mb={2}>
 					Tickets:
 				</Typography>

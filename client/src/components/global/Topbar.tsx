@@ -113,7 +113,7 @@ export default function Topbar(): JSX.Element {
 											Login
 										</Button>
 									) : (
-										<Button onClick={(): Promise<void> => validate(user)}
+										<Button onClick={(): void => navigate('/profiel')}
 											color='secondary' startIcon={<PersonIcon />}
 											variant='contained'>
 											My Account
