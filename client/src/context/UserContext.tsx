@@ -12,19 +12,26 @@ import type {
 	$TSfixMeAny 
 } from '../components/global/globalTypes';
 
-type TRole = 'admin' | 'medewerker' | 'user' | 'donateur'
+export enum level
+{
+    bezoeker, donateur, medewerker,acteur,admin,bandlid
+}
 
-const initRole: TRole = 'admin';
-
+type userData = {
+	id: number,
+	naam: string,
+	email: string,
+	token: string
+}
 type contextData = {
 
     user: {
-        userData: $TSfixMeAny;
-        setUser: React.Dispatch<React.SetStateAction<$TSfixMeAny>>;
+        userData: userData | null;
+        setUser: React.Dispatch<React.SetStateAction<userData| null>>;
     };
     role: {
-        role: TRole;
-        setRole: React.Dispatch<React.SetStateAction<$TSfixMeAny>>;
+        role: level;
+        setRole: React.Dispatch<React.SetStateAction<level>>;
     };
     theme: {
         theme: Theme;
@@ -60,10 +67,9 @@ export const UserProvider = ({ children }: $TSfixMeAny) => {
 		localStorage.setItem('darkMode', darkMode ? 'light' : 'dark');
 	}, [darkMode]);
     
-	const [userData, setUser] = React.useState({
-	});
+	const [userData, setUser] = React.useState<null | userData>(null);
     
-	const [role, setRole] = React.useState(initRole);
+	const [role, setRole] = React.useState(level.bezoeker);
 
 	const store: contextData = {
 		user: {

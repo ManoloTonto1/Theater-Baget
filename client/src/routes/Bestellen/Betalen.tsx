@@ -20,6 +20,7 @@ type props = {
 }
 function Betalen(props: props) {
 	const { user } = React.useContext(UserContext);
+
 	const setGegevens = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		props.setGegevens({
 			amount: props.selection.length * 10,
@@ -84,7 +85,7 @@ function Betalen(props: props) {
 							</Grid>
 							<Grid item xs={12}>
 								<Typography variant='h6'>
-									{user.userData.username ? user.userData.username : 'Anoniem'}
+									{user.userData ? user.userData.naam : 'Anoniem'}
 								</Typography>
 							</Grid>
 						</Grid>

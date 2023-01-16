@@ -15,11 +15,9 @@ import {
 	Typography 
 } from '@mui/material';
 
-import UserContext from '../../../context/UserContext';
-
-import {
-	buildRequestParams 
-} from '../../../api/RequestBuilder';
+import UserContext, {
+	level 
+} from '../../../context/UserContext';
 
 import { 
 	useNavigate 
@@ -28,7 +26,7 @@ import {
 import API from '../../../api/apiRoutes';
 
 function SignIn() {
-	const { user } = React.useContext(UserContext);
+	const { user, role } = React.useContext(UserContext);
 	const navigate = useNavigate();
 	
 	// general values
@@ -60,9 +58,13 @@ function SignIn() {
 				console.log(localStorage.getItem('token'));
 				
 				user.setUser({
+					id: res.data.id,
+					naam: res.data.naam,
 					email: email,
-					persistentLogin: rememberMe
+					token: res.data.token
 				});
+
+				role.setRole(res.data.role);
 				
 				navigate('/');
 			}

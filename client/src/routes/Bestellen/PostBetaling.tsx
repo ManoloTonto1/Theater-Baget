@@ -20,7 +20,7 @@ type props = {
     data: Data;
 }
 enum states {
-    inProgress,
+	inProgress,
     done,
     failed
 }
@@ -37,19 +37,23 @@ function PostBetaling(props: props): JSX.Element {
 		const req = async (): Promise<void> => {
 			setState(states.inProgress);
 			const ref = crypto.randomUUID();
-			API('external').Pay(
+			const payment = await API('external').Pay(
 				props.data.amount,
 				ref,
 				''
-			).then((res) => {
-				if (res.status !== 200) {
-					setState(states.failed);
-					return;
-				}
-				setState(states.done);
-			}).catch(() => {
+			);
+			if (payment.status !== 200) {
 				setState(states.failed);
+				return;
+			}
+			const paymentLog = await API('bestellingen').Create({
+					
 			});
+			if (paymentLog.status !== 200) {
+				setState(states.failed);
+				return; 
+			}
+			setState(states.done);
 		};
 		req();
 	}, [props]);
