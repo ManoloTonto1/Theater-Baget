@@ -5,7 +5,7 @@ import {
 import React from 'react';
 import Logout from './adminLogout/Logout';
 import ProgrammaToevoegen from './adminProgramma/ProgrammaToevoegen';
-import ZaalToevoegen from './adminZaalToevoegen/ZaakToevoegen';
+import ZaalToevoegen from './adminZaalToevoegen/ZaalToevoegen';
 import GebruikerToevoegen from './adminGebruikerToevoegen/GebruikerToevoegen';
 import GebruikerInzien from './adminGebruikerInzien/GebruikerInzien';
 
@@ -46,14 +46,6 @@ function a11yAccesibilityProps(index: number) {
 
 function AdminPage() {
 	const [value, setValue] = React.useState(0);
-	// API('gebruiker').Get(value)
-	// 	.then((res) => {
-	// 		if (res.status != 200) {
-	// 			return;
-	// 		}
-
-	// 	});
-
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
@@ -89,7 +81,6 @@ function AdminPage() {
 					xs={12}
 				>
 					<Card elevation={4} sx={{
-						maxHeight: 500,
 						minHeight: 500,
 						overflowY:'auto',
 						scrollbarWidth: 'thin',
