@@ -4,10 +4,6 @@ import {
 } from '@mui/material';
 import React from 'react';
 import Logout from './adminLogout/Logout';
-import Monki from '../../assets/gorilla.jfif';
-import type {
-	ProfileCardProps
-} from '../../components/ProfileCard';
 import ProgrammaToevoegen from './adminProgramma/ProgrammaToevoegen';
 import ZaalToevoegen from './adminZaalToevoegen/ZaakToevoegen';
 import GebruikerToevoegen from './adminGebruikerToevoegen/GebruikerToevoegen';
@@ -48,25 +44,15 @@ function a11yAccesibilityProps(index: number) {
 	};
 }
 
-// source for tabs: https://mui.com/material-ui/react-tabs/ en de login page
 function AdminPage() {
 	const [value, setValue] = React.useState(0);
-	const [data, setData] = React.useState<never[] | ProfileCardProps[]>([]);
-	React.useEffect(() => {
-		// API('gebruiker').Get(value)
-		// 	.then((res) => {
-		// 		if (res.status != 200) {
-		// 			return;
-		// 		}
+	// API('gebruiker').Get(value)
+	// 	.then((res) => {
+	// 		if (res.status != 200) {
+	// 			return;
+	// 		}
 
-		// 	});
-		setData([{
-			image: Monki,
-			name: 'akasha monka',
-			email: 'gekkefred@ninja.ninja',
-			ageGroep: 'dood'
-		}]);
-	}, [value]);
+	// 	});
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
@@ -134,81 +120,3 @@ function AdminPage() {
 }
 
 export default AdminPage;
-
-/*
-function AdminPage() : JSX.Element{
-	const { theme } = React.useContext(UserContext);
-	return(
-		<ThemeProvider theme={theme.theme}>
-			<Box style={{
-				width: '100%',
-				height: '100vh',
-				backgroundImage: 'url('+img+')'
-			}}>
-				<Container style={{
-					height: '100vh',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}>
-					<Grid container spacing={2}
-						sx={{
-							mb:4
-						}}>
-						<Grid item>
-							<Card sx={{
-								width: 250,
-								height: 80,
-								p: 3
-							}}>
-								<Typography sx={{
-									mb: 2
-								}}>Programma uploaden (Excell)</Typography>
-								<Button variant="contained" component="label">
-                                Upload
-									<input hidden accept="image/*"
-										multiple type="file"
-									/>
-								</Button>
-							</Card>
-						</Grid>
-						<Grid item>
-							<Card sx={{
-								width: 250,
-								p: 3
-							}}>
-								<Typography>Gebruiker toevoegen</Typography>
-								<TextField id="standard-basic" label="Naam"
-									variant="standard" />
-								<TextField id="standard-basic" label="Geboortedatum"
-									variant="standard" />
-								<TextField id="standard-basic" label="E-Mail"
-									variant="standard" />
-								<TextField id="standard-basic" label="Wachtwoord"
-									variant="standard" />
-								<TextField id="standard-basic" label="Wachtwoord bevestigen"
-									variant="standard" />
-								<Button variant="contained" sx={{
-									mt:2
-								}}>Gebruiker toevoegen</Button>
-							</Card>
-						</Grid>
-						<Grid item>
-							<Card sx={{
-								width: 250,
-								p:3
-							}}>
-								<Typography>Gebruiker inzien</Typography>
-								<TextField id="standard-basic" label="Naam"
-									variant="standard" />
-							</Card>
-						</Grid>
-					</Grid>
-				</Container>
-			</Box>
-		</ThemeProvider>
-	);
-}
-    
-export default AdminPage;
-*/
