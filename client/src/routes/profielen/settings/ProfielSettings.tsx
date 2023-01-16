@@ -14,6 +14,7 @@ import dayjs from 'dayjs';
 import React, {
 	useCallback 
 } from 'react';
+import UserContext from '../../../context/UserContext';
 
 function ProfielSettings() {
 	const [naam, setNaam] = React.useState('');
@@ -22,6 +23,7 @@ function ProfielSettings() {
 	const [password, setPassword] = React.useState('');
 	const [email, setEmail] = React.useState('');
 	const [passwordsMatch, setPasswordsMatch] = React.useState(true);
+	const { user } = React.useContext(UserContext);
 
 	const handlePassword = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setPassword(e.target.value);
@@ -54,6 +56,7 @@ function ProfielSettings() {
 			required 
 			onChange={handleNaam}
 			value={naam}
+			defaultValue={user.userData?.naam}
 			/>
 
 			<LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -75,7 +78,8 @@ function ProfielSettings() {
 			}} label='E-mail adres'
 			variant='standard' type='email'
 			required onChange={handleEmail} 
-			value={email}/>
+			value={email}
+			defaultValue={user.userData?.email}/>
 
 			<TextField sx={{
 				m: 1, mb: 2 

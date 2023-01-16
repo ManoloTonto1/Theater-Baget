@@ -14,22 +14,22 @@ import type {
 } from '../../../components/global/globalTypes';
 import API from '../../../api/apiRoutes';
 import UserContext from '../../../context/UserContext';
-import { any } from 'cypress/types/bluebird';
 
 function ProfielTickets() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 	const [data, setData] = React.useState<never[] | Programma[]>([]);
 	const {user} = React.useContext(UserContext);
+	const u = user.userData as userData;
 	React.useEffect(() => {
 		API('programmeringen').GetAll()
 			.then((res) => {
 				if (res.status != 200) {
 					return;
 				}
-				setData(res.data.find(re => re.owner.id = user.userData.id));
+				// needs to be fixed
+				setData(res.data.find(re => re.owner.id = u.id));
 			});
 	}, []);
-	
 
 	return (
 		<Box sx={{
@@ -42,6 +42,12 @@ function ProfielTickets() {
 				</Typography>
 				{data.map((card) => {
 					console.log(card);
+					if(!card)
+					{
+						return <Typography key='pimol' variant='h4' mb={2}>
+							No cards.
+						</Typography>;
+					}
 					return <Ticket key={card.id} {...card} />;
 				})}
 			</CardContent>

@@ -16,7 +16,9 @@ import {
 	ProfileCard
 } from '../../../components/ProfileCard';
 import API from '../../../api/apiRoutes';
-import UserContext from '../../../context/UserContext';
+import UserContext, {
+	level, userData 
+} from '../../../context/UserContext';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -58,9 +60,14 @@ function Profiel() {
 	const [value, setValue] = React.useState(0);
 	const [data, setData] = React.useState<never[] | ProfileCardProps[]>([]);
 	const { user, role } = React.useContext(UserContext);
+	const props: ProfileCardProps = {
+		image: Monki, 
+		name: user.userData? user.userData.naam: 'Not Found',
+		email: user.userData ? user.userData.email : 'Not Found',
+		ageGroep: user.userData ? user.userData.leeftijdsGroep : 'Not Found'
+	};
 
-	// important!!! needs logic
-	const isBandLid = role.role == 
+	const isBandLid = role.role == level.acteur;
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
@@ -74,9 +81,7 @@ function Profiel() {
 				<Grid item lg={6}
 					xs={12}>
 					<Card elevation={4}>
-						{data.map((card) => {
-							return <ProfileCard key={card.name} {...card} />;
-						})}
+						<ProfileCard key='hoe' {...props} />
 						<Tabs
 							orientation="vertical"
 							variant="fullWidth"
