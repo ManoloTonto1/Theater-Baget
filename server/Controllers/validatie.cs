@@ -7,21 +7,23 @@ namespace server.Controllers;
 public class ValidationController : ControllerBase
 {
     Jwt jwt = new Jwt();
-
-    private readonly theaterContext context;
-
+    
     public ValidationController(theaterContext _context)
     {
-        context = _context;
     }
     [HttpPost]
-    public async Task<ActionResult> Post(ValidationData data)
+    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token)
     {
-        bool result = jwt.ValidateToken(data.token);
+        if(token == null || token == ""){
+            return Unauthorized();
+        };
 
-        if(result) {
-            return Ok(result);
+        var result = jwt.ValidateToken(token);
+
+        if (!result.Item1)
+        {
+            return Unauthorized();
         }
-        return BadRequest();
+        return Ok(result);
     }
 }

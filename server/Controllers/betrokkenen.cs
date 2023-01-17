@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace server.Controllers;
 [Route("api/betrokkenen")]
 [ApiController]
-public class BetrokkenenController : ControllerBase, IController<Betrokkene>
+public class BetrokkenenController : ControllerBase, IController<Betrokkene,Betrokkene>
 {
     private readonly theaterContext context;
 
@@ -14,7 +14,7 @@ public class BetrokkenenController : ControllerBase, IController<Betrokkene>
     }
     [HttpDelete("{id}")]
 
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")]string token,int id)
     {
         var item = await context.Betrokkene.FindAsync(id);
         if (item == null)
@@ -34,13 +34,13 @@ public class BetrokkenenController : ControllerBase, IController<Betrokkene>
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Betrokkene>> Get(int id)
+    public async Task<ActionResult<Betrokkene>> Get([FromHeader(Name = "Authorization")]string token,int id)
     {
         var value = await context.Betrokkene.FindAsync(id);
         return value == null ? NotFound() : value;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Betrokkene>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Betrokkene>>> GetAll([FromHeader(Name = "Authorization")]string token)
     {
         var value = await context.Betrokkene.ToListAsync();
         return value == null ? NotFound() : value;
@@ -52,7 +52,7 @@ public class BetrokkenenController : ControllerBase, IController<Betrokkene>
         return await context.Betrokkene.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Data<Betrokkene> data)
+    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")]string token,Betrokkene data)
     {
         // context.Betrokkene.Add(data);
         await context.SaveChangesAsync();
@@ -60,7 +60,7 @@ public class BetrokkenenController : ControllerBase, IController<Betrokkene>
         return CreatedAtAction("Get", new { data.id }, data);
     }
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, Betrokkene data)
+    public async Task<ActionResult> Put([FromHeader(Name = "Authorization")]string token,int id, Betrokkene data)
     {
         if (id != data.id)
         {

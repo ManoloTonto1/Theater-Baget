@@ -4,17 +4,19 @@ using Microsoft.EntityFrameworkCore;
 namespace server.Controllers;
 [Route("api/gebruikers")]
 [ApiController]
-public class GebruikerenController : ControllerBase, IController<Gebruiker>
+public class GebruikerenController : ControllerBase, IController<Gebruiker, GebruikerData>
 {
     private readonly theaterContext context;
+    private readonly Jwt jwt;
 
     public GebruikerenController(theaterContext _context)
     {
         context = _context;
+        jwt = new Jwt();
     }
     [HttpDelete("{id}")]
 
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")] string token, int id)
     {
         var item = await context.Gebruiker.FindAsync(id);
         if (item == null)
@@ -34,13 +36,13 @@ public class GebruikerenController : ControllerBase, IController<Gebruiker>
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Gebruiker>> Get(int id)
+    public async Task<ActionResult<Gebruiker>> Get([FromHeader(Name = "Authorization")] string token, int id)
     {
         var value = await context.Gebruiker.FindAsync(id);
         return value == null ? NotFound() : value;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Gebruiker>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Gebruiker>>> GetAll([FromHeader(Name = "Authorization")] string token)
     {
         var value = await context.Gebruiker.ToListAsync();
         return value == null ? NotFound() : value;
@@ -52,20 +54,36 @@ public class GebruikerenController : ControllerBase, IController<Gebruiker>
         return await context.Gebruiker.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Data<Gebruiker> data)
+    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, GebruikerData data)
     {
-        // context.Gebruiker.Add(data);
-        // await context.SaveChangesAsync();
+        var role = jwt.getRoleFromToken(token);
+        if (role != level.admin)
+        {
+            return BadRequest();
+        }
+        var newData = new Gebruiker
+        {
+            naam = data.naam,
+            level = data.level,
+            loginGegevens = data.loginGegevens,
+            leeftijdsGroep = data.leeftijdsGroep,
+        };
+        
+        context.Gebruiker.Add(newData);
+        await context.SaveChangesAsync();
 
-        // return CreatedAtAction("Get", new { data.id }, data);
         return Ok();
     }
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, Gebruiker data)
+    public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token, int id, [FromBody]GebruikerData data)
     {
-        if (id != data.id)
+        var role = jwt.getRoleFromToken(token);
+        if (role != level.admin)
         {
-            return BadRequest();
+            if (!jwt.validateUserFromToken(token, id))
+            {
+                return BadRequest();
+            }
         }
 
         context.Entry(data).State = EntityState.Modified;

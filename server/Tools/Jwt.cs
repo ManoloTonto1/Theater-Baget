@@ -92,4 +92,15 @@ private string audience = "TheaterBaget Chad";
         var parsedRole = Convert.ToInt16(role);
         return (level)parsedRole;
     }
+    public bool validateUserFromToken(string token,int id)
+    {
+        var _token = extractToken(token);
+        var (isValid, jwtToken) = ValidateToken(_token);
+        if(!isValid || jwtToken == null){
+            return false;
+        }
+
+        var userId = jwtToken.Claims.First(x => x.Type.Contains("id")).Value;
+        return Convert.ToInt16(userId) == id;
+    }
 }

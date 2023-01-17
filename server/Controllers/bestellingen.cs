@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace server.Controllers;
 [Route("api/bestellingen")]
 [ApiController]
-public class BestellingenController : ControllerBase, IController<Bestelling>
+public class BestellingenController : ControllerBase, IController<Bestelling,Bestelling>
 {
     private readonly theaterContext context;
 
@@ -14,7 +14,7 @@ public class BestellingenController : ControllerBase, IController<Bestelling>
     }
     [HttpDelete("{id}")]
 
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")]string token,int id)
     {
         var item = await context.Bestelling.FindAsync(id);
         if (item == null)
@@ -30,17 +30,17 @@ public class BestellingenController : ControllerBase, IController<Bestelling>
 
     public bool Exists(int id)
     {
-        return context.Bestelling.Any(i => i.factuurNr == id);
+        return context.Bestelling.Any(i => i.id == id);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Bestelling>> Get(int id)
+    public async Task<ActionResult<Bestelling>> Get([FromHeader(Name = "Authorization")]string token,int id)
     {
         var value = await context.Bestelling.FindAsync(id);
         return value == null ? NotFound() : value;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Bestelling>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Bestelling>>> GetAll([FromHeader(Name = "Authorization")]string token)
     {
         var value = await context.Bestelling.ToListAsync();
         return value == null ? NotFound() : value;
@@ -52,7 +52,7 @@ public class BestellingenController : ControllerBase, IController<Bestelling>
         return await context.Bestelling.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(Data<Bestelling> data)
+    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")]string token,Bestelling data)
     {
         // context.Bestelling.Add(data);
         // await context.SaveChangesAsync();
@@ -61,9 +61,9 @@ public class BestellingenController : ControllerBase, IController<Bestelling>
         return Ok();
     }
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, Bestelling data)
+    public async Task<ActionResult> Put([FromHeader(Name = "Authorization")]string token,int id, Bestelling data)
     {
-        if (id != data.factuurNr)
+        if (id != data.id)
         {
             return BadRequest();
         }

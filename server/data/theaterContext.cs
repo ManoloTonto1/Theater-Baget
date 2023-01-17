@@ -27,7 +27,7 @@ public class theaterContext : DbContext
 
         // Betaling
         builder.Entity<Betaling>()
-            .HasKey(betaling => betaling.factuurNr);
+            .HasKey(betaling => betaling.id);
 
         builder.Entity<Betaling>()
             .HasOne(betaling => betaling.owner)
