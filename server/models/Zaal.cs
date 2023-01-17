@@ -8,11 +8,3 @@ public class Zaal
     public List<Programmering>? programmeringen { get; set; }
     public List<Reservering>? reserveringen { get; set; }
 }
-public class ZaalData
-{
-    public int zaalNr { get; set; }
-    public string soort { get; set; } = "";
-    public int eersterangsAantal { get; set; }
-    public int tweederangsAantal { get; set; }
-    public int? derderangsAantal { get; set; }
-}

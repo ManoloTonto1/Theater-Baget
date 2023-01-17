@@ -4,17 +4,19 @@ using Microsoft.EntityFrameworkCore;
 namespace server.Controllers;
 [Route("api/bestellingen")]
 [ApiController]
-public class BestellingenController : ControllerBase, IController<Bestelling,Bestelling>
+public class BestellingenController : ControllerBase, IController<Bestelling, Bestelling>
 {
     private readonly theaterContext context;
+    private readonly Jwt jwt;
 
     public BestellingenController(theaterContext _context)
     {
         context = _context;
+        jwt = new Jwt();
     }
     [HttpDelete("{id}")]
 
-    public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")]string token,int id)
+    public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")] string token, int id)
     {
         var item = await context.Bestelling.FindAsync(id);
         if (item == null)
@@ -34,13 +36,13 @@ public class BestellingenController : ControllerBase, IController<Bestelling,Bes
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Bestelling>> Get([FromHeader(Name = "Authorization")]string token,int id)
+    public async Task<ActionResult<Bestelling>> Get([FromHeader(Name = "Authorization")] string token, int id)
     {
         var value = await context.Bestelling.FindAsync(id);
         return value == null ? NotFound() : value;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Bestelling>>> GetAll([FromHeader(Name = "Authorization")]string token)
+    public async Task<ActionResult<IEnumerable<Bestelling>>> GetAll([FromHeader(Name = "Authorization")] string token)
     {
         var value = await context.Bestelling.ToListAsync();
         return value == null ? NotFound() : value;
@@ -52,17 +54,38 @@ public class BestellingenController : ControllerBase, IController<Bestelling,Bes
         return await context.Bestelling.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")]string token,Bestelling data)
+    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, Bestelling data)
     {
-        // context.Bestelling.Add(data);
-        // await context.SaveChangesAsync();
+        var user = new Gebruiker
+            {
+                naam = "Anoniem",
+                level = level.bezoeker,
+                leeftijdsGroep = LeeftijdsGroep.Volwassenen,
+            };
 
-        // return CreatedAtAction("Get", new { id = data.factuurNr }, data);
-        return Ok();
+        if (token != null && token != "")
+        {
+            var (isValid, _token) = jwt.ValidateToken(token);
+            if (!isValid)
+            {
+                return Unauthorized();
+            }
+            user = await context.Gebruiker.FindAsync(jwt.getUserFromToken(token));
+        }
+        data.owner = user;
+        context.Bestelling.Add(data);
+        await context.SaveChangesAsync();
+
+        return CreatedAtAction("Get", new { id = data.factuurNr }, data);
     }
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put([FromHeader(Name = "Authorization")]string token,int id, Bestelling data)
+    public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token, int id, Bestelling data)
     {
+        var role = jwt.getRoleFromToken(token);
+        if(role != level.admin){
+            return Unauthorized();
+        }
+
         if (id != data.id)
         {
             return BadRequest();

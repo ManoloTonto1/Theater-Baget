@@ -59,7 +59,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Programmering>>> GetByDate([FromBody]string date)
     {
-        var value = await context.Programmering.Where(p => p.datum == DateTime.Parse(date)).ToListAsync();
+        var value = await context.Programmering.Where(p => p.datum.ToShortDateString() == DateTime.Parse(date).ToShortDateString()).ToListAsync();
         return value == null ? NotFound() : value;
     }
 

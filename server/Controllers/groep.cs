@@ -4,18 +4,36 @@ using Microsoft.EntityFrameworkCore;
 namespace server.Controllers;
 [Route("api/groepen")]
 [ApiController]
-public class GroepenController : ControllerBase, IController<Groep,GroepData>
+public class GroepenController : ControllerBase, IController<Groep,Groep>
 {
     private readonly theaterContext context;
+    private readonly Jwt jwt;
 
     public GroepenController(theaterContext _context)
     {
         context = _context;
+        jwt = new Jwt();
     }
     [HttpDelete("{id}")]
 
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")]string token,int id)
     {
+        var role = jwt.getRoleFromToken(token);
+        var thisGroup = await context.Groep.FindAsync(id);
+        if (thisGroup == null){
+            return BadRequest();
+        }
+        
+        if (role != level.admin)
+        {
+            var user = jwt.getUserFromToken(token);
+            var thisUser = await context.Betrokkene.Where(b => b.id == user && b.groepen.Find(g => g.id == id) == thisGroup).FirstAsync();
+            if (thisUser == null || thisUser.naam == "")
+            {
+                return BadRequest();
+            }
+        }
+        
         var item = await context.Groep.FindAsync(id);
         if (item == null)
         {
@@ -34,19 +52,19 @@ public class GroepenController : ControllerBase, IController<Groep,GroepData>
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Groep>> Get(int id)
+    public async Task<ActionResult<Groep>> Get([FromHeader(Name = "Authorization")]string token,int id)
     {
         var value = await context.Groep.FindAsync(id);
         return value == null ? NotFound() : value;
     }
     [HttpGet("{name}")]
-    public async Task<ActionResult<Groep>> GetByName(string name)
+    public async Task<ActionResult<Groep>> GetByName([FromHeader(Name = "Authorization")]string token,string name)
     {
         var value = await context.Groep.Where(g => g.naam == name).FirstAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Groep>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Groep>>> GetAll([FromHeader(Name = "Authorization")]string token)
     {
         var value = await context.Groep.ToListAsync();
         return value == null ? NotFound() : value;
@@ -58,27 +76,36 @@ public class GroepenController : ControllerBase, IController<Groep,GroepData>
         return await context.Groep.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] GroepData data)
+    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")]string token,[FromBody] Groep data)
     {
-        var newData = new Groep
+        var role = jwt.getRoleFromToken(token);
+        if (role != level.admin || role != level.bandlid || role != level.medewerker)
         {
-            naam = data.naam,
-            afbeelding = data.afbeelding,
-            omschrijving = data.omschrijving,
-            websiteUrl = data.websiteUrl
-        };
-        context.Groep.Add(newData);
+            return Unauthorized();
+        }
+        context.Groep.Add(data);
         await context.SaveChangesAsync();
 
-        return CreatedAtAction("Get", new { newData.id }, newData);
+        return CreatedAtAction("Get", new { data.id }, data);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, Groep data)
+    public async Task<ActionResult> Put([FromHeader(Name = "Authorization")]string token,int id, Groep data)
     {
-        if (id != data.id)
-        {
+        var role = jwt.getRoleFromToken(token);
+        var thisGroup = await context.Groep.FindAsync(id);
+        if (thisGroup == null){
             return BadRequest();
+        }
+        
+        if (role != level.admin)
+        {
+            var user = jwt.getUserFromToken(token);
+            var thisUser = await context.Betrokkene.Where(b => b.id == user && b.groepen.Find(g => g.id == id) == thisGroup).FirstAsync();
+            if (thisUser == null || thisUser.naam == "")
+            {
+                return BadRequest();
+            }
         }
 
         context.Entry(data).State = EntityState.Modified;

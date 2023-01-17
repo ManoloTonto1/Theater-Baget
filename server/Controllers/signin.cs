@@ -7,7 +7,6 @@ namespace server.Controllers;
 public class SignInController : ControllerBase
 {
 
-    Database db = new Database();
     Jwt jwt = new Jwt();
 
     private readonly theaterContext context;
@@ -19,7 +18,6 @@ public class SignInController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Post(SignInData data)
     {
-        var request = db.authenticate(data.email, data.password);
         var user = await context.Gebruiker.Where(
             g => g.loginGegevens.email == data.email &&
             g.loginGegevens.wachtwoord == data.password).FirstAsync();

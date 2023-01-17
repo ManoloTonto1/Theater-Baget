@@ -103,4 +103,15 @@ private string audience = "TheaterBaget Chad";
         var userId = jwtToken.Claims.First(x => x.Type.Contains("id")).Value;
         return Convert.ToInt16(userId) == id;
     }
+    public int getUserFromToken(string token)
+    {
+        var _token = extractToken(token);
+        var (isValid, jwtToken) = ValidateToken(_token);
+        if(!isValid || jwtToken == null){
+            return -1;
+        }
+
+        var userId = jwtToken.Claims.First(x => x.Type.Contains("id")).Value;
+        return Convert.ToInt16(userId);
+    }
 }

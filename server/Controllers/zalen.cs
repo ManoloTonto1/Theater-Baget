@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace server.Controllers;
 [Route("api/zalen")]
 [ApiController]
-public class ZalenController : ControllerBase, IController<Zaal,ZaalData>
+public class ZalenController : ControllerBase, IController<Zaal,Zaal>
 {
     private readonly theaterContext context;
     private readonly Jwt auth;
@@ -17,8 +17,13 @@ public class ZalenController : ControllerBase, IController<Zaal,ZaalData>
 
     [HttpDelete("{id}")]
 
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")] string token,int id)
     {
+        var role = auth.getRoleFromToken(token);
+        if (role != level.admin || role != level.medewerker)
+        {
+            return Unauthorized();
+        }
         var zaal = await context.Zaal.FindAsync(id);
         if (zaal == null)
         {
@@ -37,13 +42,13 @@ public class ZalenController : ControllerBase, IController<Zaal,ZaalData>
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Zaal>> Get(int id)
+    public async Task<ActionResult<Zaal>> Get([FromHeader(Name = "Authorization")] string token,int id)
     {
         var value = await context.Zaal.FindAsync(id);
         return value == null ? NotFound() : value;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Zaal>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Zaal>>> GetAll([FromHeader(Name = "Authorization")] string token)
     {
         var value = await context.Zaal.ToListAsync();
         return value == null ? NotFound() : value;
@@ -55,7 +60,7 @@ public class ZalenController : ControllerBase, IController<Zaal,ZaalData>
         return await context.Zaal.CountAsync();
     }
     [HttpPost]
-    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody]ZaalData data)
+    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody]Zaal data)
     {
         if(token == null || token == ""){
             return Unauthorized();
@@ -78,11 +83,15 @@ public class ZalenController : ControllerBase, IController<Zaal,ZaalData>
     }
     
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, [FromBody] Zaal data)
+    public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token,int id, [FromBody] Zaal data)
     {
-        if (id != data.zaalNr)
+        var role = auth.getRoleFromToken(token);
+        if (role != level.admin || role != level.medewerker)
         {
-            return BadRequest();
+            return Unauthorized();
+        }
+        if(!Exists(id)){
+            return NotFound();
         }
 
         context.Entry(data).State = EntityState.Modified;
