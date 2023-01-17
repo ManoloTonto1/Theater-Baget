@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +24,6 @@
     <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.25.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
-    <PackageReference Include="xunit" Version="2.4.2" />
     <!-- <PackageReference Include="Microsoft.IdentityModel" Version="7.0.0" /> -->
   </ItemGroup>
 
