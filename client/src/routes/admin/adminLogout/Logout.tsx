@@ -2,21 +2,8 @@ import {
 	Box, Button, Typography 
 } from '@mui/material';
 import React from 'react';
-import { 
-	useNavigate 
-} from 'react-router-dom';
-import JWT, { 
-	Signout 
-} from '../../../api/jwt';
-
-import UserContext from '../../../context/UserContext';
 
 function Logout() {
-	const { user, role } = React.useContext(UserContext);
-	const navigate = useNavigate();
-
-	JWT(true);
-
 	return (
 		<Box sx={{
 			display: 'flex',
@@ -36,7 +23,6 @@ function Logout() {
                 Klik op de knop hieronder om uit te loggen.
 			</Typography>
 			<Button variant="contained" size="large"
-				onClick={() => Signout(user, role)}
 				sx={{
 					mt:4,
 					width: '100%'
