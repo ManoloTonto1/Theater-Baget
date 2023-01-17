@@ -3,12 +3,13 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-public class Jwt
+namespace server;
+public class JWT
 {
-private string SecureKey = "de_dikste_boktor";
-private string issuer = "TheaterBaget";
-private string audience = "TheaterBaget Chad";
-    public string CreateUserToken(Gebruiker user,bool persistentLogin)
+    private string SecureKey = "de_dikste_boktor";
+    private string issuer = "TheaterBaget";
+    private string audience = "TheaterBaget Chad";
+    public string CreateUserToken(Gebruiker user, bool persistentLogin)
     {
         var claims = new List<Claim>
         {
@@ -37,10 +38,11 @@ private string audience = "TheaterBaget Chad";
         return jwt;
     }
 
-    public (bool,JwtSecurityToken?) ValidateToken(string token)
+    public (bool, JwtSecurityToken?) validateToken(string token)
     {
-        if (token == null){
-            return (false,null);
+        if (token == null)
+        {
+            return (false, null);
         }
 
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -63,7 +65,7 @@ private string audience = "TheaterBaget Chad";
         }
         catch
         {
-            return (false,null);
+            return (false, null);
         }
     }
     public string extractToken(string token)
@@ -83,8 +85,9 @@ private string audience = "TheaterBaget Chad";
     public level? getRoleFromToken(string token)
     {
         var _token = extractToken(token);
-        var (isValid, jwtToken) = ValidateToken(_token);
-        if(!isValid || jwtToken == null){
+        var (isValid, jwtToken) = validateToken(_token);
+        if (!isValid || jwtToken == null)
+        {
             return null;
         }
 
@@ -92,11 +95,12 @@ private string audience = "TheaterBaget Chad";
         var parsedRole = Convert.ToInt16(role);
         return (level)parsedRole;
     }
-    public bool validateUserFromToken(string token,int id)
+    public bool validateUserFromToken(string token, int id)
     {
         var _token = extractToken(token);
-        var (isValid, jwtToken) = ValidateToken(_token);
-        if(!isValid || jwtToken == null){
+        var (isValid, jwtToken) = validateToken(_token);
+        if (!isValid || jwtToken == null)
+        {
             return false;
         }
 
@@ -106,8 +110,9 @@ private string audience = "TheaterBaget Chad";
     public int getUserFromToken(string token)
     {
         var _token = extractToken(token);
-        var (isValid, jwtToken) = ValidateToken(_token);
-        if(!isValid || jwtToken == null){
+        var (isValid, jwtToken) = validateToken(_token);
+        if (!isValid || jwtToken == null)
+        {
             return -1;
         }
 

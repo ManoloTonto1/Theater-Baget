@@ -7,12 +7,12 @@ namespace server.Controllers;
 public class ZalenController : ControllerBase, IController<Zaal,Zaal>
 {
     private readonly theaterContext context;
-    private readonly Jwt auth;
+    private readonly JWT auth;
 
     public ZalenController(theaterContext _context)
     {
         context = _context;
-        auth = new Jwt();
+        auth = new JWT();
     }
 
     [HttpDelete("{id}")]

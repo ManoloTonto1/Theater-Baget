@@ -7,12 +7,12 @@ namespace server.Controllers;
 public class BestellingenController : ControllerBase, IController<Bestelling, Bestelling>
 {
     private readonly theaterContext context;
-    private readonly Jwt jwt;
+    private readonly JWT jwt;
 
     public BestellingenController(theaterContext _context)
     {
         context = _context;
-        jwt = new Jwt();
+        jwt = new JWT();
     }
     [HttpDelete("{id}")]
 
@@ -65,7 +65,7 @@ public class BestellingenController : ControllerBase, IController<Bestelling, Be
 
         if (token != null && token != "")
         {
-            var (isValid, _token) = jwt.ValidateToken(token);
+            var (isValid, _token) = jwt.validateToken(token);
             if (!isValid)
             {
                 return Unauthorized();

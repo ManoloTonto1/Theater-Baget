@@ -6,7 +6,7 @@ namespace server.Controllers;
 [ApiController]
 public class ValidationController : ControllerBase
 {
-    Jwt jwt = new Jwt();
+    JWT jwt = new JWT();
     
     public ValidationController(theaterContext _context)
     {
@@ -18,7 +18,7 @@ public class ValidationController : ControllerBase
             return Unauthorized();
         };
 
-        var result = jwt.ValidateToken(token);
+        var result = jwt.validateToken(token);
 
         if (!result.Item1)
         {

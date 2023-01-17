@@ -7,12 +7,12 @@ namespace server.Controllers;
 public class DonatiesController : ControllerBase, IController<Donatie, DonatieData>
 {
     private readonly theaterContext context;
-    private readonly Jwt jwt;
+    private readonly JWT jwt;
 
     public DonatiesController(theaterContext _context)
     {
         context = _context;
-        jwt = new Jwt();
+        jwt = new JWT();
     }
     [HttpDelete("{id}")]
 
@@ -76,7 +76,7 @@ public class DonatiesController : ControllerBase, IController<Donatie, DonatieDa
 
         if (data.userId != null)
         {
-            var (isValid, _) = jwt.ValidateToken(token);
+            var (isValid, _) = jwt.validateToken(token);
             if (!isValid)
             {
                 return Unauthorized();

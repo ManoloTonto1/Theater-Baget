@@ -7,12 +7,12 @@ namespace server.Controllers;
 public class ReserveringenController : ControllerBase, IController<Reservering, ReserveringData>
 {
     private readonly theaterContext context;
-    private readonly Jwt jwt;
+    private readonly JWT jwt;
 
     public ReserveringenController(theaterContext _context)
     {
         context = _context;
-        jwt = new Jwt();
+        jwt = new JWT();
     }
 
     [HttpDelete("{id}")]
@@ -68,7 +68,7 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
 
         if (data.userId != null)
         {
-            var (isValid, _token) = jwt.ValidateToken(token);
+            var (isValid, _token) = jwt.validateToken(token);
             if (!isValid)
             {
                 return Unauthorized();

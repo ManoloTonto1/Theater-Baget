@@ -7,12 +7,12 @@ namespace server.Controllers;
 public class GroepenController : ControllerBase, IController<Groep,Groep>
 {
     private readonly theaterContext context;
-    private readonly Jwt jwt;
+    private readonly JWT jwt;
 
     public GroepenController(theaterContext _context)
     {
         context = _context;
-        jwt = new Jwt();
+        jwt = new JWT();
     }
     [HttpDelete("{id}")]
 

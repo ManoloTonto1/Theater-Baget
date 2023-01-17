@@ -7,12 +7,12 @@ namespace server.Controllers;
 public class GebruikerenController : ControllerBase, IController<Gebruiker, GebruikerData>
 {
     private readonly theaterContext context;
-    private readonly Jwt jwt;
+    private readonly JWT jwt;
 
     public GebruikerenController(theaterContext _context)
     {
         context = _context;
-        jwt = new Jwt();
+        jwt = new JWT();
     }
     [HttpDelete("{id}")]
 

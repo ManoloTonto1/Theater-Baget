@@ -7,12 +7,12 @@ namespace server.Controllers;
 public class ProgrammeringenController : ControllerBase, IController<Programmering, ProgrammeringData>
 {
     private readonly theaterContext context;
-    private readonly Jwt jwt;
+    private readonly JWT jwt;
 
     public ProgrammeringenController(theaterContext _context)
     {
         context = _context;
-        jwt = new Jwt();
+        jwt = new JWT();
 
         // Seeds the Db
         new Seed(_context);

@@ -7,7 +7,7 @@ namespace server.Controllers;
 public class SignInController : ControllerBase
 {
 
-    Jwt jwt = new Jwt();
+    JWT jwt = new JWT();
 
     private readonly theaterContext context;
 
