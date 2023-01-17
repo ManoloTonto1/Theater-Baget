@@ -20,10 +20,6 @@ import PaidIcon from '@mui/icons-material/Paid';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Tooltip from '@mui/material/Tooltip';
 import useWindowSize from '../../hooks/useWindowSize';
-import {
-	signout,
-	validate
-} from '../../api/jwt';
 
 export default function Topbar(): JSX.Element {
 	const windowSize = useWindowSize();
@@ -35,6 +31,7 @@ export default function Topbar(): JSX.Element {
 
 	const { user, theme } = React.useContext(UserContext);
 	return (
+		
 		<ThemeProvider theme={theme.theme}>
 			<Box sx={{
 				flexGrow: 1
@@ -114,15 +111,10 @@ export default function Topbar(): JSX.Element {
 											Login
 										</Button>
 									) : (
-										// <Button onClick={(): Promise<void> => validate(user)}
-										// 	color='secondary' startIcon={<PersonIcon />}
-										// 	variant='contained'>
-										// 	My Account
-										// </Button>
-										<Button onClick={(): Promise<void> => signout(user)}
+										<Button onClick={(): void => navigate('/profiel')}
 											color='secondary' startIcon={<PersonIcon />}
 											variant='contained'>
-											Log out
+											My Account
 										</Button>
 									)
 									}

@@ -14,6 +14,8 @@ import {
 	ProfileCard
 } from '../../components/ProfileCard';
 
+import UserContext from '../../context/UserContext';
+
 interface TabPanelProps {
 	children?: React.ReactNode;
 	index: number;
@@ -51,6 +53,8 @@ function a11yAccesibilityProps(index: number) {
 
 // source for tabs: https://mui.com/material-ui/react-tabs/ en de login page
 function Profiel() {
+	
+	const { user } = React.useContext(UserContext);
 	const [value, setValue] = React.useState(0);
 	const [data, setData] = React.useState<never[] | ProfileCardProps[]>([]);
 	React.useEffect(() => {
@@ -64,7 +68,7 @@ function Profiel() {
 		setData([{
 			image: Monki,
 			name: 'akasha monka',
-			email: 'gekkefred@ninja.ninja',
+			email: user.userData.email,
 			ageGroep: 'dood'
 		}]);
 	}, [value]);

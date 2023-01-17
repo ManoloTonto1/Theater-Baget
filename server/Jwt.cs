@@ -19,8 +19,8 @@ public class Jwt {
 
         var token = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddSeconds(10),
-            // expires: DateTime.Now.AddMinutes(15),
+            // expires: DateTime.Now.AddSeconds(10),
+            expires: DateTime.Now.AddMinutes(15),
             signingCredentials: creds
         );
 

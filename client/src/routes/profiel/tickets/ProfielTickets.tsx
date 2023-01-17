@@ -40,7 +40,7 @@ function ProfielTickets() {
 					Tickets:
 				</Typography>
 				{data.map((card) => {
-					console.log(card);
+					// console.log(card);
 					return <Ticket key={card.id} {...card} />;
 				})}
 			</CardContent>
