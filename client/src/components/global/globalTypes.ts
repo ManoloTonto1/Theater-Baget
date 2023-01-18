@@ -36,4 +36,5 @@ export type Groep = {
     afbeelding: string;
     link: string;
     betrokkenen: userData[];
+    programmeringen: Programma[];
 }

@@ -10,20 +10,29 @@ import {
 	Ticket 
 } from '../../../../components/Ticket';
 import type {
+	Groep,
 	Programma 
 } from '../../../../components/global/globalTypes';
 import API from '../../../../api/apiRoutes';
+import {
+	useParams 
+} from 'react-router-dom';
 
 function BandShows() {
+	const { id } = useParams();
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 	const [data, setData] = React.useState<never[] | Programma[]>([]);
+	const [dataLenth, setDataLength] = React.useState<number>();
 	React.useEffect(() => {
-		API('programmeringen').GetAll()
+		API('groepen')
+			.Get(id)
 			.then((res) => {
 				if (res.status != 200) {
 					return;
 				}
-				setData(res.data);
+			
+				setData(res.data.programmeringen);
+				setDataLength(res.data.programmeringen.length);
 
 			});
 	}, []);
@@ -32,17 +41,22 @@ function BandShows() {
 		<Box sx={{
 			p: 1,
 			scrollbarWidth: 'thin',
+			overflowY: 'visible'
 		}}>
 			<CardContent sx={{
-				marginTop: 100
+				
 			}}>
 				<Typography variant='h4' mb={2}>
 					Bands shows:
 				</Typography>
-				{data.map((card) => {
-					// console.log(card);
-					return <Ticket key={card.id} {...card} />;
-				})}
+				{ dataLenth == 0? 
+					<Typography variant='h5' mb={2}>
+					No current shows available.
+					</Typography> :
+					data.map((card) => {
+						console.log('caRD:', card);
+						return <Ticket key={card.id} {...card} />;
+					})}
 			</CardContent>
 		</Box>
 

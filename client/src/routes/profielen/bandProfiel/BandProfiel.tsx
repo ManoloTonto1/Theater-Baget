@@ -56,12 +56,12 @@ function BandProfiel() {
 	const { id } = useParams();
 	const [value, setValue] = React.useState(0);
 	const [data, setData] = React.useState<never[] | Groep[]>([]);
-	const { user, role } = React.useContext(UserContext);
 
 	React.useEffect(() => {
 		API('groepen')
 			.Get(id)
 			.then((res) => {
+				console.log(res.data);
 				setData(res.data);
 			});
 	}, [id]);
@@ -78,7 +78,7 @@ function BandProfiel() {
 				<Grid item lg={6}
 					xs={12}>
 					<Card elevation={4}>
-						<BandCard key='hoe' {...data[0]} />
+						<BandCard key='hoe' {...data} />
 						<Tabs
 							orientation="vertical"
 							variant="fullWidth"
