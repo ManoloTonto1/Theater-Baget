@@ -15,7 +15,7 @@ public class Programmering {
 }
 
 
-public class Data<Programmering>
+public class ProgrammeringData
 {
     public int id { get; set; }
     public string titel { get; set; } 
@@ -23,6 +23,4 @@ public class Data<Programmering>
     public string datum { get; set; } 
     public string afbeelding { get; set; }
     public float prijs { get; set; } = 10f;
-
-
 }
