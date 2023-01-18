@@ -2,6 +2,7 @@ import {
 	Card, Grid, Avatar, Box, Typography 
 } from '@mui/material';
 import React from 'react';
+import UserContext from '../context/UserContext';
 
 export type ProfileCardProps = {
     image: string,
@@ -9,7 +10,9 @@ export type ProfileCardProps = {
     email: string,
     ageGroep: string
 }
-export function ProfileCard(props:ProfileCardProps) {
+export function ProfileCard(props: ProfileCardProps) {
+	const { user } = React.useContext(UserContext);
+
 	return (
 		<Card elevation={4} sx={{
 			marginBottom: 2,
@@ -30,14 +33,14 @@ export function ProfileCard(props:ProfileCardProps) {
 					justifyContent: 'center',
 					flexDirection: 'column'
 				}}>
-					<Typography>
-                        Naam: {props.name}
+					<Typography variant='h4'>
+						{user.userData?.naam}
+					</Typography>
+					<Typography variant='h5'>
+						{user.userData?.email}
 					</Typography>
 					<Typography>
-                        Email: {props.email}
-					</Typography>
-					<Typography>
-                        Leeftijd: {props.ageGroep}
+						{/* Leeftijd: {user.userData?.ageGroup} */}
 					</Typography>
 				</Box>
 			</Grid>
