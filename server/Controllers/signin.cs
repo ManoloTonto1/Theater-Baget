@@ -27,8 +27,7 @@ public class SignInController : ControllerBase
         {
             return BadRequest();
         };
-        System.Console.WriteLine(user.naam);
-        System.Console.WriteLine(data.persistentLogin);
+        
         var token = jwt.CreateUserToken(user, data.persistentLogin);
         var loggedInUser = new loggedInUserData
         {

@@ -20,11 +20,14 @@ import PaidIcon from '@mui/icons-material/Paid';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Tooltip from '@mui/material/Tooltip';
 import useWindowSize from '../../hooks/useWindowSize';
+import useAuth from '../../hooks/useAuth';
 
 export default function Topbar(): JSX.Element {
 	const windowSize = useWindowSize();
 	const navigate = useNavigate();
 	const location = useLocation();
+	const isValid = useAuth();
+
 	const changeLocation = React.useCallback(async (): Promise<void> => {
 		navigate(-1);
 	}, [navigate]);
@@ -103,7 +106,7 @@ export default function Topbar(): JSX.Element {
 										}}>
 										Donate
 									</Button>
-									{localStorage.getItem('token') == null ? (
+									{!isValid ? (
 
 										<Button onClick={(): void => navigate('/login')}
 											color='secondary' startIcon={<PersonIcon />}
@@ -137,7 +140,7 @@ export default function Topbar(): JSX.Element {
 											</IconButton>
 										</Tooltip>
 
-										<Tooltip title='login'>
+										{isValid ? (<Tooltip title='login'>
 											<IconButton onClick={(): void => navigate('/login')}
 												sx={{
 													color: 'black',
@@ -148,7 +151,19 @@ export default function Topbar(): JSX.Element {
 												}}>
 												<PersonIcon fontSize='small' />
 											</IconButton>
-										</Tooltip>
+										</Tooltip>)
+											: (<Tooltip title='login'>
+												<IconButton onClick={(): void => navigate('/login')}
+													sx={{
+														color: 'black',
+														bgcolor: 'secondary.main',
+														'&:hover': {
+															backgroundColor: 'secondary.dark'
+														}
+													}}>
+													<PersonIcon fontSize='small' />
+												</IconButton>
+											</Tooltip>)}
 									</>
 								)}
 

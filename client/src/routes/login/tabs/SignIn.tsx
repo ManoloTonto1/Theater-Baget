@@ -52,20 +52,23 @@ function SignIn() {
 				persistentLogin: rememberMe,
 			}
 		).then((res) => {
-			if(res.status == 200) {
-				localStorage.setItem('token', res.data);
-				
-				user.setUser({
-					id: res.data.id,
-					naam: res.data.naam,
-					email: email,
-					token: res.data.token
-				});
-
-				role.setRole(res.data.role);
-				
-				navigate('/');
+			if (res.status != 200) {
+				setErrorText('Invalid Credentials');
 			}
+			
+			localStorage.setItem('token', res.data.token);
+			user.setUser({
+				id: res.data.gebruiker.id,
+				naam: res.data.gebruiker.naam,
+				email: email,
+				ageGroup: res.data.gebruiker.leeftijdsGroep,
+				token: res.data.token
+			});
+
+			role.setRole(res.data.role);
+				
+			navigate('/');
+			
 		}).catch(() => {
 			setErrorText('Invalid Credentials');
 		});
