@@ -49,7 +49,6 @@ public class JWT
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(SecureKey);
         var cleanToken = extractToken(token);
-        System.Console.WriteLine(cleanToken);
         try
         {
             tokenHandler.ValidateToken(cleanToken,new TokenValidationParameters
@@ -62,7 +61,6 @@ public class JWT
                 ValidAudience = audience
             }, out SecurityToken validatedToken);
             var jwtToken = (JwtSecurityToken)validatedToken;
-            System.Console.WriteLine(jwtToken);
 
             return (true, jwtToken);
         }

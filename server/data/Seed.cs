@@ -160,7 +160,6 @@ class Seed
     }
     private void seedGroep(theaterContext context)
     {
-        System.Console.WriteLine(context.Groep.Count());
         if (context.Groep.Count() != 0)
         {
             return;
