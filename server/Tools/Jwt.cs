@@ -6,11 +6,13 @@ using Microsoft.IdentityModel.Tokens;
 namespace server;
 public class JWT
 {
+    public JWT(){} 
     private string SecureKey = "de_dikste_boktor";
     private string issuer = "TheaterBaget";
     private string audience = "TheaterBaget Chad";
     public string CreateUserToken(Gebruiker user, bool persistentLogin)
     {
+        System.Console.WriteLine(user.loginGegevens.email);
         var claims = new List<Claim>
         {
             new Claim("id", Convert.ToString(user.id)),

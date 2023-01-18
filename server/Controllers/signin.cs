@@ -7,25 +7,28 @@ namespace server.Controllers;
 public class SignInController : ControllerBase
 {
 
-    JWT jwt = new JWT();
+    readonly JWT jwt;
 
     private readonly theaterContext context;
 
     public SignInController(theaterContext _context)
     {
         context = _context;
+        jwt = new JWT();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(SignInData data)
+    public async Task<ActionResult> Post([FromBody]SignInData data)
     {
         var user = await context.Gebruiker.Where(
             g => g.loginGegevens.email == data.email &&
-            g.loginGegevens.wachtwoord == data.password).FirstAsync();
-
+            g.loginGegevens.wachtwoord == data.password).Include(g=>g.loginGegevens).FirstAsync();
+        
         if (user == null)
         {
             return BadRequest();
         };
+        System.Console.WriteLine(user.naam);
+        System.Console.WriteLine(data.persistentLogin);
         var token = jwt.CreateUserToken(user, data.persistentLogin);
         var loggedInUser = new loggedInUserData
         {

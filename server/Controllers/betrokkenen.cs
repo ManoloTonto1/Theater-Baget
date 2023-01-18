@@ -36,13 +36,13 @@ public class BetrokkenenController : ControllerBase, IController<Betrokkene,Betr
     [HttpGet("{id}")]
     public async Task<ActionResult<Betrokkene>> Get([FromHeader(Name = "Authorization")]string token,int id)
     {
-        var value = await context.Betrokkene.FindAsync(id);
+        var value = await context.Betrokkene.Include(b=> b.groepen).Where(b=> b.id == id).FirstAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Betrokkene>>> GetAll([FromHeader(Name = "Authorization")]string token)
     {
-        var value = await context.Betrokkene.ToListAsync();
+        var value = await context.Betrokkene.Include(b=> b.groepen).ToListAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet("/count")]

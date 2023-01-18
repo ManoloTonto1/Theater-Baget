@@ -40,7 +40,14 @@ function ProgrammaOverzicht() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 	const [data,setData] = React.useState<never[] | Programma[]>([]);
 	React.useEffect(() => {
-		API('programmeringen').GetAll()
+		const date = value?.toDate();
+		if (!date) {
+			return;
+		}
+		const apiSafeDate = `${date.getMonth() +1}/${date.getDate()}/${date.getFullYear()}`;
+		API('programmeringen').Get('datum',{
+			datum:apiSafeDate
+		})
 			.then((res) => {
 				if (res.status != 200) {
 					return;
@@ -48,7 +55,7 @@ function ProgrammaOverzicht() {
 				setData(res.data);
 
 			});
-	}, []);
+	}, [value]);
     
 	return (
 		<Container sx={{

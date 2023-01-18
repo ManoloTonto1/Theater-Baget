@@ -86,10 +86,13 @@ public class DonatiesController : ControllerBase, IController<Donatie, DonatieDa
 
         var newData = new Donatie
         {
+            betaling = new Betaling{
             factuurNr = data.factuurNr,
-            message = data.message,
             prijs = data.prijs,
-            owner = user,
+
+            },
+            user = user,
+            message = data.message,
         };
         context.Donatie.Add(newData);
         await context.SaveChangesAsync();

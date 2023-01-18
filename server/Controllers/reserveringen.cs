@@ -48,6 +48,13 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
         var value = await context.Reservering.ToListAsync();
         return value == null ? NotFound() : value;
     }
+    [HttpGet("datum/{datum}")]
+    public async Task<ActionResult<IEnumerable<Reservering>>> GetAllByDate([FromHeader(Name = "Authorization")] string token,[FromHeader(Name = "datum")]string datum)
+    {
+        var date = Convert.ToDateTime(datum).Date;
+        var value = await context.Reservering.Where(p => p.betaling.aankoopDatum>=date && p.betaling.aankoopDatum < date.AddDays(1)).Include(p=>p.zaal).Include(p=>p.betaling).ToListAsync();
+        return value == null ? NoContent() : value;
+    }
 
 
     [HttpGet("/count")]
@@ -60,11 +67,11 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody] ReserveringData data)
     {
         var user = new Gebruiker
-            {
-                naam = "Anoniem",
-                level = level.bezoeker,
-                leeftijdsGroep = LeeftijdsGroep.Volwassenen,
-            };
+        {
+            naam = "Anoniem",
+            level = level.bezoeker,
+            leeftijdsGroep = LeeftijdsGroep.Volwassenen,
+        };
 
         if (data.userId != null)
         {
@@ -78,17 +85,18 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
 
         var newData = new Reservering
         {
-            aankoopDatum = DateTime.Today,
+
             owner = user,
             stoelen = data.stoelen,
             programmering = await context.Programmering.FindAsync(data.programmeringId),
-            bestelling = new Bestelling
+            betaling = new Betaling
             {
+                aankoopDatum = DateTime.Today,
                 factuurNr = data.referenceCode,
-                korting = 0,
                 prijs = data.amountPaid,
-                owner = user,
+                korting = 0,
             },
+
         };
         context.Reservering.Add(newData);
         await context.SaveChangesAsync();
@@ -102,7 +110,8 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
     public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token, int id, [FromBody] ReserveringData data)
     {
         var role = jwt.getRoleFromToken(token);
-        if(role != level.admin){
+        if (role != level.admin)
+        {
             return Unauthorized();
         }
 
