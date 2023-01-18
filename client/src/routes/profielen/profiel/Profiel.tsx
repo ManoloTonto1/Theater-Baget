@@ -7,17 +7,14 @@ import ProfielTickets from '../tickets/ProfielTickets';
 import BandlidShows from '../bandlidProfiel/shows/BandlidShows';
 import BandlidBands from '../bandlidProfiel/bands/BandlidBands';
 import Logout from '../logout/Logout';
-import Monki from '../../../assets/gorilla.jfif';
-import Avatar from '@mui/material/Avatar';
-import type {
-	ProfileCardProps
-} from '../../../components/ProfileCard';
 import {
 	ProfileCard
 } from '../../../components/ProfileCard';
-import API from '../../../api/apiRoutes';
+import type {
+	userData 
+} from '../../../context/UserContext';
 import UserContext, {
-	level, userData 
+	level 
 } from '../../../context/UserContext';
 
 interface TabPanelProps {
@@ -58,13 +55,14 @@ function a11yAccesibilityProps(index: number) {
 // source for tabs: https://mui.com/material-ui/react-tabs/ en de login page
 function Profiel() {
 	const [value, setValue] = React.useState(0);
-	const [data, setData] = React.useState<never[] | ProfileCardProps[]>([]);
 	const { user, role } = React.useContext(UserContext);
-	const props: ProfileCardProps = {
-		image: Monki, 
-		name: user.userData? user.userData.naam: 'Not Found',
+	console.log(user.userData);
+	const props: userData = {
+		id: user.userData? user.userData.id: 404,
+		naam: user.userData? user.userData.naam: 'Not Found',
 		email: user.userData ? user.userData.email : 'Not Found',
-		ageGroep: user.userData ? user.userData.leeftijdsGroep : 'Not Found'
+		leeftijdsGroep: user.userData ? user.userData.leeftijdsGroep : 'Not Found',
+		token: user.userData ? user.userData.token : 'Not Found'
 	};
 
 	const isBandLid = role.role == level.acteur;

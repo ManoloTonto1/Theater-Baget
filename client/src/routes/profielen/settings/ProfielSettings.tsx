@@ -56,7 +56,6 @@ function ProfielSettings() {
 			required 
 			onChange={handleNaam}
 			value={naam}
-			defaultValue={user.userData?.naam}
 			/>
 
 			<LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -79,7 +78,7 @@ function ProfielSettings() {
 			variant='standard' type='email'
 			required onChange={handleEmail} 
 			value={email}
-			defaultValue={user.userData?.email}/>
+			/>
 
 			<TextField sx={{
 				m: 1, mb: 2 

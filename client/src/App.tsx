@@ -23,6 +23,7 @@ const IntressesFeedback = React.lazy(() => import('./routes/Interesses/feedback/
 const IntressesSuggestie = React.lazy(() => import('./routes/Interesses/suggestie/IntressesSuggestie'));
 const TicketKopen = React.lazy(() => import('./routes/Bestellen/TicketKopen'));
 const Profiel = React.lazy(()=> import('./routes/profielen/profiel/Profiel'));
+const BandProfiel = React.lazy(()=> import('./routes/profielen/bandProfiel/BandProfiel'));
 const Bands = React.lazy(()=>import('./routes/bands/Bands'));
 const BandsById = React.lazy(() => import('./routes/bands/BandsById'));
 const Donate = React.lazy(() => import('./routes/donate/Donate'));
@@ -85,6 +86,9 @@ function App() : JSX.Element {
 					</Suspense>} />
 					<Route path={'/begunstigersportaal'} element={<Suspense fallback={<LoadingPage />}>
 						<BegunstigersPortaal />
+					</Suspense>} />
+					<Route path={'/band/:id'} element={<Suspense fallback={<LoadingPage />}>
+						<BandProfiel />
 					</Suspense>} />
 				</Routes >
 				<Footer/>

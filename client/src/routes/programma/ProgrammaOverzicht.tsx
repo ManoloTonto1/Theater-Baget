@@ -34,6 +34,7 @@ import type {
 	Programma 
 } from '../../components/global/globalTypes';
 
+
 /* source date picker: https://mui.com/x/react-date-pickers/custom-components/ */
 function ProgrammaOverzicht() {
 	const navigate = useNavigate();

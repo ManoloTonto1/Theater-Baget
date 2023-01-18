@@ -1,3 +1,7 @@
+import type {
+	userData 
+} from '../../context/UserContext';
+
 /**
  * use instead of any, we'll ix it later.
  *
@@ -15,10 +19,21 @@ export type Programma = {
     zaalNr: string;
 }
 
+export type Reservering = {
+    id: number;
+    qr: string;
+    betaald: boolean;
+    aankoopDatum: string;
+    stoelen: string;
+    owner: userData;
+    programmering: Programma;
+}
+
 export type Groep = {
     id: number;
     naam: string;
-    afbeelding: string;
     omschrijving: string;
+    afbeelding: string;
     link: string;
+    betrokkenen: userData[];
 }
