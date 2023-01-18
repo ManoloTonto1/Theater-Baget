@@ -6,30 +6,35 @@ namespace server.Controllers;
 [ApiController]
 public class SignInController : ControllerBase
 {
-    
-    Database db = new Database();
-    Jwt jwt = new Jwt();
+
+    readonly JWT jwt;
 
     private readonly theaterContext context;
 
     public SignInController(theaterContext _context)
     {
         context = _context;
-    }
-    [HttpDelete("{id}")]
-    public bool Exists(int id)
-    {
-        return true;
+        jwt = new JWT();
     }
     [HttpPost]
-    public async Task<ActionResult> Post(SignInData data)
+    public async Task<ActionResult> Post([FromBody]SignInData data)
     {
-        var request = db.authenticate(data.email, data.password);
- 
-        if(request) {
-            var token = jwt.CreateToken(data.email);
-            return Ok(token);
-        }
-        return BadRequest();
+        var user = await context.Gebruiker.Where(
+            g => g.loginGegevens.email == data.email &&
+            g.loginGegevens.wachtwoord == data.password).Include(g=>g.loginGegevens).FirstAsync();
+        
+        if (user == null)
+        {
+            return BadRequest();
+        };
+        System.Console.WriteLine(user.naam);
+        System.Console.WriteLine(data.persistentLogin);
+        var token = jwt.CreateUserToken(user, data.persistentLogin);
+        var loggedInUser = new loggedInUserData
+        {
+            token = token,
+            gebruiker = user
+        };
+        return Ok(loggedInUser);
     }
 }

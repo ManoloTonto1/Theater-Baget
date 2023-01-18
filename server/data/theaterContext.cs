@@ -8,7 +8,6 @@ public class theaterContext : DbContext
     }
 
     public DbSet<Gebruiker> Gebruiker { get; set; } = default!;
-    public DbSet<Bestelling> Bestelling { get; set; } = default!;
     public DbSet<Betaling> Betaling { get; set; } = default!;
     public DbSet<Betrokkene> Betrokkene { get; set; } = default!;
     public DbSet<Donatie> Donatie { get; set; } = default!;
@@ -24,14 +23,22 @@ public class theaterContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+                builder.Entity<Zaal>()
+            .ToTable("Zaal");
+        builder.Entity<Betaling>()
+            .ToTable("Betalingen");
 
+        // Donaties
+        builder.Entity<Donatie>()
+            .ToTable("Donatie");
+        builder.Entity<Donatie>()
+        .HasOne(d => d.user)
+        .WithMany(g => g.donaties);
         // Betaling
+        
         builder.Entity<Betaling>()
-            .HasKey(betaling => betaling.factuurNr);
+            .HasKey(betaling => betaling.id);
 
-        builder.Entity<Betaling>()
-            .HasOne(betaling => betaling.owner)
-            .WithMany(gebruiker => gebruiker.betalingen);
 
         // Betrokkene
         builder.Entity<Betrokkene>()
@@ -98,9 +105,9 @@ public class theaterContext : DbContext
             .WithMany(zaal => zaal.reserveringen);
 
         builder.Entity<Reservering>()
-            .HasOne(reservering => reservering.bestelling)
-            .WithOne(bestelling => bestelling.reservering)
-            .HasForeignKey<Bestelling>(be => be.reserveringFK);
+            .HasOne(reservering => reservering.betaling)
+            .WithOne(betaling => betaling.reservering)
+            .HasForeignKey<Betaling>(be => be.reserveringFK);
 
         // Comments
         builder.Entity<Comment>()
@@ -110,22 +117,24 @@ public class theaterContext : DbContext
         builder.Entity<Comment>()
             .HasOne(comment => comment.programmering)
             .WithMany(programmering => programmering.comments);
-
         // Zaal
+
         builder.Entity<Zaal>()
             .HasKey(zaal => zaal.zaalNr);
+
 
         // logs
         builder.Entity<Logs>()
             .HasKey(logs => logs.lognr);
 
-        // bestellingen
-        builder.Entity<Bestelling>()
-            .ToTable("Bestelling");
 
-        // Donaties
-        builder.Entity<Donatie>()
-            .ToTable("Donatie");
+        // Stoelen 
+        builder.Entity<Stoel>()
+            .HasKey(s => s.id);
+
+        builder.Entity<Stoel>()
+            .HasOne(res => res.reservering)
+            .WithMany(stoelen => stoelen.stoelen);
 
     }
 }

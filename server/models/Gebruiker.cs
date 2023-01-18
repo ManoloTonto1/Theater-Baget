@@ -4,13 +4,19 @@ public enum level
 }
 public class Gebruiker {
     public int id { get; set; }
-    public string naam { get; set; } = "";
+    public string naam { get; set; } = "Anoniem";
     public LeeftijdsGroep leeftijdsGroep { get; set; }
     public level level { get; set; } // Role: user, medewerker, admin ect
     public LoginGegevens? loginGegevens { get; set; }
     public List<Reservering>? reserveringen { get; set; } 
     public List<Interesse>? interesses { get; set; }
-    public List<Betaling>? betalingen { get; set; }
+    public List<Donatie>? donaties { get; set; }
     public List<Logs>? logs { get; set; }
     public List<Comment>? comments { get; set; }
+}
+public class GebruikerData {
+    public string naam { get; set; }
+    public LeeftijdsGroep leeftijdsGroep { get; set; }
+    public level level { get; set; } // Role: user, medewerker, admin ect
+    public LoginGegevens? loginGegevens { get; set; }
 }

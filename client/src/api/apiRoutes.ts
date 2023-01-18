@@ -59,7 +59,7 @@ interface ApiModule {
      * @param {?string} [id]
      * @returns {Promise<AxiosResponse<any, any>>}
      */
-    Get(id?: string): Promise<AxiosResponse<any, any>>
+    Get(id?: string, data?: Data<unknown> | unknown): Promise<AxiosResponse<any, any>>
     // eslint-disable-next-line max-len
     /**
      * Get all the documents given a limit.
@@ -104,11 +104,14 @@ interface ExternalModule {
 const API = <T extends string>(route: T): T extends 'external' ? ExternalModule : ApiModule => {
 	const ApiModule: ApiModule = {
 		route: '',
-		Get: async (id?: string) => {
+		Get: async (id?: string, data?: Data<unknown> | unknown) => {
 			return axios({
-				headers: BearerToken,
+				headers: {
+					...BearerToken,
+					...data
+				},
 				method: 'GET',
-				url: id ? ApiModule.route + id : ApiModule.route
+				url: id ? ApiModule.route + id : ApiModule.route,
 			});
 		},
 		GetAll: async () => {

@@ -1,10 +1,6 @@
-using System.Data.SQLite;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using server.Controllers;
 
 var policy = "Client";
 
@@ -20,9 +16,24 @@ builder.Services.AddCors(options =>
                           .AllowAnyMethod();
                       });
 });
-
-builder.Services.AddDbContext<theaterContext>(options =>
-    options.UseSqlite("Data Source=database.db"));
+builder.Services.AddMvc().AddJsonOptions(options =>
+{
+     options.JsonSerializerOptions.PropertyNamingPolicy = null;
+     options.JsonSerializerOptions.MaxDepth = 64;
+     options.JsonSerializerOptions.IncludeFields = true;
+    options.JsonSerializerOptions.WriteIndented = true;
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<theaterContext>(options =>
+        options.UseSqlite("Data Source=database.db"));
+}
+else 
+{
+    builder.Services.AddDbContext<theaterContext>(options =>
+        options.UseMySQL("Data Source=manuellopezhernandez.database.windows.net;Integrated Security=false;User ID=cmykttpscpclmwxyqxuwgkqx;Password=exJpmn7E9XsDVEtU4WKGikia;"));
+}
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -45,10 +56,5 @@ app.UseCors(policy);
 app.UseAuthorization();
 app.MapControllers();
 
-JsonSerializerOptions options = new()
-{
-    ReferenceHandler = ReferenceHandler.IgnoreCycles,
-    WriteIndented = true
-};
 
 app.Run();

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "run-p server client",
     "client": "cd client && npm run dev",
-    "server": "cd server && dotnet run",
+    "server": "cd server && dotnet watch",
     "cypress": "cd client && npm run cypress",
     "test": ""
   },
