@@ -56,7 +56,7 @@ function BandProfiel() {
 	const { id } = useParams();
 	const [value, setValue] = React.useState(0);
 	const [data, setData] = React.useState<never[] | Groep[]>([]);
-
+	
 	React.useEffect(() => {
 		API('groepen')
 			.Get(id)
@@ -101,7 +101,7 @@ function BandProfiel() {
 					<Card elevation={4} sx={{
 						maxHeight: 500,
 						minHeight: 500,
-						
+						overflowY: 'auto'
 					}}>
 						<TabPanel value={value} index={0}>
 							<BandShows />

@@ -32,7 +32,8 @@ export function BandCard(props:Groep) {
 					<Typography>
                         Naam: {props.naam}
 					</Typography>
-					<Button variant="contained" href={props.link}>
+					<Button variant="contained" target="_blank"
+						href={props.link}>
   						Link
 					</Button>
 				</Box>

@@ -1,16 +1,12 @@
 import {
 	Box, CardContent, Typography 
 } from '@mui/material';
-import type {
-	Dayjs 
-} from 'dayjs';
-import dayjs from 'dayjs';
+
 import React from 'react';
 import {
 	Ticket 
 } from '../../../../components/Ticket';
 import type {
-	Groep,
 	Programma 
 } from '../../../../components/global/globalTypes';
 import API from '../../../../api/apiRoutes';
@@ -20,7 +16,6 @@ import {
 
 function BandShows() {
 	const { id } = useParams();
-	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 	const [data, setData] = React.useState<never[] | Programma[]>([]);
 	const [dataLenth, setDataLength] = React.useState<number>();
 	React.useEffect(() => {
@@ -41,7 +36,6 @@ function BandShows() {
 		<Box sx={{
 			p: 1,
 			scrollbarWidth: 'thin',
-			overflowY: 'visible'
 		}}>
 			<CardContent sx={{
 				

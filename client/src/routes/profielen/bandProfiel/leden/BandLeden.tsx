@@ -1,18 +1,7 @@
 import {
 	Box, CardContent, Typography 
 } from '@mui/material';
-import type {
-	Dayjs 
-} from 'dayjs';
-import dayjs from 'dayjs';
 import React from 'react';
-import {
-	Ticket 
-} from '../../../../components/Ticket';
-import type {
-	Groep,
-	Programma 
-} from '../../../../components/global/globalTypes';
 import API from '../../../../api/apiRoutes';
 import {
 	useParams 
@@ -20,10 +9,13 @@ import {
 import {
 	ProfileCard 
 } from '../../../../components/ProfileCard';
+import type {
+	userData 
+} from '../../../../context/UserContext';
 
 function BandLeden() {
-	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
-	const [data, setData] = React.useState<never[] | Groep[]>([]);
+	const [data, setData] = React.useState<never[] | userData[]>([]);
+	const [dataLenth, setDataLength] = React.useState<number>();
 	const { id } = useParams();
 	React.useEffect(() => {
 		API('groepen').Get(id)
@@ -31,8 +23,8 @@ function BandLeden() {
 				if (res.status != 200) {
 					return;
 				}
-				setData(res.data);
-
+				setData(res.data.betrokkenen);
+				setDataLength(res.data.betrokkenen.length);
 			});
 	}, [id]);
 
@@ -42,15 +34,19 @@ function BandLeden() {
 			scrollbarWidth: 'thin',
 		}}>
 			<CardContent sx={{
-				marginTop: 100
+				
 			}}>
 				<Typography variant='h4' mb={2}>
 					Leden:
 				</Typography>
-				{data.map((card, i) => {
-					console.log(card);
-					return <ProfileCard key={card.id} {...card.betrokkenen[i]} />;
-				})}
+				{dataLenth == 0? 
+					<Typography variant='h5' mb={2}>
+					Band currently has no members.
+					</Typography> :
+					data.map((card) => {
+						console.log(card);
+						return <ProfileCard key={card.id} {...card} />;
+					})}
 			</CardContent>
 		</Box>
 
