@@ -106,10 +106,12 @@ const API = <T extends string>(route: T): T extends 'external' ? ExternalModule 
 		route: '',
 		Get: async (id?: string, data?: Data<unknown> | unknown) => {
 			return axios({
-				headers: BearerToken,
+				headers: {
+					...BearerToken,
+					...data
+				},
 				method: 'GET',
 				url: id ? ApiModule.route + id : ApiModule.route,
-				data:data
 			});
 		},
 		GetAll: async () => {

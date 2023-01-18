@@ -16,7 +16,14 @@ builder.Services.AddCors(options =>
                           .AllowAnyMethod();
                       });
 });
-
+builder.Services.AddMvc().AddJsonOptions(options =>
+{
+     options.JsonSerializerOptions.PropertyNamingPolicy = null;
+     options.JsonSerializerOptions.MaxDepth = 64;
+     options.JsonSerializerOptions.IncludeFields = true;
+    options.JsonSerializerOptions.WriteIndented = true;
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddDbContext<theaterContext>(options =>
@@ -49,10 +56,5 @@ app.UseCors(policy);
 app.UseAuthorization();
 app.MapControllers();
 
-JsonSerializerOptions options = new()
-{
-    ReferenceHandler = ReferenceHandler.IgnoreCycles,
-    WriteIndented = true
-};
 
 app.Run();

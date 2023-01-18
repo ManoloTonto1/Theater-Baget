@@ -54,20 +54,22 @@ public class GroepenController : ControllerBase, IController<Groep,Groep>
     [HttpGet("{id}")]
     public async Task<ActionResult<Groep>> Get([FromHeader(Name = "Authorization")]string token,int id)
     {
-        var value = await context.Groep.FindAsync(id);
+        var value = await context.Groep.Include(g=>g.betrokkenen).Include(g=>g.programmeringen).Where(g => g.id == id).FirstAsync();
         return value == null ? NotFound() : value;
     }
-    [HttpGet("{name}")]
-    public async Task<ActionResult<Groep>> GetByName([FromHeader(Name = "Authorization")]string token,string name)
+    [HttpGet("naam/{name}")]
+    public async Task<ActionResult<IEnumerable<Groep>>> GetByName([FromHeader(Name = "Authorization")]string token,string name)
     {
-        var value = await context.Groep.Where(g => g.naam == name).FirstAsync();
-        return value == null ? NotFound() : value;
+        var value = from s in context.Groep
+                    where EF.Functions.Like(s.naam.ToLower(), "%"+name.ToLower()+"%")
+                    select s;
+        return value == null ? NoContent() : await value.Include(g=>g.betrokkenen).Include(g=>g.programmeringen).ToListAsync();
     }
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Groep>>> GetAll([FromHeader(Name = "Authorization")]string token)
     {
-        var value = await context.Groep.ToListAsync();
-        return value == null ? NotFound() : value;
+        var value = await context.Groep.Include(g => g.betrokkenen).Include(g=>g.programmeringen).ToListAsync();
+        return value == null ? NoContent() : value;
     }
     [HttpGet("/count")]
 
