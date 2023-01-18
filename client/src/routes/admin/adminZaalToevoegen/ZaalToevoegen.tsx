@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 
 export default function ZaalToevoegen() { 
-	const handleForm = useCallback(async (e) => {
+	const handleForm = useCallback(async (e: { preventDefault: () => void; }) => {
 		e.preventDefault();
 		const form = document.getElementById('form');
 		const formData = new FormData(form as HTMLFormElement);
