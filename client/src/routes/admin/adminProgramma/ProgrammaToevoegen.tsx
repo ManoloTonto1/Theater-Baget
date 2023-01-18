@@ -20,13 +20,14 @@ function ProgrammaToevoegen() {
 	const [image,setImage] = React.useState('');
 	const [voorstellingDatum, setVoorstellingDatum] = React.useState<Dayjs | null>(dayjs());
     
-	const handleForm = useCallback(async (e) => {
+	const handleForm = useCallback(async (e: { preventDefault: () => void; }) => {
 		e.preventDefault();
 		const form = document.getElementById('form');
 		const formData = new FormData(form as HTMLFormElement);
 		for (const value of formData.values()) {
 			console.log(value);
 		}
+		console.log(voorstellingDatum);
 	}, []);
 
 	return (
