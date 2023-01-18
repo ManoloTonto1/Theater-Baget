@@ -17,6 +17,7 @@ import React, {
 import UploadImageCard from '../adminProgramma/ImageUpload';
 
 function ProgrammaToevoegen() {
+	const [image,setImage] = React.useState('');
 	const [voorstellingDatum, setVoorstellingDatum] = React.useState<Dayjs | null>(dayjs());
     
 	const handleForm = useCallback(async (e) => {
@@ -95,8 +96,7 @@ function ProgrammaToevoegen() {
 					/>
 					<UploadImageCard imageProps={{
 						image: '',
-						setImage: function (data: string): void {
-							throw new Error('Work in progress');
+						setImage: (data:string)=>void {
 						}
 					}} label={''} />
 					<Button variant='contained' type='submit'
