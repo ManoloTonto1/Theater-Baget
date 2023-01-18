@@ -47,7 +47,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     [HttpGet("{id}")]
     public async Task<ActionResult<Programmering>> Get([FromHeader(Name = "Authorization")] string token, int id)
     {
-        var value = await context.Programmering.FindAsync(id);
+        var value = await context.Programmering.Include(p=>p.zaal).Where(p=> p.id == id).FirstAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet]
@@ -56,14 +56,15 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
         var value = await context.Programmering.ToListAsync();
         return value == null ? NotFound() : value;
     }
-    [HttpGet("/datum")]
-    public async Task<ActionResult<IEnumerable<Programmering>>> GetByDate([FromBody]string date)
+    [HttpGet("datum")]
+    public async Task<ActionResult<IEnumerable<Programmering>>> GetByDate([FromHeader(Name = "datum")]string datum)
     {
-        var value = await context.Programmering.Where(p => p.datum.ToShortDateString() == DateTime.Parse(date).ToShortDateString()).ToListAsync();
-        return value == null ? NotFound() : value;
+        var date = Convert.ToDateTime(datum).Date;
+        var value = await context.Programmering.Where(p => p.datum>=date && p.datum < date.AddDays(1)).Include(p=>p.zaal).ToListAsync();
+        return value == null ? NoContent() : value;
     }
 
-    [HttpGet("/count")]
+    [HttpGet("count")]
     public async Task<ActionResult<int>> GetCount()
     {
         return await context.Programmering.CountAsync();

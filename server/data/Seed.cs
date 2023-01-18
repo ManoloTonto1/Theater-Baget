@@ -7,6 +7,7 @@ class Seed
         seedZaal(context);
         seedGebruiker(context);
         seedProgramma(context);
+        seedGroep(context);
 
     }
     private void seedZaal(theaterContext context)
@@ -159,6 +160,7 @@ class Seed
     }
     private void seedGroep(theaterContext context)
     {
+        System.Console.WriteLine(context.Groep.Count());
         if (context.Groep.Count() != 0)
         {
             return;
@@ -188,6 +190,9 @@ class Seed
                     level = level.bandlid,
 
                 },
+            },
+            programmeringen = new List<Programmering>{
+                context.Programmering.First()
             }
         });
         context.Groep.Add(new Groep
@@ -277,5 +282,8 @@ class Seed
                 },
             }
         });
+
+        context.SaveChanges();
+
     }
 }
