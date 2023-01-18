@@ -14,3 +14,9 @@ public class Gebruiker {
     public List<Logs>? logs { get; set; }
     public List<Comment>? comments { get; set; }
 }
+public class GebruikerData {
+    public string naam { get; set; }
+    public LeeftijdsGroep leeftijdsGroep { get; set; }
+    public level level { get; set; } // Role: user, medewerker, admin ect
+    public LoginGegevens? loginGegevens { get; set; }
+}

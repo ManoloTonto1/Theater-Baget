@@ -53,9 +53,7 @@ function SignIn() {
 			}
 		).then((res) => {
 			if(res.status == 200) {
-				console.log(res.data);
 				localStorage.setItem('token', res.data);
-				console.log(localStorage.getItem('token'));
 				
 				user.setUser({
 					id: res.data.id,

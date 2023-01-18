@@ -40,7 +40,7 @@ function BandShows() {
 					Bands shows:
 				</Typography>
 				{data.map((card) => {
-					console.log(card);
+					// console.log(card);
 					return <Ticket key={card.id} {...card} />;
 				})}
 			</CardContent>

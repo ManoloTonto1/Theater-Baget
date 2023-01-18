@@ -1,24 +1,32 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Any;
 
 namespace server.Controllers;
 [Route("api/programmeringen")]
 [ApiController]
-public class ProgrammeringenController : ControllerBase, IController<Programmering>
+public class ProgrammeringenController : ControllerBase, IController<Programmering, ProgrammeringData>
 {
     private readonly theaterContext context;
+    private readonly JWT jwt;
 
     public ProgrammeringenController(theaterContext _context)
     {
         context = _context;
+        jwt = new JWT();
+
         // Seeds the Db
         new Seed(_context);
     }
     [HttpDelete("{id}")]
 
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")] string token, int id)
     {
+        var role = jwt.getRoleFromToken(token);
+        if (role != level.admin | role != level.medewerker)
+        {
+            return Unauthorized();
+        }
+
         var item = await context.Programmering.FindAsync(id);
         if (item == null)
         {
@@ -37,26 +45,39 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Programmering>> Get(int id)
+    public async Task<ActionResult<Programmering>> Get([FromHeader(Name = "Authorization")] string token, int id)
     {
         var value = await context.Programmering.FindAsync(id);
         return value == null ? NotFound() : value;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Programmering>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Programmering>>> GetAll([FromHeader(Name = "Authorization")] string token)
     {
         var value = await context.Programmering.ToListAsync();
         return value == null ? NotFound() : value;
     }
-    [HttpGet("/count")]
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Programmering>>> GetByDate([FromBody]string date)
+    {
+        var value = await context.Programmering.Where(p => p.datum.ToShortDateString() == DateTime.Parse(date).ToShortDateString()).ToListAsync();
+        return value == null ? NotFound() : value;
+    }
 
+    [HttpGet("/count")]
     public async Task<ActionResult<int>> GetCount()
     {
         return await context.Programmering.CountAsync();
     }
+
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] Data<Programmering> data)
+    public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody] ProgrammeringData data)
     {
+        var role = jwt.getRoleFromToken(token);
+        if (role != level.admin | role != level.medewerker)
+        {
+            return Unauthorized();
+        }
+
         var date = DateTime.Parse(data.datum);
         var newData = new Programmering
         {
@@ -65,15 +86,20 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
             afbeelding = data.afbeelding,
             omschrijving = data.omschrijving,
 
-    };
+        };
         context.Programmering.Add(newData);
         await context.SaveChangesAsync();
 
-        return CreatedAtAction("Get", new { data.id }, newData);
+        return CreatedAtAction("Get", new { newData.id }, newData);
     }
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put(int id, Programmering data)
+    public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token, int id, [FromBody] ProgrammeringData data)
     {
+        var role = jwt.getRoleFromToken(token);
+        if (role != level.admin | role != level.medewerker)
+        {
+            return Unauthorized();
+        }
         if (id != data.id)
         {
             return BadRequest();
