@@ -56,7 +56,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
         var value = await context.Programmering.ToListAsync();
         return value == null ? NotFound() : value;
     }
-    [HttpGet]
+    [HttpGet("/datum")]
     public async Task<ActionResult<IEnumerable<Programmering>>> GetByDate([FromBody]string date)
     {
         var value = await context.Programmering.Where(p => p.datum.ToShortDateString() == DateTime.Parse(date).ToShortDateString()).ToListAsync();

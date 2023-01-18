@@ -34,14 +34,13 @@ import type {
 	Programma 
 } from '../../components/global/globalTypes';
 
-
 /* source date picker: https://mui.com/x/react-date-pickers/custom-components/ */
 function ProgrammaOverzicht() {
 	const navigate = useNavigate();
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 	const [data,setData] = React.useState<never[] | Programma[]>([]);
 	React.useEffect(() => {
-		API('programmeringen').GetAll()
+		API('programmeringen/datum').Get('', value)
 			.then((res) => {
 				if (res.status != 200) {
 					return;
