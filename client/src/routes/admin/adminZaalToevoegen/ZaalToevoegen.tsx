@@ -4,6 +4,7 @@ import {
 import React, {
 	useCallback
 } from 'react';
+import API from '../../../api/apiRoutes';
 
 export default function ZaalToevoegen() {
 	const handleForm = useCallback(async (e: { preventDefault: () => void; }) => {
@@ -13,6 +14,17 @@ export default function ZaalToevoegen() {
 		for (const value of formData.values()) {
 			console.log(value);
 		}
+
+		API('zalen').Create({
+			eersterangsAantal: parseFloat(formData.get('eersterang')as string),
+			tweederangsAantal: parseFloat(formData.get('tweederang')as string),
+			derderangsAantal: parseFloat(formData.get('derderang')as string),
+			soort: formData.get('soort'),
+		}).then((res) => {
+			if (res.status !== 200) { 
+				return;
+			}
+		});
 	}, []);
 
 	return (
@@ -30,34 +42,34 @@ export default function ZaalToevoegen() {
 				<TextField sx={{
 					m: 1, mb: 2
 				}}
-					label='Soort ruimte(theater of vrije ruimte)'
-					variant='standard'
-					type='text'
-					name='titel'
-					required
+				label='Soort ruimte(theater of vrije ruimte)'
+				variant='standard'
+				type='text'
+				name='soort'
+				required
 				/>
 				<TextField sx={{
 					m: 1, mb: 2
 				}}
-					label='Aantal eersterangs stoelen'
-					variant='standard'
-					type='text'
-					name='omschrijving'
-					required
+				label='Aantal eersterangs stoelen'
+				variant='standard'
+				type='text'
+				name='eersterang'
+				required
 				/>
 				<TextField sx={{
 					m: 1, mb: 2
 				}} label='Aantal tweederangs stoelen'
-					variant='standard' type='text'
-					name='zaalnummer'
-					required
+				variant='standard' type='text'
+				name='tweederang'
+				required
 				/>
 				<TextField sx={{
 					m: 1, mb: 3
 				}} label='Aantal derderangs stoelen'
-					variant='standard' type='text'
-					name='prijs'
-					required
+				variant='standard' type='text'
+				name='derderang'
+				required
 				/>
 				<Button variant='contained' type='submit'
 					onClick={handleForm} sx={{
