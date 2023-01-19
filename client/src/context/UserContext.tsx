@@ -17,6 +17,10 @@ export enum level
     bezoeker, donateur, medewerker,acteur,admin,bandlid
 }
 
+export enum leeftijdsGroep
+{
+    Tiener, Volwassenen, Senior
+}
 export type userData = {
 	id: number,
 	naam: string,

@@ -2,7 +2,8 @@ import {
 	Card, Grid, Avatar, Box, Typography 
 } from '@mui/material';
 import React from 'react';
-import type {
+import {
+	leeftijdsGroep,
 	userData 
 } from '../context/UserContext';
 import Monki from '../assets/gorilla.jfif';
@@ -35,7 +36,7 @@ export function ProfileCard(props:userData) {
                         Email: {props.email}
 					</Typography>
 					<Typography>
-                        Leeftijd: {props.leeftijdsGroep}
+                        Leeftijd: {leeftijdsGroep[parseInt(props.leeftijdsGroep)]}
 					</Typography>
 				</Box>
 			</Grid>

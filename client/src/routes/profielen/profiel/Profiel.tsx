@@ -10,7 +10,8 @@ import Logout from '../logout/Logout';
 import {
 	ProfileCard
 } from '../../../components/ProfileCard';
-import type {
+import {
+	leeftijdsGroep,
 	userData 
 } from '../../../context/UserContext';
 import UserContext, {
@@ -61,16 +62,16 @@ function Profiel() {
 		id: user.userData? user.userData.id: 404,
 		naam: user.userData? user.userData.naam: 'Not Found',
 		email: user.userData ? user.userData.email : 'Not Found',
-		leeftijdsGroep: user.userData ? user.userData.leeftijdsGroep : 'Not Found',
+		leeftijdsGroep: user.userData ? user.userData.leeftijdsGroep : '1',
 		token: user.userData ? user.userData.token : 'Not Found'
 	};
 
-	const isBandLid = role.role == level.acteur;
+	console.log(role);
+	const isBandLid = role.role == level.acteur || role.role == level.bandlid;
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
-	console.log("leeftijd:" + props.leeftijdsGroep);
 	return (
 		<Container maxWidth={'xl'} sx={{
 			my: 4
