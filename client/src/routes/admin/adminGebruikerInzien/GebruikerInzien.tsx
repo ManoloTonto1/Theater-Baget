@@ -1,36 +1,8 @@
 import React, {
 	useCallback
 } from 'react';
-import React, {
-	useCallback
-} from 'react';
 import {
-	Box,
-	Button,
-	Card,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-	FormControl,
-	InputLabel,
-	MenuItem,
-	Select,
-	Typography
-	Box,
-	Button,
-	Card,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-	FormControl,
-	InputLabel,
-	MenuItem,
-	Select,
-	Typography
+	Box, Button, Card, FormControl, InputLabel, MenuItem, Select, Typography,
 } from '@mui/material';
 import API from '../../../api/apiRoutes';
 
@@ -69,68 +41,60 @@ function GebruikerInzien() {
 	}, [setOpen]);
 
 	return (
-		<Box sx={{
-			display: 'flex',
-			justifyItems: 'center',
-			alignItems: 'center',
-			alignContent: 'center',
-			flexDirection: 'column',
-			flexWrap: 'nowrap'
-		}}>
-			<Card sx={{
-				width: 250,
-				p: 3
+		<Box
+			component = 'form'
+			id='form'
+			sx={{
 				p: 3
 			}}>
-				<Typography
-					sx={{
-						pb:2
-					}}
-				>Gebruiker inzien</Typography>
+			<Typography
+				sx={{
+					pb:2
+				}}
+			>Gebruiker inzien</Typography>
 
-				<FormControl fullWidth>
+			<FormControl fullWidth>
 					
-					<InputLabel>Gebruiker</InputLabel>
-					<Select
-						variant='standard'
-						value={selectedUser}
-						onChange={handleSelectChange}
-					>
-						{usersList}
-					</Select>
-					<Button
-						variant='contained'
-						onClick={handleClickOpen}
-					>
+				<InputLabel>Gebruiker</InputLabel>
+				<Select
+					variant='standard'
+					value={selectedUser}
+					onChange={handleSelectChange}
+				>
+					{usersList}
+				</Select>
+				<Button
+					variant='contained'
+					onClick={handleClickOpen}
+				>
 							Inzien
-					</Button>
-				</FormControl>
-				<Typography
-					sx={{
-						pb:2
-					}}
-				>Gebruiker inzien</Typography>
+				</Button>
+			</FormControl>
+			<Typography
+				sx={{
+					pb:2
+				}}
+			>Gebruiker inzien</Typography>
 
-				<FormControl fullWidth>
+			<FormControl fullWidth>
 					
-					<InputLabel>Gebruiker</InputLabel>
-					<Select
-						variant='standard'
-						value={selectedUser}
-						onChange={handleSelectChange}
-					>
-						{usersList}
-					</Select>
-					<Button
-						variant='contained'
-						onClick={handleClickOpen}
-					>
+				<InputLabel>Gebruiker</InputLabel>
+				<Select
+					variant='standard'
+					value={selectedUser}
+					onChange={handleSelectChange}
+				>
+					{usersList}
+				</Select>
+				<Button
+					variant='contained'
+					onClick={handleClickOpen}
+				>
 							Inzien
-					</Button>
-				</FormControl>
-			</Card>
+				</Button>
+			</FormControl>
 
-			{
+			{/* {
 				selectedUser != null &&
 				<Dialog
 					open={open}
@@ -185,10 +149,9 @@ function GebruikerInzien() {
 						<Button onClick={handleClose} autoFocus>Close</Button>
 					</DialogActions>
 				</Dialog>
-			}
+			} */}
 		</Box >
 	);
 }
-
 
 export default GebruikerInzien;
