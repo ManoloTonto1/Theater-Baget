@@ -32,7 +32,7 @@ function ProfielTickets() {
 				if (res.status != 200) {
 					return;
 				}
-				// needs to be fixed
+				
 				setData(res.data.reserveringen);
 				setDataLength(res.data.reserveringen.length);
 			});

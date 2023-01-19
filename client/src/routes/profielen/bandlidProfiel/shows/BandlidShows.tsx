@@ -17,6 +17,7 @@ import API from '../../../../api/apiRoutes';
 function BandlidShows() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 	const [data, setData] = React.useState<never[] | Programma[]>([]);
+	const [dataLength, setDataLength] = React.useState<number>();
 	React.useEffect(() => {
 		API('programmeringen').GetAll()
 			.then((res) => {
@@ -24,6 +25,7 @@ function BandlidShows() {
 					return;
 				}
 				setData(res.data);
+				setDataLength(res.data.length);
 
 			});
 	}, []);
@@ -39,10 +41,14 @@ function BandlidShows() {
 				<Typography variant='h4' mb={2}>
 					My shows:
 				</Typography>
-				{data.map((card) => {
-					console.log(card);
-					return <Ticket key={card.id} {...card} />;
-				})}
+				{dataLength == 0? 
+					<Typography variant='h5' mb={2}>
+						You currently dont have any reservations.
+					</Typography> :
+					data.map((card) => {
+						console.log(card);
+						return <Ticket key={card.id} {...card} />;
+					})}
 			</CardContent>
 		</Box>
 

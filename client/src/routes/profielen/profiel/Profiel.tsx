@@ -106,7 +106,7 @@ function Profiel() {
 					<Card elevation={4} sx={{
 						maxHeight: 500,
 						minHeight: 500,
-						
+						overflowY: 'visible'
 					}}>
 						<TabPanel value={value} index={0}>
 							<Box sx={{
@@ -127,7 +127,7 @@ function Profiel() {
 								scrollbarWidth: 'thin',
 								alignItems: 'center',
 								display: 'flex',
-								justifyContent: 'center'
+								justifyContent: 'center',
 							}}>
 								<ProfielSettings />
 							</Box>
