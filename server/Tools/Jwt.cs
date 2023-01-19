@@ -87,13 +87,17 @@ public class JWT
     {
         var _token = extractToken(token);
         var (isValid, jwtToken) = validateToken(_token);
+        System.Console.WriteLine(_token);
+        System.Console.WriteLine(isValid);
+        System.Console.WriteLine(jwtToken);
         if (!isValid || jwtToken == null)
         {
             return null;
         }
 
-        var role = jwtToken.Claims.First(x => x.Type.Contains(ClaimTypes.Role)).Value;
+        var role = jwtToken.Claims.First(x => x.Type.Contains(ClaimTypes.Role)).ValueType; 
         var parsedRole = Convert.ToInt16(role);
+        System.Console.WriteLine(role);
         return (level)parsedRole;
     }
     public bool validateUserFromToken(string token, int id)

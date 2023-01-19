@@ -22,7 +22,8 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")] string token, int id)
     {
         var role = jwt.getRoleFromToken(token);
-        if (role != level.admin | role != level.medewerker)
+        System.Console.WriteLine(role);
+        if (role != level.admin || role != level.medewerker)
         {
             return Unauthorized();
         }
@@ -74,19 +75,23 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody] ProgrammeringData data)
     {
         var role = jwt.getRoleFromToken(token);
-        if (role != level.admin | role != level.medewerker)
+        System.Console.WriteLine("role here");
+        System.Console.WriteLine(role);
+        if (role != level.admin || role != level.medewerker)
         {
             return Unauthorized();
         }
 
         var date = DateTime.Parse(data.datum);
+        var zaal = await context.Zaal.Where(z => z.zaalNr == data.zaalNr).FirstAsync();
         var newData = new Programmering
         {
             titel = data.titel,
             datum = date,
             afbeelding = data.afbeelding,
             omschrijving = data.omschrijving,
-
+            prijs = data.prijs,
+            zaal = zaal
         };
         context.Programmering.Add(newData);
         await context.SaveChangesAsync();

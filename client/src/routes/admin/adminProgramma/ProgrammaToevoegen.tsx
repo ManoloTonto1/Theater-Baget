@@ -1,6 +1,14 @@
-import {
-	Box, Button, Card, FormGroup, TextField, Typography 
+import type {
+	SelectChangeEvent
 } from '@mui/material';
+import {
+	Grid
+	,
+	Box, Button, Card, Chip,
+	FormControl, FormGroup,
+	InputLabel, MenuItem, Select, TextField, Typography 
+} from '@mui/material';
+
 import {
 	LocalizationProvider, DatePicker 
 } from '@mui/x-date-pickers';
@@ -16,11 +24,28 @@ import React, {
 } from 'react';
 import API from '../../../api/apiRoutes';
 import UploadImageCard from '../adminProgramma/ImageUpload';
+type Zaal = {
+	zaalNr: number;
+	soort: string;
+}
 
 function ProgrammaToevoegen() {
 	const [image,setImage] = React.useState('');
 	const [voorstellingDatum, setVoorstellingDatum] = React.useState<Dayjs | null>(dayjs());
-    
+	const [selectedZaal, setSelectedZaal] = React.useState('');
+	const [zalen, setZalen] = React.useState<never[] | Zaal[]>([]);
+	
+	React.useEffect(() => {
+		API('zalen').GetAll().then((res) => {
+			if (res.status != 200) {
+				return;
+			}
+			setZalen(res.data);
+		});	
+	},[]);
+	const handleChange = useCallback((event: SelectChangeEvent) => {
+	  setSelectedZaal(event.target.value as string);
+	},[]);
 	const handleForm = useCallback(async (e: { preventDefault: () => void; }) => {
 		e.preventDefault();
 		const form = document.getElementById('form');
@@ -28,92 +53,108 @@ function ProgrammaToevoegen() {
 		for (const value of formData.values()) {
 			console.log(value);
 		}
-		API('programmeringen').Create(
-			formData
-		).then((res: { status: number; }) => {
+		const date = voorstellingDatum?.toDate();
+		if (!date) {
+			return;
+		}
+		const apiSafeDate = `${date.getMonth() +1}/${date.getDate()}/${date.getFullYear()}`;
+		API('programmeringen').Create({
+			datum: apiSafeDate,
+			titel: formData.get('titel'),
+			afbeelding: image,
+			omschrijving: formData.get('omschrijving'),
+			prijs: parseFloat(formData.get('prijs') as string),
+			zaalNr: parseInt(selectedZaal),
+		}).then((res) => {
 			if (res.status !== 200) { /* empty */ }
 		});
 		console.log(voorstellingDatum);
-	}, []);
+	}, [image, selectedZaal, voorstellingDatum]);
 
 	return (
-		<Box sx={{
-			display: 'flex',
-			justifyItems: 'center',
-			alignItems: 'center',
-			alignContent: 'center',
-			flexDirection: 'column',
-			flexWrap: 'nowrap'
-		}}>
-			<Card
-				component = 'form'
-				id='form'
-				sx={{
-					width: 250,
-					p: 3
-				}}>
-				<FormGroup>
-					<Typography variant="h5">
+		<Box
+			component = 'form'
+			id='form'
+			sx={{
+				p: 3
+			}}>
+			<FormGroup>
+				<Typography variant="h5">
                 Programma toevoegen
-					</Typography>
-					<TextField sx={{ 
-						m: 1, mb: 2 
-					}} 
-					label='Titel' 
-					variant='standard' 
-					type='text' 
-					name='titel'
-					required 
+				</Typography>
+				<UploadImageCard imageProps={{
+					image: image,
+					setImage: setImage
+				}} label={''} />
+				<TextField sx={{ 
+				 mb: 2 
+				}} 
+				label='Titel' 
+				variant='standard' 
+				type='text' 
+				name='titel'
+				required 
+				/>
+				<TextField sx={{ 
+					mb: 2 
+				}} 
+				label='Omschrijving' 
+				variant='standard' 
+				type='text' 
+				name='omschrijving'
+				required 
+				/>
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<DatePicker
+						label="Datum voorstelling"
+						value={voorstellingDatum}
+						onChange={(newValue) => {
+							setVoorstellingDatum(newValue);
+						}}
+						renderInput={(params) => <TextField sx={{
+							mb: 2 
+						}} variant='standard'
+						{...params} />}
 					/>
-					<TextField sx={{ 
-						m: 1, mb: 2 
-					}} 
-					label='Omschrijving' 
-					variant='standard' 
-					type='text' 
-					name='omschrijving'
-					required 
-					/>
-					<LocalizationProvider dateAdapter={AdapterDayjs}>
-						<DatePicker
-							label="Datum voorstelling"
-							value={voorstellingDatum}
-							onChange={(newValue) => {
-								setVoorstellingDatum(newValue);
-							}}
-							renderInput={(params) => <TextField sx={{
-								m:1
-							}} variant='standard'
-							{...params} />}
+				</LocalizationProvider>
+				<Grid container spacing = {3}>
+					<Grid item xs={6}>
+						<FormControl fullWidth>
+							<InputLabel id="Zaal select">Zaal select</InputLabel>
+							<Select
+								variant='standard'
+								labelId="Zaal select"
+								value={selectedZaal}
+								label="Zaal select"
+								onChange={handleChange}
+							>
+								{zalen.map((zaal) => {
+									return <MenuItem key={zaal.zaalNr} value={zaal.zaalNr}>
+										<Chip size={'small'} color={'primary'}
+											label={`#${zaal.zaalNr}`} />
+									</MenuItem>;
+								})}
+							</Select>
+						</FormControl>
+					</Grid>
+					<Grid item xs={6}>
+						<TextField sx={{
+							mb: 2 
+						}} label='Prijs'
+						variant='standard' type='text'
+						name='prijs'
+						fullWidth
+						required 
 						/>
-					</LocalizationProvider>
-					<TextField sx={{
-						m: 1, mb: 2 
-					}} label='Zaalnummer'
-					variant='standard' type='text'
-					name='zaalnummer'
-					required
-					/>
-					<TextField sx={{
-						m: 1, mb: 3
-					}} label='Prijs'
-					variant='standard' type='text'
-					name='prijs'
-					required 
-					/>
-					<UploadImageCard imageProps={{
-						image: '',
-						setImage: (data:string)=>void {
-						}
-					}} label={''} />
-					<Button variant='contained' type='submit'
-						onClick={handleForm} sx={{
-							my:3
-						}}>
+					</Grid>
+				</Grid>
+				<Button variant='contained' type='submit'
+					onClick={handleForm} sx={{
+						my:3
+					}}>
 				Toevoegen
-					</Button>
-				</FormGroup>
-			</Card>
+				</Button>
+			</FormGroup>
 		</Box>
 	);
 }

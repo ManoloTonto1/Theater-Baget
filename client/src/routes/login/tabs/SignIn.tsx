@@ -61,11 +61,11 @@ function SignIn() {
 				id: res.data.gebruiker.id,
 				naam: res.data.gebruiker.naam,
 				email: email,
-				ageGroup: res.data.gebruiker.leeftijdsGroep,
+				leeftijdsGroep: res.data.gebruiker.leeftijdsGroep,
 				token: res.data.token
 			});
 
-			role.setRole(res.data.role);
+			role.setRole(res.data.gebruiker.role);
 				
 			navigate('/');
 			
