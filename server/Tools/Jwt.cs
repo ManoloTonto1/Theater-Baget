@@ -12,7 +12,6 @@ public class JWT
     private string audience = "TheaterBaget Chad";
     public string CreateUserToken(Gebruiker user, bool persistentLogin)
     {
-        System.Console.WriteLine(user.loginGegevens.email);
         var claims = new List<Claim>
         {
             new Claim("id", Convert.ToString(user.id)),
@@ -49,18 +48,18 @@ public class JWT
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(SecureKey);
+        var cleanToken = extractToken(token);
         try
         {
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            tokenHandler.ValidateToken(cleanToken,new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                ClockSkew = TimeSpan.Zero
+                ValidIssuer = issuer,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidAudience = audience
             }, out SecurityToken validatedToken);
-
             var jwtToken = (JwtSecurityToken)validatedToken;
 
             return (true, jwtToken);

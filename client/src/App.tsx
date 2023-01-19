@@ -32,7 +32,7 @@ const ProgrammaOverzicht = React.lazy(() => import('./routes/programma/Programma
 const BegunstigersPortaal = React.lazy(() => import('./routes/programma/BegunstigersPortaal'));
 
 function App() : JSX.Element {
-	const { user, theme } = React.useContext(UserContext);
+	const { _, theme } = React.useContext(UserContext);
 	const location = useLocation();
 	return (
 		<ThemeProvider theme={theme.theme} >
