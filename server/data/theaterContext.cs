@@ -8,6 +8,7 @@ public class theaterContext : DbContext
     }
 
     public DbSet<Gebruiker> Gebruiker { get; set; } = default!;
+    public DbSet<Stoel> stoelen { get; set; } = default!;
     public DbSet<Betaling> Betaling { get; set; } = default!;
     public DbSet<Betrokkene> Betrokkene { get; set; } = default!;
     public DbSet<Donatie> Donatie { get; set; } = default!;

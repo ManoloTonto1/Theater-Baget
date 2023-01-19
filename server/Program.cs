@@ -1,11 +1,12 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using server.Controllers;
 
 var policy = "Client";
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: policy,
@@ -16,20 +17,22 @@ builder.Services.AddCors(options =>
                           .AllowAnyMethod();
                       });
 });
+
 builder.Services.AddMvc().AddJsonOptions(options =>
 {
-     options.JsonSerializerOptions.PropertyNamingPolicy = null;
-     options.JsonSerializerOptions.MaxDepth = 64;
-     options.JsonSerializerOptions.IncludeFields = true;
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    options.JsonSerializerOptions.MaxDepth = 64;
+    options.JsonSerializerOptions.IncludeFields = true;
     options.JsonSerializerOptions.WriteIndented = true;
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
+
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddDbContext<theaterContext>(options =>
         options.UseSqlite("Data Source=database.db"));
 }
-else 
+else
 {
     builder.Services.AddDbContext<theaterContext>(options =>
         options.UseMySQL("Data Source=manuellopezhernandez.database.windows.net;Integrated Security=false;User ID=cmykttpscpclmwxyqxuwgkqx;Password=exJpmn7E9XsDVEtU4WKGikia;"));
@@ -42,19 +45,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseRouting();
+app.UseAuthorization();
+app.UseEndpoints(builder =>
+{
+    builder.MapHub<StoelenController>("/api/stoelen");
+    builder.MapControllers();
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-// enable if you want t use HTTPS, remember to change the Proxy in the client.
-// app.UseHttpsRedirection();
 
 app.UseCors(policy);
-
-app.UseAuthorization();
-app.MapControllers();
-
 
 app.Run();

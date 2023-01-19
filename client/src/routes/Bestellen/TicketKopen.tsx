@@ -72,7 +72,7 @@ function TicketKopen() {
 					<Card
 						elevation={4}
 						sx={{
-							zIndex: 10000,
+							zIndex: 100,
 							p: 1,
 							position: 'sticky',
 							top: 0,
@@ -104,8 +104,7 @@ function TicketKopen() {
 								</Typography>
 								<Ticket {...data} />
 								<SeatChoice
-									columns={10}
-									rows={10}
+									{...data}
 									selection={selection}
 									setSelection={setSelection}
 								/>

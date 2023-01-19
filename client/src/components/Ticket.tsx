@@ -94,7 +94,7 @@ export function Ticket(props:TicketsProps) {
 									<Box sx={{
 									}}>
 										<Typography variant="body1">
-											{datum.toUTCString()}
+											Zaal: #{props.zaal.zaalNr}
 										</Typography>
 										<Typography variant="h6">{props.titel}</Typography>
 										<Typography variant="body2" >

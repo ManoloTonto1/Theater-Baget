@@ -1,71 +1,109 @@
 import React from 'react';
+import type {
+	SelectChangeEvent
+} from '@mui/material';
 import {
-	Box, Fade, Grid
+	Box, FormControl, Grid, MenuItem, Select
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
-import Seat from './Seat';
+import type {
+	Programma
+} from '../../components/global/globalTypes';
+import yellow from '@mui/material/colors/yellow';
+import orange from '@mui/material/colors/orange';
+import {
+	green
+} from '@mui/material/colors';
+import API, {
+	apiEndPoint 
+} from '../../api/apiRoutes';
+import {
+	useParams
+} from 'react-router-dom';
 type props = {
-    rows: number;
-    columns: number;
-    selection: never[] | string[];
-    setSelection: React.Dispatch<React.SetStateAction<string[] | never[]>>;
-};
-function SeatChoice({ rows, columns, selection, setSelection }: props) {
-	const [seats, setSeats] = React.useState<never[] | JSX.Element[]>([]);
+	selection: never[] | string[];
+	setSelection: React.Dispatch<React.SetStateAction<string[] | never[]>>;
+} & Programma;
 
-	const renderSeats = React.useCallback(() => {
-		const seats = [];
-		for (let i = 0; i < columns + 1; i++) {
-			seats.push(
-				<Grid
-					item
-					xs={1}
-					display={'flex'}
-					justifyContent={'center'}
-					key={`chip${i}`}
-				>
-					{i ? <Chip label={i} color={'primary'} /> : <></>}
-				</Grid>
-			);
+import * as signalR from '@microsoft/signalr';
+
+const connection = new signalR.HubConnectionBuilder()
+	.withUrl('/ws/stoelen')
+	.build();
+
+function SeatChoice(props: props) {
+	const { id } = useParams();
+	const [seats, setSeats] = React.useState<JSX.Element[]>([]);
+	const currentUserId = React.useRef(crypto.randomUUID());
+	const getSeats = React.useCallback(() => {
+		const arr = [];
+		let currentLetter = 'A';
+		for (let j = 1; j < props.zaal.eersterangsAantal + 1; j++) {
+			arr.push(<MenuItem key={currentLetter + j} value={currentLetter + j}>{currentLetter + j}
+				<Chip sx={{
+					ml: 1,
+					bgcolor: yellow[500],
+					color: '#000'
+				}} label={'1e Rang'} /></MenuItem>);
 		}
-		for (let i = 0; i < rows; i++) {
-			seats.push(
-				<Grid
-					item
-					xs={1}
-					display={'flex'}
-					justifyContent={'center'}
-					key={String.fromCharCode(65 + i)}
-				>
-					<Chip label={String.fromCharCode(65 + i)} color={'primary'} />
-				</Grid>
-			);
-			for (let j = 0; j < columns; j++) {
-				seats.push(
-					<Grid
-						item
-						xs={1}
-						display={'flex'}
-						justifyContent={'center'}
-						key={String.fromCharCode(65 + i) + (j + 1)}
-					>
-						<Seat
-							id={String.fromCharCode(65 + i) + (j + 1)}
-							setSelection={setSelection}
-							selection={selection}
-						/>
-					</Grid>
-				);
+		currentLetter = 'B';
+		for (let j = 1; j < props.zaal.tweederangsAantal + 1; j++) {
+			arr.push(<MenuItem key={currentLetter + j} value={currentLetter + j}>{currentLetter + j}
+				<Chip sx={{
+					ml: 1,
+					bgcolor: orange[500],
+					color: '#000'
+				}} label={'2de Rang'} /></MenuItem>);
+		}
+		currentLetter = 'C';
+		for (let j = 1; j < props.zaal.derderangsAantal + 1; j++) {
+			arr.push(<MenuItem key={currentLetter + j} value={currentLetter + j}>{currentLetter + j}
+				<Chip sx={{
+					ml: 1,
+					bgcolor: green[500],
+					color: '#000'
+				}} label={'3de Rang'} /></MenuItem>);
+		}
+		return arr;
+	},[props.zaal.derderangsAantal, props.zaal.eersterangsAantal, props.zaal.tweederangsAantal]);
+
+	const doFirstFetch = React.useCallback(() => {
+		connection.invoke('Get',parseInt(id as string),currentUserId.current,'i like niggas');
+		connection.on('receiveMessage', (user, message, stoelen) => {
+			const seatArray = getSeats();
+			seatArray.filter((seat) => !stoelen.includes(seat));
+			setSeats(seatArray);
+			console.log(user);
+			console.log(message);
+			console.log(stoelen);
+		});
+	}, [getSeats, id]);
+
+	const waitForSocketConnetion = React.useCallback(() => {
+		setTimeout(() => {
+			if (connection.state === signalR.HubConnectionState.Connected && seats.length === 0) {
+				doFirstFetch();
 			}
-		}
-
-		return seats;
-	}, [columns, rows, selection, setSelection]);
+			else {
+				waitForSocketConnetion();
+			}
+		},5);
+	}, [doFirstFetch, seats.length]);
+	
 	React.useEffect(() => {
-		setSeats([]);
-		setSeats(renderSeats());
-	}, [renderSeats, selection]);
+		connection.start().catch(err => console.error(err.toString()));
+		waitForSocketConnetion();
+	}, [doFirstFetch, waitForSocketConnetion]);
+	
+	const handleChange = (event: SelectChangeEvent<string[]>) => {
+		const { target: { value }, } = event;
+		props.setSelection(
+			// On autofill we get a stringified value.
+			typeof value === 'string' ? value.split(',') : value,
+		);
+	};
+	
 	return (
 		<Box
 			sx={{
@@ -78,43 +116,41 @@ function SeatChoice({ rows, columns, selection, setSelection }: props) {
 				}}
 				variant="h4"
 			>
-                Stoel Selectie:
+				Stoel Selectie:
 			</Typography>
-			{selection.map((selected) => {
-				return (
-					<Fade in key={selected}>
-						<Chip
-							label={selected}
-							color={'info'}
-							sx={{
-								mr: 1,
+			<Grid container spacing={3}>
+				<Grid item lg={10}>
+					<Typography variant='h5'>
+						Instructies:
+					</Typography>
+					<Typography>
+						Onze zalen zijn geconfigureert met rijen van Letters en Nummers, De letters gaan vanaf A t/m C.
+						Waardoor <i><b>A</b></i> het dichtst is van het stage,
+						en <i><b>C</b></i> het achterste plek is van het zaal is. <br />
+						De nummers gaan vanaf <i><b>1</b></i>
+						t/m het maximaal aantal zitplaatsen beschikbaar in het zaal.
+						Waarbij <i><b>1</b></i> het linkerste plaats is in het zaal.
+					</Typography>
+				</Grid>
+				<Grid item lg={3}>
+					<FormControl fullWidth>
+						<Select
+							multiple
+							displayEmpty
+							labelId="Stoel selectie"
+							value={props.selection}
+							onChange={handleChange}
+							renderValue={(selected) => {
+								if (selected.length === 0) {
+									return <em>Stoelen</em>;
+								}
+
+								return selected.join(', ');
 							}}
-						/>
-					</Fade>
-				);
-			})}
-			<Grid
-				sx={{
-					mt: 1,
-				}}
-				container
-				spacing={1}
-				columns={columns + 1}
-			>
-				{seats}
-				<Grid item xs={columns + 1}>
-					<Box
-						sx={{
-							p: 2,
-							bgcolor: 'white',
-							color: 'black',
-							borderRadius: 1,
-						}}
-					>
-						<Typography align="center" variant="h5">
-                            Scherm
-						</Typography>
-					</Box>
+						>
+							{seats}
+						</Select>
+					</FormControl>
 				</Grid>
 			</Grid>
 		</Box>
