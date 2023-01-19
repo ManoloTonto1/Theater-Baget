@@ -47,57 +47,52 @@ function GebruikerInzien() {
 			sx={{
 				p: 3
 			}}>
-			<Card sx={{
-				width: 250,
-				p: 3
-			}}>
-				<Typography
-					sx={{
-						pb:2
-					}}
-				>Gebruiker inzien</Typography>
+			<Typography
+				sx={{
+					pb:2
+				}}
+			>Gebruiker inzien</Typography>
 
-				<FormControl fullWidth>
+			<FormControl fullWidth>
 					
-					<InputLabel>Gebruiker</InputLabel>
-					<Select
-						variant='standard'
-						value={selectedUser}
-						onChange={handleSelectChange}
-					>
-						{usersList}
-					</Select>
-					<Button
-						variant='contained'
-						onClick={handleClickOpen}
-					>
+				<InputLabel>Gebruiker</InputLabel>
+				<Select
+					variant='standard'
+					value={selectedUser}
+					onChange={handleSelectChange}
+				>
+					{usersList}
+				</Select>
+				<Button
+					variant='contained'
+					onClick={handleClickOpen}
+				>
 							Inzien
-					</Button>
-				</FormControl>
-				<Typography
-					sx={{
-						pb:2
-					}}
-				>Gebruiker inzien</Typography>
+				</Button>
+			</FormControl>
+			<Typography
+				sx={{
+					pb:2
+				}}
+			>Gebruiker inzien</Typography>
 
-				<FormControl fullWidth>
+			<FormControl fullWidth>
 					
-					<InputLabel>Gebruiker</InputLabel>
-					<Select
-						variant='standard'
-						value={selectedUser}
-						onChange={handleSelectChange}
-					>
-						{usersList}
-					</Select>
-					<Button
-						variant='contained'
-						onClick={handleClickOpen}
-					>
+				<InputLabel>Gebruiker</InputLabel>
+				<Select
+					variant='standard'
+					value={selectedUser}
+					onChange={handleSelectChange}
+				>
+					{usersList}
+				</Select>
+				<Button
+					variant='contained'
+					onClick={handleClickOpen}
+				>
 							Inzien
-					</Button>
-				</FormControl>
-			</Card>
+				</Button>
+			</FormControl>
 
 			{/* {
 				selectedUser != null &&
