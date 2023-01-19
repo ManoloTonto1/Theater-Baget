@@ -58,7 +58,7 @@ function Profiel() {
 	const [value, setValue] = React.useState(0);
 	const [data, setData] = React.useState<never[] | ProfileCardProps[]>([]);
 	React.useEffect(() => {
-		// API('gebruiker').Get(value)
+		// API('gebruikers').Get(value)
 		// 	.then((res) => {
 		// 		if (res.status != 200) {
 		// 			return;

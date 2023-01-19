@@ -1,5 +1,5 @@
 import {
-	Box, Button, Checkbox, FormControlLabel, FormGroup, Slide, TextField 
+	Box, Button, Checkbox, FormControlLabel, FormGroup, Slide, TextField, Typography 
 } from '@mui/material';
 
 import { 
@@ -7,9 +7,10 @@ import {
 	LocalizationProvider 
 } from '@mui/x-date-pickers';
 
-import dayjs, { 
+import type { 
 	Dayjs 
 } from 'dayjs';
+import dayjs from 'dayjs';
 
 import { 
 	AdapterDayjs 
@@ -20,9 +21,14 @@ import React, {
 } from 'react';
 
 import UserContext from '../../../context/UserContext';
+import API from '../../../api/apiRoutes';
+import {
+	useNavigate 
+} from 'react-router-dom';
 
 function SignUp () {
-	const { user } = React.useContext(UserContext);
+	const { user, role } = React.useContext(UserContext);
+	const navigate = useNavigate();
 
 	// general values
 	const [password, setPassword] = React.useState('');
@@ -40,6 +46,8 @@ function SignUp () {
 	
 	const [passwordsMatch, setPasswordsMatch] = React.useState(true);
 
+	const [errorText, setErrorText] = React.useState('');
+
 	const signUp = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
@@ -47,6 +55,40 @@ function SignUp () {
 			
 			// TODO sign up logica
 
+			const fullName = `${voornaam}${(tussenvoegsel) ? ' '+tussenvoegsel : ''} ${achternaam}`;
+			await API('signup').Create({
+				naam : fullName,
+				leeftijdsGroep : 1,
+				level : 1,
+				loginGegevens: {
+					wachtwoord : password,
+					email : email,
+					twoFactor: false
+				}
+			}).then(async ()=> {
+				await API('signin').Create({
+					email: email,
+					password: password,
+					persistentLogin: false,
+				}).then((res)=> {
+					console.log('login successful');
+					localStorage.setItem('token', res.data.token);
+					user.setUser({
+						id: res.data.gebruiker.id,
+						naam: res.data.gebruiker.naam,
+						email: email,
+						ageGroup: res.data.gebruiker.leeftijdsGroep,
+						token: res.data.token
+					});
+
+					role.setRole(res.data.role);
+					navigate('/');
+				}).catch(()=>{
+					setErrorText('Er is iets misgegaan bij het inloggen, probeer het later opnieuw');
+				});
+			}).catch((err) => {
+				setErrorText(err.response.data);
+			});
 			return;
 		}
 		setPasswordsMatch(false);
@@ -54,27 +96,27 @@ function SignUp () {
 
 	const handlePassword = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setPassword(e.target.value);
-	}, []);
+	}, [setPassword]);
 
 	const handleEmail = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setEmail(e.target.value);
-	}, []);
+	}, [setEmail]);
 
 	const handleConfirmPassword = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setConfirmPassword(e.target.value);
-	}, []);
+	}, [setConfirmPassword]);
 
 	const handleVoornaam = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setVoornaam(e.target.value);
-	}, []);
+	}, [setVoornaam]);
 	
 	const handleTussenvoegsel = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setTussenvoegsel(e.target.value);
-	}, []);
+	}, [setTussenvoegsel]);
 	
 	const handleAchternaam = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setAchternaam(e.target.value);
-	}, []);
+	}, [setAchternaam]);
 
 	return (
 
@@ -88,6 +130,7 @@ function SignUp () {
 				sx={{ 
 					p: 2 
 				}}>
+				<Typography color='red' align='center'>{errorText}</Typography>
 				<FormGroup>
 					<Box sx={{
 						'& .MuiTextField-root': { 
