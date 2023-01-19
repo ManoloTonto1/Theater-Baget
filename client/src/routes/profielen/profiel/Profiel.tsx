@@ -70,7 +70,7 @@ function Profiel() {
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
-
+	console.log("leeftijd:" + props.leeftijdsGroep);
 	return (
 		<Container maxWidth={'xl'} sx={{
 			my: 4
