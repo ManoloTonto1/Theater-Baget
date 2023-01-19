@@ -48,15 +48,28 @@ function SignUp () {
 
 	const [errorText, setErrorText] = React.useState('');
 
+	const getLeeftijdsGroep = (birthYear:any) => {
+		const estimatedAge = new Date().getFullYear() - birthYear;
+
+		if(estimatedAge < 18) {
+			return 1;
+		}
+		if(estimatedAge < 50) {
+			return 2;
+		}
+		return 3;
+	};
+
 	const signUp = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		if (password === confirmPassword) {
 
 			const fullName = `${voornaam}${(tussenvoegsel) ? ' '+tussenvoegsel : ''} ${achternaam}`;
+			const leeftijdsGroep = getLeeftijdsGroep(geboorteDatum.$y);
 			await API('signup').Create({
 				naam : fullName,
-				leeftijdsGroep : 1,
+				leeftijdsGroep : leeftijdsGroep,
 				level : 1,
 				loginGegevens: {
 					wachtwoord : password,
