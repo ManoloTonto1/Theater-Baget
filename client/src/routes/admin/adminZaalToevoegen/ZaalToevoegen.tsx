@@ -13,6 +13,12 @@ export default function ZaalToevoegen() {
 		for (const value of formData.values()) {
 			console.log(value);
 		}
+		/* API('external').Donate().then((res) => {
+			if (res.status !== 200) {
+				return;
+			}
+		}).catch(() => {
+		}); */
 	}, []);
 
 	return (
