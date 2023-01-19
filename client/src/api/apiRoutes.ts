@@ -13,16 +13,6 @@ import type {
 import axios from 'axios';
 
 /**
- * Bearer token for authorization
- *
- * @type {{ 'Content-Type': string; Authorization: string; }}
- */
-const BearerToken = {
-	'Access-Control-Allow-Origin':'*',
-	'Content-Type': 'application/json',
-	Authorization: `Bearer ${localStorage.getItem('token')}`
-};
-/**
  * Data Generic
  *
  * @typedef {Data}
@@ -102,6 +92,16 @@ interface ExternalModule {
  * @returns {ApiModule}
  */
 const API = <T extends string>(route: T): T extends 'external' ? ExternalModule : ApiModule => {
+	/**
+ * Bearer token for authorization
+ *
+ * @type {{ 'Content-Type': string; Authorization: string; }}
+ */
+	const BearerToken = {
+		'Access-Control-Allow-Origin':'*',
+		'Content-Type': 'application/json',
+		Authorization: `Bearer ${localStorage.getItem('token')}`
+	};
 	const ApiModule: ApiModule = {
 		route: '',
 		Get: async (id?: string, data?: Data<unknown> | unknown) => {

@@ -2,14 +2,12 @@ import {
 	Card, Grid, Avatar, Box, Typography 
 } from '@mui/material';
 import React from 'react';
+import type {
+	userData 
+} from '../context/UserContext';
+import Monki from '../assets/gorilla.jfif';
 
-export type ProfileCardProps = {
-    image: string,
-    name: string,
-    email: string,
-    ageGroep: string
-}
-export function ProfileCard(props:ProfileCardProps) {
+export function ProfileCard(props:userData) {
 	return (
 		<Card elevation={4} sx={{
 			marginBottom: 2,
@@ -18,8 +16,8 @@ export function ProfileCard(props:ProfileCardProps) {
 		}}>
 			<Grid container>
 				<Avatar
-					alt={props.name}
-					src={props.image}
+					alt={props.naam}
+					src={Monki}
 					sx={{
 						width: 100,
 						height: 100,
@@ -31,13 +29,13 @@ export function ProfileCard(props:ProfileCardProps) {
 					flexDirection: 'column'
 				}}>
 					<Typography>
-                        Naam: {props.name}
+                        Naam: {props.naam}
 					</Typography>
 					<Typography>
                         Email: {props.email}
 					</Typography>
 					<Typography>
-                        Leeftijd: {props.ageGroep}
+                        Leeftijd: {props.leeftijdsGroep}
 					</Typography>
 				</Box>
 			</Grid>
