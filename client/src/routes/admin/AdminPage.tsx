@@ -1,4 +1,3 @@
-
 import {
 	Box, Card, Container, Grid, Tab, Tabs, Typography
 } from '@mui/material';
@@ -62,17 +61,23 @@ function AdminPage() {
 	return (
 		<>{
 			user.userData && role.role === level.admin ? (
-				<Container maxWidth={'xl'} sx={{
-					my: 4
+				<Container maxWidth={'md'}
+					sx={{
+					my:4,
+
 				}}>
 			
-					<Grid container spacing={3}>
-						<Grid item lg={6}
+					<Grid container spacing={3} sx={{
+											display: 'flex',
+											justifyContent:'center'
+					}}>
+						<Grid item
+							lg={12}
 							xs={12}>
 							<Card elevation={4}>
 								<Tabs
-									orientation="vertical"
-									variant="fullWidth"
+									// orientation="vertical"
+									variant="scrollable"
 									value={value}
 									onChange={handleChange}
 									aria-label="Vertical tabs"
@@ -88,9 +93,12 @@ function AdminPage() {
 								</Tabs>
 							</Card>
 						</Grid>
-						<Grid item lg={6}
+						<Grid
+							item
+							lg={12}
 							sm={12}
 							xs={12}
+
 						>
 							<Card elevation={4} sx={{
 								minHeight: 500,
