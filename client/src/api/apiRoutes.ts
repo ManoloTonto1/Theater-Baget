@@ -88,6 +88,8 @@ interface ApiModule {
      * @returns {Promise<AxiosResponse<any, any>>}
      */
     Create(data: Data<unknown> | any): Promise<AxiosResponse<any, any>>
+	// eslint-disable-next-line max-len
+	AkashaTestCreate(Soort:string,Eersterangs:number,Tweederangs:number,Derderangs:number): Promise<AxiosResponse<any, any>>
 }
 
 interface ExternalModule {
@@ -142,6 +144,20 @@ const API = <T extends string>(route: T): T extends 'external' ? ExternalModule 
 				headers: BearerToken,
 				url: ApiModule.route,
 				data: data
+			});
+		},
+		// eslint-disable-next-line max-len
+		AkashaTestCreate: async (Soort:string,Eersterangs:number,Tweederangs:number,Derderangs:number): Promise<AxiosResponse<any, any>> => {
+			return axios({
+				method: 'POST',
+				headers: BearerToken,
+				url: ApiModule.route,
+				data: {
+					Soort,
+					Eersterangs,
+					Tweederangs,
+					Derderangs
+				}
 			});
 		},
 

@@ -4,21 +4,42 @@ import {
 import React, {
 	useCallback 
 } from 'react';
+import API from '../../../api/apiRoutes';
 
 export default function ZaalToevoegen() { 
-	const handleForm = useCallback(async (e: { preventDefault: () => void; }) => {
+	const [soort, setSoort] = React.useState('');
+	const [eersterangs, setEersterangs] = React.useState('');
+	const [tweederangs, setTweederangs] = React.useState('');
+	const [derderangs, setDerderangs] = React.useState('');
+
+	const handleSoort = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setSoort(e.target.value);
+	}, []);
+	const handleEersterangs = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setEersterangs(e.target.value);
+	}, []);
+	const handleTweederangs = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setTweederangs(e.target.value);
+	}, []);
+	const handleDerderangs = useCallback(async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setDerderangs(e.target.value);
+	}, []);
+	/* const handleForm = useCallback(async (e: { preventDefault: () => void; }) => {
 		e.preventDefault();
 		const form = document.getElementById('form');
 		const formData = new FormData(form as HTMLFormElement);
 		for (const value of formData.values()) {
 			console.log(value);
 		}
-		/* API('external').Donate().then((res) => {
-			if (res.status !== 200) {
-				return;
-			}
-		}).catch(() => {
-		}); */
+		API('zalen').AkashaTestCreate().then((res: { status: number; }) => {
+			if (res.status !== 200) {  }
+		}); 
+	}, []); */
+	const handleData = useCallback(async (e: { preventDefault: () => void; }) => {
+		e.preventDefault();
+		API('zalen').AkashaTestCreate(soort, eersterangs, tweederangs, derderangs).then((res: { status: number; }) => {
+			if (res.status !== 200) { /* empty */ }
+		}); 
 	}, []);
 
 	return (
@@ -49,15 +70,19 @@ export default function ZaalToevoegen() {
 					type='text' 
 					name='titel'
 					required 
+					onChange={handleSoort}
+					value={soort}
 					/>
 					<TextField sx={{ 
 						m: 1, mb: 2 
 					}} 
 					label='Aantal eersterangs stoelen' 
 					variant='standard' 
-					type='text' 
+					type='number' 
 					name='omschrijving'
 					required 
+					onChange={handleEersterangs}
+					value={eersterangs}
 					/>
 					<TextField sx={{
 						m: 1, mb: 2 
@@ -65,6 +90,8 @@ export default function ZaalToevoegen() {
 					variant='standard' type='text'
 					name='zaalnummer'
 					required
+					onChange={handleTweederangs}
+					value={tweederangs}
 					/>
 					<TextField sx={{
 						m: 1, mb: 3
@@ -72,9 +99,11 @@ export default function ZaalToevoegen() {
 					variant='standard' type='text'
 					name='prijs'
 					required 
+					onChange={handleDerderangs}
+					value={derderangs}
 					/>
 					<Button variant='contained' type='submit'
-						onClick={handleForm} sx={{
+						onClick={handleData} sx={{
 							my:3
 						}}>
 				Toevoegen

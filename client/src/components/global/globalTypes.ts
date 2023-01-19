@@ -14,3 +14,10 @@ export type Programma = {
     titel: string;
     zaalNr: string;
 }
+
+export type Zaal = {
+    soort: string;
+    eersterangs: number;
+    tweederangs: number;
+    derderangs: number;
+}
