@@ -23,7 +23,8 @@ function Logout() {
 			alignItems: 'center',
 			alignContent: 'center',
 			flexDirection: 'column',
-			flexWrap: 'nowrap'
+			flexWrap: 'nowrap',
+			maxWidth: 500
 		}}>
 			<Typography variant="h3" align="center"
 				sx={{
