@@ -11,7 +11,6 @@ public class ValidationController : ControllerBase
 
     public ValidationController(theaterContext _context)
     {
-        context = _context;
     }
     [HttpGet]
     public async Task<ActionResult> Get([FromHeader(Name = "Authorization")] string token)
