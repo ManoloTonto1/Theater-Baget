@@ -31,8 +31,8 @@ export function ProfileCard(props:userData) {
 					<Typography>
                         Naam: {props.naam}
 					</Typography>
-					<Typography>
-                        Email: {props.email}
+					<Typography variant='h5'>
+						{user.userData?.email}
 					</Typography>
 					<Typography>
                         Leeftijd: {props.leeftijdsGroep}
