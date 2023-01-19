@@ -82,7 +82,6 @@ function SignUp () {
 					password: password,
 					persistentLogin: false,
 				}).then((res)=> {
-					console.log('login successful');
 					localStorage.setItem('token', res.data.token);
 					user.setUser({
 						id: res.data.gebruiker.id,

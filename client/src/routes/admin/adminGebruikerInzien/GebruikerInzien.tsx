@@ -17,9 +17,6 @@ import {
 	Typography
 } from '@mui/material';
 import API from '../../../api/apiRoutes';
-import {
-	Form 
-} from 'react-router-dom';
 
 function GebruikerInzien() {
 
@@ -47,14 +44,13 @@ function GebruikerInzien() {
 		setSelectedUser(e.target.value);
 	}, [setSelectedUser]);
 
-	const handleClickOpen = () => {
+	const handleClickOpen = useCallback(() => {
 		setOpen(true);
-		console.log(selectedUser);
-	};
+	}, [setOpen]);
 
-	const handleClose = () => {
+	const handleClose = useCallback(() => {
 		setOpen(false);
-	};
+	}, [setOpen]);
 
 	return (
 		<Box sx={{
