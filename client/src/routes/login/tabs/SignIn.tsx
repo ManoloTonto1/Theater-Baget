@@ -67,7 +67,10 @@ function SignIn() {
 			});
 
 			role.setRole(res.data.role);
+			role.setRole(res.data.role);
 				
+			navigate('/');
+			
 			navigate('/');
 			
 		}).catch(() => {
