@@ -66,7 +66,7 @@ function SignIn() {
 				token: res.data.token
 			});
 
-			role.setRole(res.data.gebruiker.role);
+			role.setRole(res.data.gebruiker.level);
 				
 			navigate('/');
 			
