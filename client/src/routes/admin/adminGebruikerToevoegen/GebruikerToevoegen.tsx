@@ -39,16 +39,10 @@ function GebruikerToevoegen() {
 		setNaam(e.target.value);
 	}, []);
 	return (
-		<Box sx={{
-			display: 'flex',
-			justifyItems: 'center',
-			alignItems: 'center',
-			alignContent: 'center',
-			flexDirection: 'column',
-			flexWrap: 'nowrap'
-		}}>
-			<Card sx={{
-				width: 250,
+		<Box
+			component = 'form'
+			id='form'
+			sx={{
 				p: 3
 			}}>
 				<FormGroup>
@@ -109,7 +103,6 @@ function GebruikerToevoegen() {
 				Toevoegen
 					</Button>
 				</FormGroup>
-			</Card>
 		</Box>
 	);
 }
