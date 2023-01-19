@@ -5,8 +5,15 @@ import React, {
 	useCallback 
 } from 'react';
 import API from '../../../api/apiRoutes';
+import type {
+	Zaal 
+} from '../../../components/global/globalTypes';
 
-export default function ZaalToevoegen() { 
+type props = {
+	zaal: Zaal
+}
+
+export default function ZaalToevoegen(props: props) { 
 	const [soort, setSoort] = React.useState('');
 	const [eersterangs, setEersterangs] = React.useState('');
 	const [tweederangs, setTweederangs] = React.useState('');
@@ -37,7 +44,17 @@ export default function ZaalToevoegen() {
 	}, []); */
 	const handleData = useCallback(async (e: { preventDefault: () => void; }) => {
 		e.preventDefault();
-		API('zalen').AkashaTestCreate(soort, eersterangs, tweederangs, derderangs).then((res: { status: number; }) => {
+		
+		API('zalen').AkashaTestCreate(
+			soort, 
+			Number(eersterangs), 
+			Number(tweederangs), 
+			Number(derderangs)
+		).then((res: { status: number; }) => {
+			console.log(soort);
+			console.log(Number(eersterangs));
+			console.log(Number(tweederangs));
+			console.log(Number(derderangs));
 			if (res.status !== 200) { /* empty */ }
 		}); 
 	}, []);
