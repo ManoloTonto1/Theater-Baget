@@ -14,6 +14,7 @@ import dayjs from 'dayjs';
 import React, {
 	useCallback 
 } from 'react';
+import API from '../../../api/apiRoutes';
 import UploadImageCard from '../adminProgramma/ImageUpload';
 
 function ProgrammaToevoegen() {
@@ -27,6 +28,11 @@ function ProgrammaToevoegen() {
 		for (const value of formData.values()) {
 			console.log(value);
 		}
+		API('programmeringen').Create(
+			formData
+		).then((res: { status: number; }) => {
+			if (res.status !== 200) { /* empty */ }
+		});
 		console.log(voorstellingDatum);
 	}, []);
 
