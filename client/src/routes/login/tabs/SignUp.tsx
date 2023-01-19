@@ -52,8 +52,6 @@ function SignUp () {
 		e.preventDefault();
 
 		if (password === confirmPassword) {
-			
-			// TODO sign up logica
 
 			const fullName = `${voornaam}${(tussenvoegsel) ? ' '+tussenvoegsel : ''} ${achternaam}`;
 			await API('signup').Create({

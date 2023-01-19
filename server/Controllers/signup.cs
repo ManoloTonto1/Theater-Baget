@@ -17,7 +17,6 @@ public class SignUpController : ControllerBase {
     }
 
     [HttpPost]
-    // public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody] ProgrammeringData data)
     public async Task<ActionResult> Post([FromBody]GebruikerData data)
     {
         var nieuweGebruiker = new Gebruiker {
