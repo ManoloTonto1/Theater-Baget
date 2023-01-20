@@ -54,6 +54,7 @@ function SignIn() {
 		).then((res) => {
 			if (res.status != 200) {
 				setErrorText('Invalid Credentials');
+				return;
 			}
 			
 			localStorage.setItem('token', res.data.token);

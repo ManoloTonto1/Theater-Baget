@@ -41,7 +41,7 @@ function BandlidShows() {
 				</Typography>
 				{dataLength == 0? 
 					<Typography variant='h5' mb={2}>
-						You currently dont have any reservations.
+						You currently dont have any jobs to work.
 					</Typography> :
 					data.map((card) => {
 						console.log(card);

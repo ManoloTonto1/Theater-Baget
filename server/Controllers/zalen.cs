@@ -62,15 +62,11 @@ public class ZalenController : ControllerBase, IController<Zaal,Zaal>
     [HttpPost]
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody]Zaal data)
     {
-        if(token == null || token == ""){
-            return Unauthorized();
-        }
         var role = auth.getRoleFromToken(token);
-        if (role == null || role != level.medewerker || role != level.admin)
+        if ((int)role == (int)level.admin || (int)role == (int)level.medewerker)
         {
-            return Unauthorized();
-        }
-        var newData = new Zaal{
+            var newData = new Zaal
+            {
             eersterangsAantal = data.eersterangsAantal,
             tweederangsAantal = data.tweederangsAantal,
             derderangsAantal = data.derderangsAantal,
@@ -80,6 +76,8 @@ public class ZalenController : ControllerBase, IController<Zaal,Zaal>
         await context.SaveChangesAsync();
 
         return CreatedAtAction("Get", new { id = data.zaalNr }, data);
+        }
+        return Unauthorized();
     }
     
     [HttpPut("{id}")]

@@ -1,5 +1,5 @@
 import {
-	Card, Grid, Avatar, Box, Typography 
+	Card, Grid, Avatar, Box, Typography
 } from '@mui/material';
 import React from 'react';
 import {
@@ -7,40 +7,48 @@ import {
 	userData 
 } from '../context/UserContext';
 import Monki from '../assets/gorilla.jfif';
+import UserContext from '../context/UserContext';
+import ErrorPage from './ErrorPage';
 
-export function ProfileCard(props:userData) {
+export function ProfileCard() {
+	const { user, role } = React.useContext(UserContext);
+	const userData = user.userData;
 	return (
-		<Card elevation={4} sx={{
-			marginBottom: 2,
-			display: 'flex',
-			justifyContent: 'center'
-		}}>
-			<Grid container>
-				<Avatar
-					alt={props.naam}
-					src={Monki}
-					sx={{
-						width: 100,
-						height: 100,
-						m: 2
-					}} />
-				<Box sx={{
+		<>
+			{userData ? (
+				<Card elevation={4} sx={{
+					marginBottom: 2,
 					display: 'flex',
-					justifyContent: 'center',
-					flexDirection: 'column'
+					justifyContent: 'center'
 				}}>
-					<Typography>
-                        Naam: {props.naam}
-					</Typography>
-					<Typography>
-                        Email: {props.email}
-					</Typography>
-					<Typography>
-                        Leeftijd: {leeftijdsGroep[parseInt(props.leeftijdsGroep)]}
-					</Typography>
-				</Box>
-			</Grid>
+					<Grid container>
+						<Avatar
+							alt={userData.naam}
+							src={Monki}
+							sx={{
+								width: 100,
+								height: 100,
+								m: 2
+							}} />
+						<Box sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							flexDirection: 'column'
+						}}>
+							<Typography variant='h4'>
+								{userData.naam}
+							</Typography>
+							<Typography variant='h6'>
+								{userData.email}
+							</Typography>
+							<Typography variant="body2">
+								{leeftijdsGroep[parseInt(userData.leeftijdsGroep)]}
+							</Typography>
+						</Box>
+					</Grid>
+				</Card>
 
-		</Card>
+			) : <ErrorPage />}
+		</>
 	);
 }

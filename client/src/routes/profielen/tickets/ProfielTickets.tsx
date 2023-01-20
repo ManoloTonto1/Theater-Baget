@@ -17,6 +17,9 @@ import type {
 	userData 
 } from '../../../context/UserContext';
 import UserContext from '../../../context/UserContext';
+import {
+	useNavigate
+} from 'react-router-dom';
 
 function ProfielTickets() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
@@ -53,8 +56,13 @@ function ProfielTickets() {
 					</Typography> :
 					data.map((card) => {
 						console.log(card);
-						return <Ticket key={card.id} {...card.programmering} />;
-					})}
+						return <Ticket key={card.id} {...card.programmering}
+							onClick={(e): void => {
+								e.preventDefault();
+								e.stopPropagation();
+								navigate(`event/${card.id}`);
+							}} />;
+					})};
 			</CardContent>
 		</Box>
 

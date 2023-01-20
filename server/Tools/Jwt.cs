@@ -85,16 +85,16 @@ public class JWT
     }
     public level? getRoleFromToken(string token)
     {
-        var _token = extractToken(token);
-        var (isValid, jwtToken) = validateToken(_token);
+        var (isValid, jwtToken) = validateToken(token);
         if (!isValid || jwtToken == null)
         {
             return null;
         }
 
-        var role = jwtToken.Claims.First(x => x.Type.Contains(ClaimTypes.Role)).Value;
-        var parsedRole = Convert.ToInt16(role);
-        return (level)parsedRole;
+        var role = jwtToken.Claims.First(x => x.Type.Contains(ClaimTypes.Role)).Value;         
+        level parsedRole;
+        var success = Enum.TryParse<level>(role, true, out parsedRole);
+        return parsedRole;
     }
     public bool validateUserFromToken(string token, int id)
     {

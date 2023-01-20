@@ -39,77 +39,70 @@ function GebruikerToevoegen() {
 		setNaam(e.target.value);
 	}, []);
 	return (
-		<Box sx={{
-			display: 'flex',
-			justifyItems: 'center',
-			alignItems: 'center',
-			alignContent: 'center',
-			flexDirection: 'column',
-			flexWrap: 'nowrap'
-		}}>
-			<Card sx={{
-				width: 250,
+		<Box
+			component = 'form'
+			id='form'
+			sx={{
 				p: 3
 			}}>
-				<FormGroup>
-					<Typography variant="h5">
+			<FormGroup>
+				<Typography variant="h5">
                 Gebruiker toevoegen
-					</Typography>
+				</Typography>
 			
-					<TextField sx={{ 
-						m: 1, mb: 2 
-					}} 
-					label='Naam' 
-					variant='standard' 
-					type='text' 
-					required 
-					onChange={handleNaam}
-					value={naam}
+				<TextField sx={{ 
+					m: 1, mb: 2 
+				}} 
+				label='Naam' 
+				variant='standard' 
+				type='text' 
+				required 
+				onChange={handleNaam}
+				value={naam}
+				/>
+
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<DatePicker
+						label="Geboorte datum"
+						value={geboorteDatum}
+						onChange={(newValue) => {
+							setGeboorteDatum(newValue);
+						}}
+						renderInput={(params) => <TextField sx={{
+							m:1
+						}} variant='standard'
+						{...params} />}
 					/>
+				</LocalizationProvider>
 
-					<LocalizationProvider dateAdapter={AdapterDayjs}>
-						<DatePicker
-							label="Geboorte datum"
-							value={geboorteDatum}
-							onChange={(newValue) => {
-								setGeboorteDatum(newValue);
-							}}
-							renderInput={(params) => <TextField sx={{
-								m:1
-							}} variant='standard'
-							{...params} />}
-						/>
-					</LocalizationProvider>
+				<TextField sx={{
+					m: 1, mb: 2 
+				}} label='E-mail adres'
+				variant='standard' type='email'
+				required onChange={handleEmail} 
+				value={email}/>
 
-					<TextField sx={{
-						m: 1, mb: 2 
-					}} label='E-mail adres'
-					variant='standard' type='email'
-					required onChange={handleEmail} 
-					value={email}/>
+				<TextField sx={{
+					m: 1, mb: 2 
+				}} label='Wachtwoord'
+				variant='standard' type='password'
+				required onChange={handlePassword} 
+				value={password}/>
 
-					<TextField sx={{
-						m: 1, mb: 2 
-					}} label='Wachtwoord'
-					variant='standard' type='password'
-					required onChange={handlePassword} 
-					value={password}/>
+				<TextField sx={{
+					m: 1, mb: 3
+				}} label='Wachtwoord bevestigen'
+				variant='standard' type='password'
+				required onChange={handleConfirmPassword}
+				value={confirmPassword}
+				error={!passwordsMatch} 
+				helperText={!passwordsMatch ? 'Wachtwoorden komen niet overeen' : ''}
+				/>
 
-					<TextField sx={{
-						m: 1, mb: 3
-					}} label='Wachtwoord bevestigen'
-					variant='standard' type='password'
-					required onChange={handleConfirmPassword}
-					value={confirmPassword}
-					error={!passwordsMatch} 
-					helperText={!passwordsMatch ? 'Wachtwoorden komen niet overeen' : ''}
-					/>
-
-					<Button variant='contained' type='submit'>
+				<Button variant='contained' type='submit'>
 				Toevoegen
-					</Button>
-				</FormGroup>
-			</Card>
+				</Button>
+			</FormGroup>
 		</Box>
 	);
 }
