@@ -27,8 +27,8 @@ function useAuth() {
 						email: res.data.gebruiker.loginGegevens.email,
 						id: res.data.gebruiker.id,
 						naam: res.data.gebruiker.naam,
-						token: localStorage.getItem('token') as string,
-						leeftijdsGroep: res.data.gebruiker.leeftijdsGroep
+						leeftijdsGroep: res.data.gebruiker.leeftijdsGroep,
+						token: localStorage.getItem('token') as string
 						
 					});
 					role.setRole(res.data.gebruiker.level);

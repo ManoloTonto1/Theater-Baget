@@ -10,9 +10,6 @@ import GebruikerInzien from './adminGebruikerInzien/GebruikerInzien';
 import UserContext, {
 	level 
 } from '../../context/UserContext';
-import {
-	useNavigate 
-} from 'react-router-dom';
 import ErrorPage from '../../components/ErrorPage';
 
 interface TabPanelProps {
@@ -55,7 +52,6 @@ function AdminPage() {
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
-	const navigate = useNavigate();
 	const { user, role } = React.useContext(UserContext);
 	
 	return (
@@ -63,20 +59,18 @@ function AdminPage() {
 			user.userData && role.role === level.admin ? (
 				<Container maxWidth={'md'}
 					sx={{
-					my:4,
-
-				}}>
-			
-					<Grid container spacing={3} sx={{
-											display: 'flex',
-											justifyContent:'center'
+						my:4,
 					}}>
+					<Grid container spacing={3}
+						sx={{
+							display: 'flex',
+							justifyContent:'center'
+						}}>
 						<Grid item
 							lg={12}
 							xs={12}>
 							<Card elevation={4}>
 								<Tabs
-									// orientation="vertical"
 									variant="scrollable"
 									value={value}
 									onChange={handleChange}
@@ -123,7 +117,6 @@ function AdminPage() {
 							</Card>
 						</Grid>
 					</Grid>
-			
 				</Container>
 			) :<ErrorPage />}
 		</>

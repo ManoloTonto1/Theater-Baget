@@ -17,21 +17,27 @@ import type {
 	userData 
 } from '../../../context/UserContext';
 import UserContext from '../../../context/UserContext';
+import {
+	useNavigate
+} from 'react-router-dom';
 
 function ProfielTickets() {
 	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 	const [data, setData] = React.useState<never[] | Reservering[]>([]);
+	const [dataLength, setDataLength] = React.useState<number>();
 	const {user} = React.useContext(UserContext);
 	const u = user.userData as userData;
 	React.useEffect(() => {
 		// needs to query tickets instead of programmering
-		API('reserveringen').GetAll()
+		API('gebruikers').Get(u.id + '')
 			.then((res) => {
+				console.log(res.data);
 				if (res.status != 200) {
 					return;
 				}
-				// needs to be fixed
-				setData(res.data);
+				
+				setData(res.data.reserveringen);
+				setDataLength(res.data.reserveringen.length);
 			});
 	}, []);
 
@@ -44,17 +50,19 @@ function ProfielTickets() {
 				<Typography variant='h4' mb={2}>
 					Tickets:
 				</Typography>
-				{data.map((card) => {
-					console.log(card);
-					if(!card)
-					{
-						return <Typography key='pimol' variant='h4'
-							mb={2}>
-							No cards.
-						</Typography>;
-					}
-					return <Ticket key={card.id} {...card.programmering} />;
-				})}
+				{dataLength == 0? 
+					<Typography variant='h5' mb={2}>
+						You currently dont have any reservations.
+					</Typography> :
+					data.map((card) => {
+						console.log(card);
+						return <Ticket key={card.id} {...card.programmering}
+							onClick={(e): void => {
+								e.preventDefault();
+								e.stopPropagation();
+								navigate(`event/${card.id}`);
+							}} />;
+					})};
 			</CardContent>
 		</Box>
 

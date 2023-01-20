@@ -55,7 +55,7 @@ function a11yAccesibilityProps(index: number) {
 function BandProfiel() {
 	const { id } = useParams();
 	const [value, setValue] = React.useState(0);
-	const [data, setData] = React.useState<never[] | Groep[]>([]);
+	const [data, setData] = React.useState<never[] | Groep>();
 	
 	React.useEffect(() => {
 		API('groepen')
@@ -64,23 +64,22 @@ function BandProfiel() {
 				console.log(res.data);
 				setData(res.data);
 			});
-	}, [id]);
+	}, []);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
 
 	return (
-		<Container maxWidth={'xl'} sx={{
+		<Container sx={{
 			my: 4
 		}}>
 			<Grid container spacing={3}>
-				<Grid item lg={6}
+				<Grid item lg={12}
 					xs={12}>
 					<Card elevation={4}>
-						<BandCard key='hoe' {...data} />
+						<BandCard key='hoe' {...data as Groep} />
 						<Tabs
-							orientation="vertical"
 							variant="fullWidth"
 							value={value}
 							onChange={handleChange}
@@ -94,7 +93,7 @@ function BandProfiel() {
 						</Tabs>
 					</Card>
 				</Grid>
-				<Grid item lg={6}
+				<Grid item lg={12}
 					sm={12}
 					xs={12}
 				>

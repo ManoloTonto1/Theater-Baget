@@ -67,7 +67,6 @@ function SignIn() {
 			});
 
 			role.setRole(res.data.gebruiker.level);
-				
 			navigate('/');
 			
 		}).catch(() => {
