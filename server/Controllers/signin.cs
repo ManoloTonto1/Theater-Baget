@@ -19,9 +19,11 @@ public class SignInController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Post([FromBody]SignInData data)
     {
+        var passwordHash = EncryptionTools.hashPassword(data.password);
+        Console.WriteLine(passwordHash);
         var user = await context.Gebruiker.Where(
             g => g.loginGegevens.email == data.email &&
-            g.loginGegevens.wachtwoord == data.password).Include(g=>g.loginGegevens).FirstAsync();
+            g.loginGegevens.wachtwoord == passwordHash).Include(g=>g.loginGegevens).FirstAsync();
         
         if (user == null)
         {

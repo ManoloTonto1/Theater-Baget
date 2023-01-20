@@ -60,8 +60,79 @@ function SignUp () {
 		return 3;
 	};
 
+	const validatePassword = useCallback(() => {
+
+		const regex = new RegExp('(((?=012|123|234|345|456|567|678|789|891|901)\d)+|((?=109|109|198|987|876|765|654|543|432|321|210)\d)+)\d');
+		
+		const commonPasswords = [
+			'123456',
+			'password',
+			'123456789',
+			'12345',
+			'12345678',
+			'qwerty',
+			'1234567',
+			'111111',
+			'1234567890',
+			'123123',
+		];
+
+		// o Geen herhalende patronen
+		if(regex.test(password)) {
+			setErrorText('Wachtwoord mag geen patroon bevatten');
+			return false;
+		}
+
+		// o Niet gelijk aan de inlognaam
+		if(email.split('@')[0] == password ) {
+			setErrorText('Wachtwoord mag niet gelijk zijn aan de inlognaam');
+			return false; 
+		}
+
+		// o Niet in de top-10 lijst van veel voorkomende wachtwoorden (zoalsqwerty123!)
+		if(commonPasswords.includes(password)) {
+			setErrorText('Wachtwoord is niet sterk genoeg');
+			return false;
+		}
+
+		// o Minimaal 7 karakters
+		if(password.length < 7) {
+			setErrorText('Wachtwoord moet minimaal 7 karakters bevatten');
+			return false;
+		}
+
+		// o Minimaal 1 hoofdletter
+		if(!new RegExp('\[A-Z]').test(password)) {
+			setErrorText('Wachtwoord moet minimaal 1 hoofdletter bevatten');
+			return false;
+		}
+
+		// o Minimaal 1 kleine letter
+		if(!new RegExp('\[a-z]').test(password)) {
+			setErrorText('Wachtwoord moet minimaal 1 kleine letter bevatten');
+			return false;
+		}
+		// o Minimaal 1 speciaal karakter
+		if(new RegExp('/\W|_/g').test(password)) {
+			setErrorText('Wachtwoord moet minimaal 1 speciaal karakter bevatten');
+			return false;
+		}
+
+		// o Geen woorden (gebruik een woordenboek, je kunt dat gewoon downloaden)
+		// wordt gedaan in de backend
+
+		// o Niet in de lijst van gekraakte wachtwoorden 
+		// kost geld
+
+		return true;
+	}, [password, setErrorText]);
+
 	const signUp = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		if(!validatePassword()) {
+			return;
+		}
 
 		if (password === confirmPassword) {
 
