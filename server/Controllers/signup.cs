@@ -76,11 +76,6 @@ public class SignUpController : ControllerBase {
             return BadRequest("Wachtwoord mag geen woord zijn");
         }
 
-
-        // o Niet in de lijst van gekraakte wachtwoorden 
-        // gaan we niet doen
-
-
         var passwordHash = EncryptionTools.hashPassword(ww);
         var nieuweGebruiker = new Gebruiker {
             naam = data.naam,
