@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 public class EncryptionTools {
@@ -145,4 +146,49 @@ public class EncryptionTools {
 
         return hashed;
     }
+
+	public static bool hasUppercase (string data) {
+		foreach (char c in data) {
+			if (char.IsUpper(c)) return true;
+		}
+		return false;
+	}
+
+	public static bool hasLowercase (string data) {
+		foreach (char c in data) {
+			if (char.IsLower(c)) return true;
+		}
+		return false;
+	}
+
+	public static bool hasSpecialCharacter (string data) {
+		foreach ( char c in data )
+		{
+        	if (!Char.IsLetterOrDigit(c))
+        	{
+                return true;
+        	}
+		}
+		return false;
+	}
+
+	public static bool isWord(string data) {
+		foreach (string line in System.IO.File.ReadLines("C:/xampp/htdocs/School/Haagse Hogeschool/Leerjaar 2/Project/web/Theater-Baget/server/Tools/wordlist.txt"))
+		{  
+			if(line == data) {
+				Console.WriteLine(line+" -> "+data);
+				return true;
+			}
+		}  
+		return false;
+	}
+
+	public static bool isPattern(string data) {
+		string regString = @"(((?=012|123|234|345|456|567|678|789|891|901)\d)+|((?=109|109|198|987|876|765|654|543|432|321|210)\d)+)\d";
+		Regex regex = new Regex(regString);
+		if(regex.IsMatch(data)) {
+			return true;
+		} 
+		return false;
+	}
 }
