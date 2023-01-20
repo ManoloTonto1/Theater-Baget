@@ -254,7 +254,15 @@ function ProgrammaToevoegen() {
 							/>
 						</Grid>
 					</Grow>
-					<Grid item xs={12}>
+					<Grid item xs={12}
+						display='flex'
+						justifyContent={'center'}>
+						<Button variant='contained' onClick={handleChangeState}
+							sx={{
+								mt: 5
+							}}>
+                            Terug naar programma toevoegen
+						</Button>
 						<Typography variant='h3' align='center'>
                             Toevoegen niet gelukt.
 						</Typography>
