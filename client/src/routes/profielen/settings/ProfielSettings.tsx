@@ -41,6 +41,12 @@ function ProfielSettings() {
 		setNaam(e.target.value);
 	}, []);
 
+	const saveSettings = () => {
+
+		// API('gebruiker').Create();
+		
+	};
+
 	return (
 		<FormGroup>
 			<Typography variant="h5">
@@ -97,7 +103,7 @@ function ProfielSettings() {
 			helperText={!passwordsMatch ? 'Wachtwoorden komen niet overeen' : ''}
 			/>
 
-			<Button variant='contained' type='submit'>
+			<Button variant='contained' onClick={saveSettings}>
 				wijzigingen opslaan
 			</Button>
 		</FormGroup>
