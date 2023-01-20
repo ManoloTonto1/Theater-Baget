@@ -10,20 +10,26 @@ import {
 	Ticket 
 } from '../../../../components/Ticket';
 import type {
-	Groep
+	Groep, Programma
 } from '../../../../components/global/globalTypes';
 import API from '../../../../api/apiRoutes';
 import {
 	BandCard 
 } from '../../../../components/BandCard';
+import UserContext from '../../../../context/UserContext';
+import {
+	redirect 
+} from 'react-router-dom';
 
 function BandlidBands() {
 	const [data, setData] = React.useState<never[] | Groep[]>([]);
+	const { user } = React.useContext(UserContext);
 	React.useEffect(() => {
-		API('groepen')
-			.GetAll()
+		API('betrokkenen')
+			.Get(user.userData?.id + '')
 			.then((res) => {
-				setData(res.data);
+				console.log(res.data);
+				setData(res.data.groepen);
 			});
 	}, []);
 
@@ -40,7 +46,7 @@ function BandlidBands() {
 					Mijn bands:
 				</Typography>
 				
-				{// still needs querie to search if a guy is in the band
+				{
 					data.map((card) => {
 						console.log(card);
 						return <BandCard key={card.id} {...card} />;
