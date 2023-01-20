@@ -3,13 +3,20 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
+	Accordion,
+	AccordionDetails,
+	AccordionSummary,
 	CardActionArea, Grid 
 } from '@mui/material';
 import type {
 	Programma 
 } from './global/globalTypes';
 import truncateString from '../api/truncateString';
+import {
+	BandCard 
+} from './BandCard';
 export type TicketsProps = {
 	onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, data:Programma)=>void
 } & Programma
@@ -107,6 +114,26 @@ export function Ticket(props:TicketsProps) {
 					</Grid>
 				</Grid>
 			</CardActionArea>
+			<Accordion sx={{
+				width: '100%'
+			}}>
+				<AccordionSummary
+					expandIcon={<ExpandMoreIcon />}
+					aria-controls="panel1a-content"
+					id="panel1a-header"
+				>
+					<Typography>Bands</Typography>
+				</AccordionSummary>
+				<AccordionDetails>
+					{props.groepen.length == 0 ?
+						<Typography variant='h5' mb={2}>
+								You currently aren't part of a band.
+						</Typography> : props.groepen.map((groep) => {
+							console.log(card);
+							return <BandCard key={card.id} {...card} />;
+						})}
+				</AccordionDetails>
+			</Accordion>
 		</Card>
 	);
 }

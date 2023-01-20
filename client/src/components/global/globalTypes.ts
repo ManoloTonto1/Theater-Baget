@@ -17,6 +17,7 @@ export type Programma = {
     omschrijving: string;
     titel: string;
     zaalNr: string;
+    groepen: Groep[];
 }
 
 export type Reservering = {

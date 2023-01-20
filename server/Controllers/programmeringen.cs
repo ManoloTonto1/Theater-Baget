@@ -47,13 +47,13 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     [HttpGet("{id}")]
     public async Task<ActionResult<Programmering>> Get([FromHeader(Name = "Authorization")] string token, int id)
     {
-        var value = await context.Programmering.Include(p => p.zaal).Where(p => p.id == id).FirstAsync();
+        var value = await context.Programmering.Include(p => p.zaal).Include(p => p.groepen).Where(p => p.id == id).FirstAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Programmering>>> GetAll([FromHeader(Name = "Authorization")] string token)
     {
-        var value = await context.Programmering.ToListAsync();
+        var value = await context.Programmering.Include(p => p.groepen).ToListAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet("datum")]
