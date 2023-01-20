@@ -62,7 +62,7 @@ class Seed
             level = level.admin,
             loginGegevens = new LoginGegevens
             {
-                wachtwoord = "password",
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                 email = "chad@e.com",
                 twoFactor = false
             }
@@ -74,7 +74,7 @@ class Seed
             level = level.donateur,
             loginGegevens = new LoginGegevens
             {
-                wachtwoord = "password",
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                 email = "m@pet.com",
                 twoFactor = false
             }
@@ -86,7 +86,7 @@ class Seed
             level = level.medewerker,
             loginGegevens = new LoginGegevens
             {
-                wachtwoord = "password",
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                 email = "aka@mail.com",
                 twoFactor = false
             }
@@ -98,7 +98,7 @@ class Seed
             level = level.acteur,
             loginGegevens = new LoginGegevens
             {
-                wachtwoord = "password",
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                 email = "xiao@mail.com",
                 twoFactor = false
             }
@@ -110,7 +110,7 @@ class Seed
             level = level.bezoeker,
             loginGegevens = new LoginGegevens
             {
-                wachtwoord = "password",
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                 email = "M@mail.com",
                 twoFactor = false
             }
