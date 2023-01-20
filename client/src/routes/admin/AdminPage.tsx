@@ -63,14 +63,15 @@ function AdminPage() {
 			user.userData && role.role === level.admin ? (
 				<Container maxWidth={'md'}
 					sx={{
-					my:4,
+						my:4,
 
-				}}>
-			
-					<Grid container spacing={3} sx={{
-											display: 'flex',
-											justifyContent:'center'
 					}}>
+			
+					<Grid container spacing={3}
+						sx={{
+							display: 'flex',
+							justifyContent:'center'
+						}}>
 						<Grid item
 							lg={12}
 							xs={12}>
