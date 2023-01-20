@@ -177,7 +177,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "jason@mail.com",
                         twoFactor = false
                     }
@@ -189,7 +189,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "ta@mail.com",
                         twoFactor = false
                     }
@@ -201,7 +201,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "blaq@mail.com",
                         twoFactor = false
                     }
@@ -232,7 +232,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "fat@mail.com",
                         twoFactor = false
                     }
@@ -244,7 +244,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "harry@mail.com",
                         twoFactor = false
                     }
@@ -256,7 +256,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "skinnie@mail.com",
                         twoFactor = false
                     }
@@ -287,7 +287,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "niebba@mail.com",
                         twoFactor = false
                     }
@@ -299,7 +299,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "jan@mail.com",
                         twoFactor = false
                     }
@@ -311,7 +311,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "pieter@mail.com",
                         twoFactor = false
                     }
@@ -323,7 +323,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "milf@mail.com",
                         twoFactor = false
                     }
@@ -335,7 +335,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "aladin@mail.com",
                         twoFactor = false
                     }
@@ -347,7 +347,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "chadilicious@mail.com",
                         twoFactor = false
                     }
@@ -386,7 +386,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "jemoeder@mail.com",
                         twoFactor = false
                     }
