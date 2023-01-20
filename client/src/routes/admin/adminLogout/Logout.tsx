@@ -5,14 +5,12 @@ import React from 'react';
 
 function Logout() {
 	return (
-		<Box sx={{
-			display: 'flex',
-			justifyItems: 'center',
-			alignItems: 'center',
-			alignContent: 'center',
-			flexDirection: 'column',
-			flexWrap: 'nowrap'
-		}}>
+		<Box
+			component = 'form'
+			id='form'
+			sx={{
+				p: 3
+			}}>
 			<Typography variant="h3" align="center"
 				sx={{
 					marginBottom: 1,

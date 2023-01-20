@@ -98,7 +98,7 @@ export function Ticket(props:TicketsProps) {
 										</Typography>
 										<Typography variant="h6">{props.titel}</Typography>
 										<Typography variant="body2" >
-											{truncateString(props.omschrijving,50)}
+											{truncateString(props.omschrijving,45)}
 										</Typography>
 									</Box>
 								</Grid>

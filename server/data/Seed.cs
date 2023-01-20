@@ -62,7 +62,7 @@ class Seed
             level = level.admin,
             loginGegevens = new LoginGegevens
             {
-                wachtwoord = "password",
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                 email = "chad@e.com",
                 twoFactor = false
             }
@@ -74,7 +74,7 @@ class Seed
             level = level.donateur,
             loginGegevens = new LoginGegevens
             {
-                wachtwoord = "password",
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                 email = "m@pet.com",
                 twoFactor = false
             }
@@ -86,7 +86,7 @@ class Seed
             level = level.medewerker,
             loginGegevens = new LoginGegevens
             {
-                wachtwoord = "password",
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                 email = "aka@mail.com",
                 twoFactor = false
             }
@@ -98,7 +98,7 @@ class Seed
             level = level.acteur,
             loginGegevens = new LoginGegevens
             {
-                wachtwoord = "password",
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                 email = "xiao@mail.com",
                 twoFactor = false
             }
@@ -110,7 +110,7 @@ class Seed
             level = level.bezoeker,
             loginGegevens = new LoginGegevens
             {
-                wachtwoord = "password",
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                 email = "M@mail.com",
                 twoFactor = false
             }
@@ -175,18 +175,36 @@ class Seed
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "jason Derulo",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "jason@mail.com",
+                        twoFactor = false
+                    }
 
                 },
                 new Betrokkene{
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "таф",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "ta@mail.com",
+                        twoFactor = false
+                    }
 
                 },
                 new Betrokkene{
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "blaquito",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "blaq@mail.com",
+                        twoFactor = false
+                    }
 
                 },
             },
@@ -205,18 +223,36 @@ class Seed
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "fat bastard",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "fat@mail.com",
+                        twoFactor = false
+                    }
 
                 },
                 new Betrokkene{
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "Harry pothead",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "harry@mail.com",
+                        twoFactor = false
+                    }
 
                 },
                 new Betrokkene{
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "skinny piet",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "skinnie@mail.com",
+                        twoFactor = false
+                    }
 
                 },
             }
@@ -232,36 +268,72 @@ class Seed
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "lieve niebba",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "niebba@mail.com",
+                        twoFactor = false
+                    }
 
                 },
                 new Betrokkene{
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "jan kees",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "jan@mail.com",
+                        twoFactor = false
+                    }
 
                 },
                 new Betrokkene{
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "pieter pan",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "pieter@mail.com",
+                        twoFactor = false
+                    }
 
                 },
                 new Betrokkene{
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "milf maniac",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "milf@mail.com",
+                        twoFactor = false
+                    }
 
                 },
                 new Betrokkene{
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "aladin panstealer",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "aladin@mail.com",
+                        twoFactor = false
+                    }
 
                 },
                 new Betrokkene{
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "chadilicious marvelous",
                     level = level.bandlid,
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "chadilicious@mail.com",
+                        twoFactor = false
+                    }
 
                 },
             }
@@ -277,7 +349,12 @@ class Seed
                     leeftijdsGroep = LeeftijdsGroep.Volwassenen,
                     naam= "je moeders cigarette",
                     level = level.bandlid,
-
+                    loginGegevens = new LoginGegevens
+                    {
+                        wachtwoord = "password",
+                        email = "jemoeder@mail.com",
+                        twoFactor = false
+                    }
                 },
             }
         });

@@ -6,7 +6,7 @@ import API from '../api/apiRoutes';
 import UserContext from '../context/UserContext';
 
 function useAuth() {
-	const { user } = React.useContext(UserContext);
+	const { user, role } = React.useContext(UserContext);
 
 	const [isValid, setValid] = React.useState(false);
 	const location = useLocation();
@@ -27,9 +27,11 @@ function useAuth() {
 						email: res.data.gebruiker.loginGegevens.email,
 						id: res.data.gebruiker.id,
 						naam: res.data.gebruiker.naam,
+						leeftijdsGroep: res.data.gebruiker.leeftijdsGroep,
 						token: localStorage.getItem('token') as string
 						
 					});
+					role.setRole(res.data.gebruiker.level);
 	
 				}).catch(() => {
 					localStorage.removeItem('token');

@@ -22,7 +22,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")] string token, int id)
     {
         var role = jwt.getRoleFromToken(token);
-        if (role != level.admin | role != level.medewerker)
+        if (role != level.admin || role != level.medewerker)
         {
             return Unauthorized();
         }
@@ -47,7 +47,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     [HttpGet("{id}")]
     public async Task<ActionResult<Programmering>> Get([FromHeader(Name = "Authorization")] string token, int id)
     {
-        var value = await context.Programmering.Include(p=>p.zaal).Where(p=> p.id == id).FirstAsync();
+        var value = await context.Programmering.Include(p => p.zaal).Where(p => p.id == id).FirstAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet]
@@ -57,10 +57,10 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
         return value == null ? NotFound() : value;
     }
     [HttpGet("datum")]
-    public async Task<ActionResult<IEnumerable<Programmering>>> GetByDate([FromHeader(Name = "datum")]string datum)
+    public async Task<ActionResult<IEnumerable<Programmering>>> GetByDate([FromHeader(Name = "datum")] string datum)
     {
         var date = Convert.ToDateTime(datum).Date;
-        var value = await context.Programmering.Where(p => p.datum>=date && p.datum < date.AddDays(1)).Include(p=>p.zaal).ToListAsync();
+        var value = await context.Programmering.Where(p => p.datum >= date && p.datum < date.AddDays(1)).Include(p => p.zaal).ToListAsync();
         return value == null ? NoContent() : value;
     }
 
@@ -74,24 +74,29 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody] ProgrammeringData data)
     {
         var role = jwt.getRoleFromToken(token);
-        if (role != level.admin | role != level.medewerker)
+        if ((int)role == (int)level.admin || (int)role == (int)level.medewerker)
         {
-            return Unauthorized();
+            var date = DateTime.Parse(data.datum);
+            var zaal = await context.Zaal.Where(z => z.zaalNr == data.zaalNr).FirstAsync();
+            var newData = new Programmering
+            {
+                titel = data.titel,
+                datum = date,
+                afbeelding = data.afbeelding,
+                omschrijving = data.omschrijving,
+                prijs = data.prijs,
+                zaal = zaal
+            };
+            context.Programmering.Add(newData);
+            await context.SaveChangesAsync();
+
+            return CreatedAtAction("Get", new { newData.id }, newData);
+
         }
 
-        var date = DateTime.Parse(data.datum);
-        var newData = new Programmering
-        {
-            titel = data.titel,
-            datum = date,
-            afbeelding = data.afbeelding,
-            omschrijving = data.omschrijving,
+        return Unauthorized();
 
-        };
-        context.Programmering.Add(newData);
-        await context.SaveChangesAsync();
 
-        return CreatedAtAction("Get", new { newData.id }, newData);
     }
     [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token, int id, [FromBody] ProgrammeringData data)

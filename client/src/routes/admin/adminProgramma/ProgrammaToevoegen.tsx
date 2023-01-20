@@ -1,6 +1,23 @@
-import {
-	Box, Button, Card, FormGroup, TextField, Typography 
+import type {
+	SelectChangeEvent
 } from '@mui/material';
+import {
+	Grow
+	,
+	CircularProgress
+	,
+	Grid
+	,
+	Box, Button, Chip,
+	FormControl, FormGroup,
+	InputLabel, MenuItem, Select, TextField, Typography 
+} from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import {
+	green, red 
+} from '@mui/material/colors';
+
 import {
 	LocalizationProvider, DatePicker 
 } from '@mui/x-date-pickers';
@@ -14,100 +31,245 @@ import dayjs from 'dayjs';
 import React, {
 	useCallback 
 } from 'react';
+import API from '../../../api/apiRoutes';
 import UploadImageCard from '../adminProgramma/ImageUpload';
 
+type Zaal = {
+	zaalNr: number;
+	soort: string;
+}
+
+enum states {
+    inProgress,
+    done,
+    failed,
+	still
+}
+
 function ProgrammaToevoegen() {
+	const [image,setImage] = React.useState('');
 	const [voorstellingDatum, setVoorstellingDatum] = React.useState<Dayjs | null>(dayjs());
-    
-	const handleForm = useCallback(async (e) => {
+	const [selectedZaal, setSelectedZaal] = React.useState('');
+	const [zalen, setZalen] = React.useState<never[] | Zaal[]>([]);
+	const [state, setState] = React.useState<states>(states.still);
+	
+	React.useEffect(() => {
+		API('zalen').GetAll().then((res) => {
+			if (res.status != 200) {
+				return;
+			}
+			setZalen(res.data);
+		});	
+	},[]);
+	const handleChange = useCallback((event: SelectChangeEvent) => {
+		setSelectedZaal(event.target.value as string);
+	},[]);
+
+	const handleChangeState = React.useCallback(async () => {
+		setImage('');
+		setSelectedZaal('');
+		setVoorstellingDatum(dayjs());
+		setState(states.still);
+	},[]);
+	
+	const handleForm = useCallback(async (e: { preventDefault: () => void; }) => {
+		setState(states.inProgress);
 		e.preventDefault();
 		const form = document.getElementById('form');
 		const formData = new FormData(form as HTMLFormElement);
 		for (const value of formData.values()) {
 			console.log(value);
 		}
-	}, []);
-
+		const date = voorstellingDatum?.toDate();
+		if (!date) {
+			return;
+		}
+		const apiSafeDate = `${date.getMonth() +1}/${date.getDate()}/${date.getFullYear()}`;
+		API('programmeringen').Create({
+			datum: apiSafeDate,
+			titel: formData.get('titel'),
+			afbeelding: image,
+			omschrijving: formData.get('omschrijving'),
+			prijs: parseFloat(formData.get('prijs') as string),
+			zaalNr: parseInt(selectedZaal),
+		}).then((res) => {
+			if (res.status !== 200) { 
+				states.failed;
+			}
+			setState(states.done);
+		});
+	}, [image, selectedZaal, voorstellingDatum]);
+	
 	return (
-		<Box sx={{
-			display: 'flex',
-			justifyItems: 'center',
-			alignItems: 'center',
-			alignContent: 'center',
-			flexDirection: 'column',
-			flexWrap: 'nowrap'
-		}}>
-			<Card
-				component = 'form'
-				id='form'
-				sx={{
-					width: 250,
-					p: 3
-				}}>
-				<FormGroup>
-					<Typography variant="h5">
+		<>
+			{state === states.still && (
+				<Box
+					component = 'form'
+					id='form'
+					sx={{
+						p: 3
+					}}>
+					<FormGroup>
+						<Typography variant="h5">
                 Programma toevoegen
-					</Typography>
-					<TextField sx={{ 
-						m: 1, mb: 2 
-					}} 
-					label='Titel' 
-					variant='standard' 
-					type='text' 
-					name='titel'
-					required 
-					/>
-					<TextField sx={{ 
-						m: 1, mb: 2 
-					}} 
-					label='Omschrijving' 
-					variant='standard' 
-					type='text' 
-					name='omschrijving'
-					required 
-					/>
-					<LocalizationProvider dateAdapter={AdapterDayjs}>
-						<DatePicker
-							label="Datum voorstelling"
-							value={voorstellingDatum}
-							onChange={(newValue) => {
-								setVoorstellingDatum(newValue);
-							}}
-							renderInput={(params) => <TextField sx={{
-								m:1
-							}} variant='standard'
-							{...params} />}
+						</Typography>
+						<UploadImageCard imageProps={{
+							image: image,
+							setImage: setImage
+						}} label={''} />
+						<TextField sx={{ 
+							mb: 2 
+						}} 
+						label='Titel' 
+						variant='standard' 
+						type='text' 
+						name='titel'
+						required 
 						/>
-					</LocalizationProvider>
-					<TextField sx={{
-						m: 1, mb: 2 
-					}} label='Zaalnummer'
-					variant='standard' type='text'
-					name='zaalnummer'
-					required
-					/>
-					<TextField sx={{
-						m: 1, mb: 3
-					}} label='Prijs'
-					variant='standard' type='text'
-					name='prijs'
-					required 
-					/>
-					<UploadImageCard imageProps={{
-						image: '',
-						setImage: function (data: string): void {
-							throw new Error('Work in progress');
-						}
-					}} label={''} />
-					<Button variant='contained' type='submit'
-						onClick={handleForm} sx={{
-							my:3
-						}}>
+						<TextField sx={{ 
+							mb: 2 
+						}} 
+						label='Omschrijving' 
+						variant='standard' 
+						type='text' 
+						name='omschrijving'
+						required 
+						/>
+						<LocalizationProvider dateAdapter={AdapterDayjs}>
+							<DatePicker
+								label="Datum voorstelling"
+								value={voorstellingDatum}
+								onChange={(newValue) => {
+									setVoorstellingDatum(newValue);
+								}}
+								renderInput={(params) => <TextField sx={{
+									mb: 2 
+								}} variant='standard'
+								{...params} />}
+							/>
+						</LocalizationProvider>
+						<Grid container spacing = {3}>
+							<Grid item xs={6}>
+								<FormControl fullWidth>
+									<InputLabel id="Zaal select">Zaal select</InputLabel>
+									<Select
+										variant='standard'
+										labelId="Zaal select"
+										value={selectedZaal}
+										label="Zaal select"
+										onChange={handleChange}
+									>
+										{zalen.map((zaal) => {
+											return <MenuItem key={zaal.zaalNr} value={zaal.zaalNr}>
+												<Chip size={'small'} color={'primary'}
+													label={`#${zaal.zaalNr}`} />
+											</MenuItem>;
+										})}
+									</Select>
+								</FormControl>
+							</Grid>
+							<Grid item xs={6}>
+								<TextField sx={{
+									mb: 2 
+								}} label='Prijs'
+								variant='standard' 
+								type='number'
+								name='prijs'
+								fullWidth
+								required 
+								/>
+							</Grid>
+						</Grid>
+						<Button variant='contained' type='submit'
+							onClick={handleForm} sx={{
+								my:3
+							}}>
 				Toevoegen
-					</Button>
-				</FormGroup>
-			</Card>
-		</Box>
+						</Button>
+					</FormGroup>
+				</Box>
+			)}
+			{state === states.inProgress && (
+				<><Grid sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					mt: 5
+				}}>
+					<CircularProgress size={200} sx={{
+						mt: 2,
+						color: green[500]
+					}} />
+				</Grid>
+				<Grid sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					mt: 5
+				}}>
+					<Typography variant='h5'>Even geduld A.U.B.</Typography>
+				</Grid></> )}
+			{state === states.done && (
+				<>
+					<Grow in>
+						<Grid item xs={12}
+							display='flex'
+							justifyContent={'center'}>
+							<CheckCircleOutlineIcon sx={{
+								fontSize: 200,
+								mt: 2,
+								color: green[500]
+							}}
+							/>
+						</Grid>
+					</Grow>
+					<Grid item xs={12}
+						display='flex'
+						justifyContent={'center'}>
+						<Typography variant='h3' align='center'>
+							Toevoegen Gelukt
+						</Typography>
+					</Grid>	
+					<Grid item xs={12}
+						display='flex'
+						justifyContent={'center'}>
+						<Button variant='contained' onClick={handleChangeState}
+							sx={{
+								mt: 5
+							}}>
+                            Terug naar programma toevoegen
+						</Button>
+					</Grid>	
+				</>
+			)}
+			{state === states.failed && (
+				<>
+					<Grow in>
+						<Grid item xs={12}
+							display='flex'
+							justifyContent={'center'}>
+							<HighlightOffIcon sx={{
+								fontSize: 200,
+								mt: 2,
+								color: red[500]
+							}}
+							/>
+						</Grid>
+					</Grow>
+					<Grid item xs={12}
+						display='flex'
+						justifyContent={'center'}>
+						<Button variant='contained' onClick={handleChangeState}
+							sx={{
+								mt: 5
+							}}>
+                            Terug naar programma toevoegen
+						</Button>
+						<Typography variant='h3' align='center'>
+                            Toevoegen niet gelukt.
+						</Typography>
+					</Grid>
+				</>
+			)}	
+		</>
 	);
 }
         
