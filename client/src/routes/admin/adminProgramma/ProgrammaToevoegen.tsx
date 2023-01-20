@@ -2,12 +2,21 @@ import type {
 	SelectChangeEvent
 } from '@mui/material';
 import {
+	Grow
+	,
+	CircularProgress
+	,
 	Grid
 	,
 	Box, Button, Chip,
 	FormControl, FormGroup,
 	InputLabel, MenuItem, Select, TextField, Typography 
 } from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import {
+	green, red 
+} from '@mui/material/colors';
 
 import {
 	LocalizationProvider, DatePicker 
@@ -24,9 +33,17 @@ import React, {
 } from 'react';
 import API from '../../../api/apiRoutes';
 import UploadImageCard from '../adminProgramma/ImageUpload';
+
 type Zaal = {
 	zaalNr: number;
 	soort: string;
+}
+
+enum states {
+    inProgress,
+    done,
+    failed,
+	still
 }
 
 function ProgrammaToevoegen() {
@@ -34,6 +51,7 @@ function ProgrammaToevoegen() {
 	const [voorstellingDatum, setVoorstellingDatum] = React.useState<Dayjs | null>(dayjs());
 	const [selectedZaal, setSelectedZaal] = React.useState('');
 	const [zalen, setZalen] = React.useState<never[] | Zaal[]>([]);
+	const [state, setState] = React.useState<states>(states.still);
 	
 	React.useEffect(() => {
 		API('zalen').GetAll().then((res) => {
@@ -46,7 +64,16 @@ function ProgrammaToevoegen() {
 	const handleChange = useCallback((event: SelectChangeEvent) => {
 		setSelectedZaal(event.target.value as string);
 	},[]);
+
+	const handleChangeState = React.useCallback(async () => {
+		setImage('');
+		setSelectedZaal('');
+		setVoorstellingDatum(dayjs());
+		setState(states.still);
+	},[]);
+	
 	const handleForm = useCallback(async (e: { preventDefault: () => void; }) => {
+		setState(states.inProgress);
 		e.preventDefault();
 		const form = document.getElementById('form');
 		const formData = new FormData(form as HTMLFormElement);
@@ -66,97 +93,175 @@ function ProgrammaToevoegen() {
 			prijs: parseFloat(formData.get('prijs') as string),
 			zaalNr: parseInt(selectedZaal),
 		}).then((res) => {
-			if (res.status !== 200) { /* empty */ }
+			if (res.status !== 200) { 
+				states.failed;
+			}
+			setState(states.done);
 		});
-		console.log(voorstellingDatum);
 	}, [image, selectedZaal, voorstellingDatum]);
-
+	
 	return (
-		<Box
-			component = 'form'
-			id='form'
-			sx={{
-				p: 3
-			}}>
-			<FormGroup>
-				<Typography variant="h5">
+		<>
+			{state === states.still && (
+				<Box
+					component = 'form'
+					id='form'
+					sx={{
+						p: 3
+					}}>
+					<FormGroup>
+						<Typography variant="h5">
                 Programma toevoegen
-				</Typography>
-				<UploadImageCard imageProps={{
-					image: image,
-					setImage: setImage
-				}} label={''} />
-				<TextField sx={{ 
-					mb: 2 
-				}} 
-				label='Titel' 
-				variant='standard' 
-				type='text' 
-				name='titel'
-				required 
-				/>
-				<TextField sx={{ 
-					mb: 2 
-				}} 
-				label='Omschrijving' 
-				variant='standard' 
-				type='text' 
-				name='omschrijving'
-				required 
-				/>
-				<LocalizationProvider dateAdapter={AdapterDayjs}>
-					<DatePicker
-						label="Datum voorstelling"
-						value={voorstellingDatum}
-						onChange={(newValue) => {
-							setVoorstellingDatum(newValue);
-						}}
-						renderInput={(params) => <TextField sx={{
+						</Typography>
+						<UploadImageCard imageProps={{
+							image: image,
+							setImage: setImage
+						}} label={''} />
+						<TextField sx={{ 
 							mb: 2 
-						}} variant='standard'
-						{...params} />}
-					/>
-				</LocalizationProvider>
-				<Grid container spacing = {3}>
-					<Grid item xs={6}>
-						<FormControl fullWidth>
-							<InputLabel id="Zaal select">Zaal select</InputLabel>
-							<Select
-								variant='standard'
-								labelId="Zaal select"
-								value={selectedZaal}
-								label="Zaal select"
-								onChange={handleChange}
-							>
-								{zalen.map((zaal) => {
-									return <MenuItem key={zaal.zaalNr} value={zaal.zaalNr}>
-										<Chip size={'small'} color={'primary'}
-											label={`#${zaal.zaalNr}`} />
-									</MenuItem>;
-								})}
-							</Select>
-						</FormControl>
-					</Grid>
-					<Grid item xs={6}>
-						<TextField sx={{
-							mb: 2 
-						}} label='Prijs'
+						}} 
+						label='Titel' 
 						variant='standard' 
-						type='number'
-						name='prijs'
-						fullWidth
+						type='text' 
+						name='titel'
 						required 
 						/>
-					</Grid>
-				</Grid>
-				<Button variant='contained' type='submit'
-					onClick={handleForm} sx={{
-						my:3
-					}}>
+						<TextField sx={{ 
+							mb: 2 
+						}} 
+						label='Omschrijving' 
+						variant='standard' 
+						type='text' 
+						name='omschrijving'
+						required 
+						/>
+						<LocalizationProvider dateAdapter={AdapterDayjs}>
+							<DatePicker
+								label="Datum voorstelling"
+								value={voorstellingDatum}
+								onChange={(newValue) => {
+									setVoorstellingDatum(newValue);
+								}}
+								renderInput={(params) => <TextField sx={{
+									mb: 2 
+								}} variant='standard'
+								{...params} />}
+							/>
+						</LocalizationProvider>
+						<Grid container spacing = {3}>
+							<Grid item xs={6}>
+								<FormControl fullWidth>
+									<InputLabel id="Zaal select">Zaal select</InputLabel>
+									<Select
+										variant='standard'
+										labelId="Zaal select"
+										value={selectedZaal}
+										label="Zaal select"
+										onChange={handleChange}
+									>
+										{zalen.map((zaal) => {
+											return <MenuItem key={zaal.zaalNr} value={zaal.zaalNr}>
+												<Chip size={'small'} color={'primary'}
+													label={`#${zaal.zaalNr}`} />
+											</MenuItem>;
+										})}
+									</Select>
+								</FormControl>
+							</Grid>
+							<Grid item xs={6}>
+								<TextField sx={{
+									mb: 2 
+								}} label='Prijs'
+								variant='standard' 
+								type='number'
+								name='prijs'
+								fullWidth
+								required 
+								/>
+							</Grid>
+						</Grid>
+						<Button variant='contained' type='submit'
+							onClick={handleForm} sx={{
+								my:3
+							}}>
 				Toevoegen
-				</Button>
-			</FormGroup>
-		</Box>
+						</Button>
+					</FormGroup>
+				</Box>
+			)}
+			{state === states.inProgress && (
+				<><Grid sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					mt: 5
+				}}>
+					<CircularProgress size={200} sx={{
+						mt: 2,
+						color: green[500]
+					}} />
+				</Grid>
+				<Grid sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					mt: 5
+				}}>
+					<Typography variant='h5'>Even geduld A.U.B.</Typography>
+				</Grid></> )}
+			{state === states.done && (
+				<>
+					<Grow in>
+						<Grid item xs={12}
+							display='flex'
+							justifyContent={'center'}>
+							<CheckCircleOutlineIcon sx={{
+								fontSize: 200,
+								mt: 2,
+								color: green[500]
+							}}
+							/>
+						</Grid>
+					</Grow>
+					<Grid item xs={12}
+						display='flex'
+						justifyContent={'center'}>
+						<Typography variant='h3' align='center'>
+							Toevoegen Gelukt
+						</Typography>
+					</Grid>	
+					<Grid item xs={12}
+						display='flex'
+						justifyContent={'center'}>
+						<Button variant='contained' onClick={handleChangeState}
+							sx={{
+								mt: 5
+							}}>
+                            Terug naar programma toevoegen
+						</Button>
+					</Grid>	
+				</>
+			)}
+			{state === states.failed && (
+				<>
+					<Grow in>
+						<Grid item xs={12}
+							display='flex'
+							justifyContent={'center'}>
+							<HighlightOffIcon sx={{
+								fontSize: 200,
+								mt: 2,
+								color: red[500]
+							}}
+							/>
+						</Grid>
+					</Grow>
+					<Grid item xs={12}>
+						<Typography variant='h3' align='center'>
+                            Toevoegen niet gelukt.
+						</Typography>
+					</Grid>
+				</>
+			)}	
+		</>
 	);
 }
         
