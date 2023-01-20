@@ -10,45 +10,33 @@ import {
 	Ticket 
 } from '../../../../components/Ticket';
 import type {
-	Groep
+	Groep, Programma
 } from '../../../../components/global/globalTypes';
 import API from '../../../../api/apiRoutes';
-import Monki from '../../../../assets/gorilla.jfif';
 import {
 	BandCard 
 } from '../../../../components/BandCard';
+import UserContext from '../../../../context/UserContext';
+import {
+	redirect 
+} from 'react-router-dom';
 
 function BandlidBands() {
-	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 	const [data, setData] = React.useState<never[] | Groep[]>([]);
+	const { user } = React.useContext(UserContext);
 	React.useEffect(() => {
-		//API('groepen').GetAll()
-		//.then((res) => {
-		//	if (res.status != 200) {
-		//		return;
-		//	}
-		//	setData(res.data);
-
-		//});
-
-		setData([{
-			id: 1,
-			naam: 'akashamonka',
-			afbeelding: Monki,
-			omschrijving: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt',
-			link: 'dood'
-		},{
-			id: 1,
-			naam: 'akashamonka',
-			afbeelding: Monki,
-			omschrijving: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididu',
-			link: 'dood'
-		}]);
+		API('betrokkenen')
+			.Get(user.userData?.id + '')
+			.then((res) => {
+				console.log(res.data);
+				setData(res.data.groepen);
+			});
 	}, []);
 
 	return (
 		<Box sx={{
 			p: 1,
+			overflowY: 'visible',
 			scrollbarWidth: 'thin'
 		}}>
 			<CardContent sx={{
@@ -57,10 +45,12 @@ function BandlidBands() {
 				<Typography variant='h4' mb={2}>
 					Mijn bands:
 				</Typography>
-				{data.map((card) => {
-					console.log(card);
-					return <BandCard key={card.id} {...card} />;
-				})}
+				
+				{
+					data.map((card) => {
+						console.log(card);
+						return <BandCard key={card.id} {...card} />;
+					})}
 			</CardContent>
 		</Box>
 

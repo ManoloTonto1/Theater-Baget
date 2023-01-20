@@ -29,12 +29,12 @@ export function BandCard(props:Groep) {
 					justifyContent: 'center',
 					flexDirection: 'column'
 				}}>
-					<Typography>
-                        Naam: {props.naam}
+					<Typography variant='h4'>
+                    	{props.naam}
 					</Typography>
-					<Button variant="contained" target="_blank"
-						href={props.link}>
-  						Link
+					<Button LinkComponent={'a'} variant="contained" target="_blank"
+						href={props.websiteUrl}>
+  						Website
 					</Button>
 				</Box>
 				<Accordion sx={{

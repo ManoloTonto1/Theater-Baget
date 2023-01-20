@@ -2,17 +2,17 @@ import {
 	Card, Grid, Avatar, Box, Typography
 } from '@mui/material';
 import React from 'react';
-import type {
-	userData
+import {
+	leeftijdsGroep,
+	userData 
 } from '../context/UserContext';
 import Monki from '../assets/gorilla.jfif';
 import UserContext from '../context/UserContext';
-import { props } from 'cypress/types/bluebird';
 import ErrorPage from './ErrorPage';
 
 export function ProfileCard() {
 	const { user, role } = React.useContext(UserContext);
-	const userData = user.userData
+	const userData = user.userData;
 	return (
 		<>
 			{userData ? (
@@ -42,7 +42,7 @@ export function ProfileCard() {
 								{userData.email}
 							</Typography>
 							<Typography variant="body2">
-								{userData.leeftijdsGroep}
+								{leeftijdsGroep[parseInt(userData.leeftijdsGroep)]}
 							</Typography>
 						</Box>
 					</Grid>

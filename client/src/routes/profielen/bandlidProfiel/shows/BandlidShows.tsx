@@ -10,21 +10,23 @@ import {
 	Ticket 
 } from '../../../../components/Ticket';
 import type {
+	Groep,
 	Programma 
 } from '../../../../components/global/globalTypes';
 import API from '../../../../api/apiRoutes';
+import UserContext from '../../../../context/UserContext';
 
 function BandlidShows() {
-	const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 	const [data, setData] = React.useState<never[] | Programma[]>([]);
+	const [dataLength, setDataLength] = React.useState<number>();
+	const { user } = React.useContext(UserContext);
 	React.useEffect(() => {
-		API('programmeringen').GetAll()
+		API('betrokkenen')
+			.Get(user.userData?.id + '')
 			.then((res) => {
-				if (res.status != 200) {
-					return;
-				}
-				setData(res.data);
-
+				console.log(res.data);
+				setData(getBandsPrograms(res.data.groepen));
+				setDataLength(getBandsPrograms(res.data.groepen).length);
 			});
 	}, []);
 
@@ -33,20 +35,36 @@ function BandlidShows() {
 			p: 1,
 			scrollbarWidth: 'thin',
 		}}>
-			<CardContent sx={{
-				marginTop: 100
-			}}>
+			<CardContent>
 				<Typography variant='h4' mb={2}>
 					My shows:
 				</Typography>
-				{data.map((card) => {
-					console.log(card);
-					return <Ticket key={card.id} {...card} />;
-				})}
+				{dataLength == 0? 
+					<Typography variant='h5' mb={2}>
+						You currently dont have any jobs to work.
+					</Typography> :
+					data.map((card) => {
+						console.log(card);
+						return <Ticket key={card.id} {...card} />;
+					})}
 			</CardContent>
 		</Box>
 
 	);
+
+	function getBandsPrograms(groepen: Groep[]) {
+		const programmas: Programma[] = [];
+
+		if (groepen != null)
+			groepen.forEach((groep: Groep) => {
+				if (groep.programmeringen != null)
+					groep.programmeringen.forEach((programmering: Programma) => {
+						programmas.push(programmering);
+					});
+			});
+
+		return programmas;
+	}
 }
 
 export default BandlidShows;

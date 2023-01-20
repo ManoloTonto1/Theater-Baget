@@ -34,7 +34,7 @@ export type Groep = {
     naam: string;
     omschrijving: string;
     afbeelding: string;
-    link: string;
+    websiteUrl: string;
     betrokkenen: userData[];
     programmeringen: Programma[];
 }

@@ -38,7 +38,7 @@ public class GebruikerenController : ControllerBase, IController<Gebruiker, Gebr
     [HttpGet("{id}")]
     public async Task<ActionResult<Gebruiker>> Get([FromHeader(Name = "Authorization")] string token, int id)
     {
-        var value = await context.Gebruiker.FindAsync(id);
+        var value = await context.Gebruiker.Include( g => g.reserveringen).Where( g => g.id == id).FirstAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet]
