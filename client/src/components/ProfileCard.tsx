@@ -1,50 +1,54 @@
 import {
-	Card, Grid, Avatar, Box, Typography 
+	Card, Grid, Avatar, Box, Typography
 } from '@mui/material';
 import React from 'react';
+import {
+	leeftijdsGroep,
+	userData 
+} from '../context/UserContext';
+import Monki from '../assets/gorilla.jfif';
 import UserContext from '../context/UserContext';
+import ErrorPage from './ErrorPage';
 
-export type ProfileCardProps = {
-    image: string,
-    name: string,
-    email: string,
-    ageGroep: string
-}
-export function ProfileCard(props: ProfileCardProps) {
-	const { user } = React.useContext(UserContext);
-
+export function ProfileCard() {
+	const { user, role } = React.useContext(UserContext);
+	const userData = user.userData;
 	return (
-		<Card elevation={4} sx={{
-			marginBottom: 2,
-			display: 'flex',
-			justifyContent: 'center'
-		}}>
-			<Grid container>
-				<Avatar
-					alt={props.name}
-					src={props.image}
-					sx={{
-						width: 100,
-						height: 100,
-						m: 2
-					}} />
-				<Box sx={{
+		<>
+			{userData ? (
+				<Card elevation={4} sx={{
+					marginBottom: 2,
 					display: 'flex',
-					justifyContent: 'center',
-					flexDirection: 'column'
+					justifyContent: 'center'
 				}}>
-					<Typography variant='h4'>
-						{user.userData?.naam}
-					</Typography>
-					<Typography variant='h5'>
-						{user.userData?.email}
-					</Typography>
-					<Typography>
-						{/* Leeftijd: {user.userData?.ageGroup} */}
-					</Typography>
-				</Box>
-			</Grid>
+					<Grid container>
+						<Avatar
+							alt={userData.naam}
+							src={Monki}
+							sx={{
+								width: 100,
+								height: 100,
+								m: 2
+							}} />
+						<Box sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							flexDirection: 'column'
+						}}>
+							<Typography variant='h4'>
+								{userData.naam}
+							</Typography>
+							<Typography variant='h6'>
+								{userData.email}
+							</Typography>
+							<Typography variant="body2">
+								{leeftijdsGroep[parseInt(userData.leeftijdsGroep)]}
+							</Typography>
+						</Box>
+					</Grid>
+				</Card>
 
-		</Card>
+			) : <ErrorPage />}
+		</>
 	);
 }

@@ -23,4 +23,5 @@ public class ProgrammeringData
     public string datum { get; set; } 
     public string afbeelding { get; set; }
     public float prijs { get; set; } = 10f;
+    public int zaalNr { get; set; }
 }

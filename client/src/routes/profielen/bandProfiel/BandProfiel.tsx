@@ -2,19 +2,19 @@ import {
 	Box, Card, Container, Grid, Tab, Tabs, Typography
 } from '@mui/material';
 import React from 'react';
-import ProfielSettings from './settings/ProfielSettings';
-import ProfielTickets from './tickets/ProfielTickets';
-import Logout from './logout/Logout';
-import Monki from '../../assets/gorilla.jfif';
-import Avatar from '@mui/material/Avatar';
+import BandShows from './shows/BandShows';
+import BandLeden from './leden/BandLeden';
 import type {
-	ProfileCardProps
-} from '../../components/ProfileCard';
+	Groep
+} from '../../../components/global/globalTypes';
+import API from '../../../api/apiRoutes';
 import {
-	ProfileCard
-} from '../../components/ProfileCard';
-
-import UserContext from '../../context/UserContext';
+	useParams 
+} from 'react-router-dom';
+import {
+	BandCard 
+} from '../../../components/BandCard';
+import UserContext from '../../../context/UserContext';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -52,44 +52,34 @@ function a11yAccesibilityProps(index: number) {
 }
 
 // source for tabs: https://mui.com/material-ui/react-tabs/ en de login page
-function Profiel() {
-	
-	const { user } = React.useContext(UserContext);
+function BandProfiel() {
+	const { id } = useParams();
 	const [value, setValue] = React.useState(0);
-	const [data, setData] = React.useState<never[] | ProfileCardProps[]>([]);
+	const [data, setData] = React.useState<never[] | Groep>();
+	
 	React.useEffect(() => {
-		// API('gebruikers').Get(value)
-		// 	.then((res) => {
-		// 		if (res.status != 200) {
-		// 			return;
-		// 		}
-
-		// 	});
-		setData([{
-			image: Monki,
-			name: 'akasha monka',
-			email: user.userData.email,
-			ageGroep: 'dood'
-		}]);
-	}, [value]);
+		API('groepen')
+			.Get(id)
+			.then((res) => {
+				console.log(res.data);
+				setData(res.data);
+			});
+	}, []);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
 
 	return (
-		<Container maxWidth={'xl'} sx={{
+		<Container sx={{
 			my: 4
 		}}>
 			<Grid container spacing={3}>
-				<Grid item lg={6}
+				<Grid item lg={12}
 					xs={12}>
 					<Card elevation={4}>
-						{data.map((card) => {
-							return <ProfileCard key={card.name} {...card} />;
-						})}
+						<BandCard key='hoe' {...data as Groep} />
 						<Tabs
-							orientation="vertical"
 							variant="fullWidth"
 							value={value}
 							onChange={handleChange}
@@ -98,33 +88,25 @@ function Profiel() {
 								borderRight: 1,
 								borderColor: 'divider'
 							}}>
-							<Tab label="Tickets" {...a11yAccesibilityProps(0)} />
-							<Tab label="Settings" {...a11yAccesibilityProps(1)} />
-							<Tab label="Log out" {...a11yAccesibilityProps(2)} />
+							<Tab label="Shows" {...a11yAccesibilityProps(0)} />
+							<Tab label="Leden" {...a11yAccesibilityProps(1)} />
 						</Tabs>
 					</Card>
 				</Grid>
-				<Grid item lg={6}
+				<Grid item lg={12}
 					sm={12}
 					xs={12}
 				>
 					<Card elevation={4} sx={{
 						maxHeight: 500,
 						minHeight: 500,
-						overflowY:'auto',
-						scrollbarWidth: 'thin',
-						alignItems: 'center',
-						display: 'flex',
-						justifyContent: 'center'
+						overflowY: 'auto'
 					}}>
 						<TabPanel value={value} index={0}>
-							<ProfielTickets />
+							<BandShows />
 						</TabPanel>
 						<TabPanel value={value} index={1}>
-							<ProfielSettings />
-						</TabPanel>
-						<TabPanel value={value} index={2}>
-							<Logout />
+							<BandLeden />
 						</TabPanel>
 					</Card>
 				</Grid>
@@ -133,4 +115,4 @@ function Profiel() {
 	);
 }
 
-export default Profiel;
+export default BandProfiel;
