@@ -16,6 +16,8 @@ import SignIn from './tabs/SignIn';
 import SignUp from './tabs/SignUp';
 
 import img from '../../assets/poster.png';
+import ErrorPage from '../../components/ErrorPage';
+import UserContext from '../../context/UserContext';
 
 interface TabPanelProps {
 	children?: React.ReactNode;
@@ -54,56 +56,62 @@ function tabId(index: number) {
 
 function Login() {
 	const [tab, setTab] = React.useState(0);
+	const { user } = React.useContext(UserContext);
 	
 	const handleTabChange = useCallback(async (event: React.SyntheticEvent, newValue: number) => {
 		setTab(newValue);
 	}, []);
 	
 	return (
-		<Box style={{
-			width: '100%',
-			height: '100vh',
-			backgroundImage: 'url('+img+')'
-		}}>
-
-			<Container style={{
-				height: '100vh',
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-			}}>
-
-				<Card elevation={4} sx={{ 
-					width: 750,
-					p: 4,
-				}}>
-					< Box sx={{ 
-						width: '100%' 
+		<>
+			{
+				user.userData == null ? (
+					<Box style={{
+						width: '100%',
+						height: '100vh',
+						backgroundImage: 'url('+img+')'
 					}}>
-						<Box sx={{ 
-							borderBottom: 1, 
-							borderColor: 'divider' 
-						}}>
-							<Tabs value={tab} onChange={handleTabChange}
-								variant='fullWidth' sx={{
-									ml:1, 
-									mr:1
-								}}>
-								<Tab label="sign in" {...tabId(0)} />
-								<Tab label="sign up" {...tabId(1)} />
-							</Tabs>
-						</Box>
-						<TabPanel value={tab} index={0}>
-							<SignIn />
-						</TabPanel>
-						<TabPanel value={tab} index={1}>
-							<SignUp />
-						</TabPanel>
-					</Box >
-				</Card>
-			</Container>
-		</Box>
 
+						<Container style={{
+							height: '100vh',
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}>
+
+							<Card elevation={4} sx={{ 
+								width: 750,
+								p: 4,
+							}}>
+								< Box sx={{ 
+									width: '100%' 
+								}}>
+									<Box sx={{ 
+										borderBottom: 1, 
+										borderColor: 'divider' 
+									}}>
+										<Tabs value={tab} onChange={handleTabChange}
+											variant='fullWidth' sx={{
+												ml:1, 
+												mr:1
+											}}>
+											<Tab label="sign in" {...tabId(0)} />
+											<Tab label="sign up" {...tabId(1)} />
+										</Tabs>
+									</Box>
+									<TabPanel value={tab} index={0}>
+										<SignIn />
+									</TabPanel>
+									<TabPanel value={tab} index={1}>
+										<SignUp />
+									</TabPanel>
+								</Box >
+							</Card>
+						</Container>
+					</Box>
+				) :
+					<ErrorPage />}
+		</>
 	);
 }
 
