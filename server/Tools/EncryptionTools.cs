@@ -147,6 +147,7 @@ public class EncryptionTools {
         return hashed;
     }
 
+// returned true wanneer data een hoofdletter bevat
 	public static bool hasUppercase (string data) {
 		foreach (char c in data) {
 			if (char.IsUpper(c)) return true;
@@ -154,6 +155,7 @@ public class EncryptionTools {
 		return false;
 	}
 
+// returned true wanneer data een kleine letter bevat
 	public static bool hasLowercase (string data) {
 		foreach (char c in data) {
 			if (char.IsLower(c)) return true;
@@ -161,6 +163,7 @@ public class EncryptionTools {
 		return false;
 	}
 
+// returned true wanneer data een speciaal karakter bevat
 	public static bool hasSpecialCharacter (string data) {
 		foreach ( char c in data )
 		{
@@ -172,6 +175,7 @@ public class EncryptionTools {
 		return false;
 	}
 
+// returned true wanneer data een woord is
 	public static bool isWord(string data) {
 		foreach (string line in System.IO.File.ReadLines("C:/xampp/htdocs/School/Haagse Hogeschool/Leerjaar 2/Project/web/Theater-Baget/server/Tools/wordlist.txt"))
 		{  
@@ -183,6 +187,7 @@ public class EncryptionTools {
 		return false;
 	}
 
+// returned true wanneer data een patroon bevat
 	public static bool isPattern(string data) {
 		string regString = @"(((?=012|123|234|345|456|567|678|789|891|901)\d)+|((?=109|109|198|987|876|765|654|543|432|321|210)\d)+)\d";
 		Regex regex = new Regex(regString);
