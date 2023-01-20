@@ -53,7 +53,7 @@ function App() : JSX.Element {
 					<Route path={'/bestellen/:id'} element={<Suspense fallback={<LoadingPage />}>
 						<TicketKopen />
 					</Suspense>} />
-					<Route path={'/intresses/'} element={<Suspense fallback={<LoadingPage />}>
+					<Route path={'/interesses/'} element={<Suspense fallback={<LoadingPage />}>
 						<Interesses />
 					</Suspense>} />
 					<Route path={'/intresses/feedback'} element={<Suspense fallback={<LoadingPage />}>
