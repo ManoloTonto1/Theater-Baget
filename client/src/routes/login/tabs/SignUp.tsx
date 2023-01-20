@@ -122,7 +122,7 @@ function SignUp () {
 		// wordt gedaan in de backend
 
 		// o Niet in de lijst van gekraakte wachtwoorden 
-		// gaan we doen in de backend
+		// kost geld
 
 		return true;
 	}, [password, setErrorText]);
