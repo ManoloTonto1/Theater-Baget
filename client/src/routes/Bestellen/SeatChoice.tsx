@@ -35,7 +35,6 @@ const connection = new signalR.HubConnectionBuilder()
 function SeatChoice(props: props) {
 	const { id } = useParams();
 	const [seats, setSeats] = React.useState<JSX.Element[]>([]);
-	const currentUserId = React.useRef(crypto.randomUUID());
 	const getSeats = React.useCallback(() => {
 		const arr = [];
 		let currentLetter = 'A';
@@ -69,14 +68,11 @@ function SeatChoice(props: props) {
 	},[props.zaal.derderangsAantal, props.zaal.eersterangsAantal, props.zaal.tweederangsAantal]);
 
 	const doFirstFetch = React.useCallback(() => {
-		connection.invoke('Get',parseInt(id as string),currentUserId.current,'i like niggas');
-		connection.on('receiveMessage', (user, message, stoelen) => {
+		connection.invoke('GetDefault',parseInt(id as string));
+		connection.on('receiveMessage', (stoelen) => {
 			const seatArray = getSeats();
 			seatArray.filter((seat) => !stoelen.includes(seat));
 			setSeats(seatArray);
-			console.log(user);
-			console.log(message);
-			console.log(stoelen);
 		});
 	}, [getSeats, id]);
 
@@ -89,20 +85,29 @@ function SeatChoice(props: props) {
 				waitForSocketConnetion();
 			}
 		},5);
-	}, [doFirstFetch, seats.length]);
+	}, [doFirstFetch]);
 	
 	React.useEffect(() => {
 		connection.start().catch(err => console.error(err.toString()));
 		waitForSocketConnetion();
-	}, [doFirstFetch, waitForSocketConnetion]);
+	}, []);
 	
 	const handleChange = (event: SelectChangeEvent<string[]>) => {
 		const { target: { value }, } = event;
+		const prev = props.selection;
 		props.setSelection(
 			// On autofill we get a stringified value.
 			typeof value === 'string' ? value.split(',') : value,
 		);
+		connection.invoke('Update',id,value, prev);
+
 	};
+	connection.on('UpdateSeats', (stoelen : string[]) => {
+		const seatArray = getSeats();
+		const filteredSeats = stoelen.filter((seat) => !props.selection.includes(seat));
+		const newSeats = seatArray.filter((seat) => !filteredSeats.includes(seat.key as string));
+		setSeats(newSeats);
+	});
 	
 	return (
 		<Box
