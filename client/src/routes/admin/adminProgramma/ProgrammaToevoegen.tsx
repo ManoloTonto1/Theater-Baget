@@ -4,7 +4,7 @@ import type {
 import {
 	Grid
 	,
-	Box, Button, Card, Chip,
+	Box, Button, Chip,
 	FormControl, FormGroup,
 	InputLabel, MenuItem, Select, TextField, Typography 
 } from '@mui/material';
@@ -44,7 +44,7 @@ function ProgrammaToevoegen() {
 		});	
 	},[]);
 	const handleChange = useCallback((event: SelectChangeEvent) => {
-	  setSelectedZaal(event.target.value as string);
+		setSelectedZaal(event.target.value as string);
 	},[]);
 	const handleForm = useCallback(async (e: { preventDefault: () => void; }) => {
 		e.preventDefault();
@@ -87,7 +87,7 @@ function ProgrammaToevoegen() {
 					setImage: setImage
 				}} label={''} />
 				<TextField sx={{ 
-				 mb: 2 
+					mb: 2 
 				}} 
 				label='Titel' 
 				variant='standard' 
@@ -141,7 +141,8 @@ function ProgrammaToevoegen() {
 						<TextField sx={{
 							mb: 2 
 						}} label='Prijs'
-						variant='standard' type='text'
+						variant='standard' 
+						type='number'
 						name='prijs'
 						fullWidth
 						required 
