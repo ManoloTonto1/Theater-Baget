@@ -177,7 +177,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "jason@mail.com",
                         twoFactor = false
                     }
@@ -189,7 +189,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "ta@mail.com",
                         twoFactor = false
                     }
@@ -201,7 +201,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "blaq@mail.com",
                         twoFactor = false
                     }
@@ -209,8 +209,15 @@ class Seed
                 },
             },
             programmeringen = new List<Programmering>{
-                context.Programmering.First()
-            }
+                        new Programmering
+                        {
+                            datum = new DateTime(2023, 09, 27),
+                            titel = "qing chon bin chilli",
+                            zaal = context.Zaal.Find(3),
+                            omschrijving = "Tempor nulla ex sit reprehenderit ipsum do deserunt nisi esse do aute amet. Laborum labore non fugiat enim. Quis exercitation aliqua proident fugiat in cupidatat cillum esse cillum velit duis exercitation. Minim duis consectetur officia voluptate sunt quis duis qui adipisicing.",
+                            afbeelding = "https://thumbs.dreamstime.com/b/confused-asian-person-142560915.jpg"
+                        }
+                    }
         });
         context.Groep.Add(new Groep
         {
@@ -225,7 +232,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "fat@mail.com",
                         twoFactor = false
                     }
@@ -237,7 +244,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "harry@mail.com",
                         twoFactor = false
                     }
@@ -249,13 +256,23 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "skinnie@mail.com",
                         twoFactor = false
                     }
 
                 },
-            }
+            },
+            programmeringen = new List<Programmering>{
+                        new Programmering
+                        {
+                            datum = new DateTime(2023, 01, 27),
+                            titel = "homoerectus",
+                            zaal = context.Zaal.Find(3),
+                            omschrijving = "Tempor nulla ex sit reprehenderit ipsum do deserunt nisi esse do aute amet. Laborum labore non fugiat enim. Quis exercitation aliqua proident fugiat in cupidatat cillum esse cillum velit duis exercitation. Minim duis consectetur officia voluptate sunt quis duis qui adipisicing.",
+                            afbeelding = "https://thumbs.dreamstime.com/b/confused-asian-person-142560915.jpg"
+                        }
+                    }
         });
         context.Groep.Add(new Groep
         {
@@ -270,7 +287,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "niebba@mail.com",
                         twoFactor = false
                     }
@@ -282,7 +299,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "jan@mail.com",
                         twoFactor = false
                     }
@@ -294,7 +311,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "pieter@mail.com",
                         twoFactor = false
                     }
@@ -306,7 +323,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "milf@mail.com",
                         twoFactor = false
                     }
@@ -318,7 +335,7 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "aladin@mail.com",
                         twoFactor = false
                     }
@@ -330,13 +347,31 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "chadilicious@mail.com",
                         twoFactor = false
                     }
 
                 },
+            },
+            programmeringen = new List<Programmering>{
+            new Programmering
+            {
+                datum = new DateTime(2023, 09, 27),
+                titel = "our house in the middle of a porn",
+                zaal = context.Zaal.Find(3),
+                omschrijving = "Tempor nulla ex sit reprehenderit ipsum do deserunt nisi esse do aute amet. Laborum labore non fugiat enim. Quis exercitation aliqua proident fugiat in cupidatat cillum esse cillum velit duis exercitation. Minim duis consectetur officia voluptate sunt quis duis qui adipisicing.",
+                afbeelding = "https://thumbs.dreamstime.com/b/confused-asian-person-142560915.jpg"
+            },
+            new Programmering
+            {
+                datum = new DateTime(2023, 09, 27),
+                titel = "ghello",
+                zaal = context.Zaal.Find(3),
+                omschrijving = "Tempor nulla ex sit reprehenderit ipsum do deserunt nisi esse do aute amet. Laborum labore non fugiat enim. Quis exercitation aliqua proident fugiat in cupidatat cillum esse cillum velit duis exercitation. Minim duis consectetur officia voluptate sunt quis duis qui adipisicing.",
+                afbeelding = "https://thumbs.dreamstime.com/b/confused-asian-person-142560915.jpg"
             }
+        }
         });
                 context.Groep.Add(new Groep
         {
@@ -351,11 +386,29 @@ class Seed
                     level = level.bandlid,
                     loginGegevens = new LoginGegevens
                     {
-                        wachtwoord = "password",
+                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "jemoeder@mail.com",
                         twoFactor = false
                     }
                 },
+            },
+            programmeringen = new List<Programmering>{
+                new Programmering
+                {
+                    datum = new DateTime(2023, 09, 27),
+                    titel = "roken = hoed",
+                    zaal = context.Zaal.Find(3),
+                    omschrijving = "Tempor nulla ex sit reprehenderit ipsum do deserunt nisi esse do aute amet. Laborum labore non fugiat enim. Quis exercitation aliqua proident fugiat in cupidatat cillum esse cillum velit duis exercitation. Minim duis consectetur officia voluptate sunt quis duis qui adipisicing.",
+                    afbeelding = "https://thumbs.dreamstime.com/b/confused-asian-person-142560915.jpg"
+                },
+                new Programmering
+                {
+                    datum = new DateTime(2023, 09, 27),
+                    titel = "roken = goed",
+                    zaal = context.Zaal.Find(3),
+                    omschrijving = "Tempor nulla ex sit reprehenderit ipsum do deserunt nisi esse do aute amet. Laborum labore non fugiat enim. Quis exercitation aliqua proident fugiat in cupidatat cillum esse cillum velit duis exercitation. Minim duis consectetur officia voluptate sunt quis duis qui adipisicing.",
+                    afbeelding = "https://thumbs.dreamstime.com/b/confused-asian-person-142560915.jpg"
+                }
             }
         });
 

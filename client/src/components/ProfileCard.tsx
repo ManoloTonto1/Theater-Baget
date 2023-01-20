@@ -10,9 +10,10 @@ import Monki from '../assets/gorilla.jfif';
 import UserContext from '../context/UserContext';
 import ErrorPage from './ErrorPage';
 
-export function ProfileCard() {
+export function ProfileCard(props?: userData) {
 	const { user, role } = React.useContext(UserContext);
-	const userData = user.userData;
+	console.log(props);
+	const userData = props?.id? props : user.userData;
 	return (
 		<>
 			{userData ? (
