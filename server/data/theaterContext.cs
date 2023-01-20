@@ -24,8 +24,12 @@ public class theaterContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-                builder.Entity<Zaal>()
+        builder.Entity<Zaal>()
             .ToTable("Zaal");
+        builder.Entity<Reservering>()
+            .ToTable("Reservering");
+        builder.Entity<Reservering>()
+        .HasKey(reservering => reservering.id);
         builder.Entity<Betaling>()
             .ToTable("Betalingen");
 
@@ -36,7 +40,7 @@ public class theaterContext : DbContext
         .HasOne(d => d.user)
         .WithMany(g => g.donaties);
         // Betaling
-        
+
         builder.Entity<Betaling>()
             .HasKey(betaling => betaling.id);
 

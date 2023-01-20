@@ -6,9 +6,8 @@ namespace server.Controllers;
 
 public class StoelenController : Hub
 {
-    private CurrentSeatContext unusedChairsContext = CurrentSeatContext.Instance;
+    private CurrentSeatContext seatContext = CurrentSeatContext.Instance;
     private IServiceProvider _sp;
-    // private CurrentSeatContext seatContext = CurrentSeatContext.Instance;
     public StoelenController(IServiceProvider sp)
     {
         _sp = sp;
@@ -22,28 +21,38 @@ public class StoelenController : Hub
         using (var scope = _sp.CreateAsyncScope())
         {
             var context = scope.ServiceProvider.GetRequiredService<theaterContext>();
-            var ctx = unusedChairsContext.Get();
+            var ctx = await seatContext.Get(id);
             if(ctx.Count == 0){
-                await unusedChairsContext.Update(await context.stoelen.Where(s => s.reservering.programmering.id == id).Select(s => s.value).ToListAsync());
+                var dbList = await context.stoelen.Where(s => s.reservering.programmering.id == id).Select(s => s.value).ToListAsync();
+                await seatContext.Update(id, dbList);
             }
-            await Clients.Caller.SendAsync("receiveMessage", unusedChairsContext.Get());
+            await Clients.Caller.SendAsync("receiveMessage", await seatContext.Get(id));
         }
 
         
     }
-    public async Task Update(List<string> selectedSeats,List<string> prevSeats)
+    public async Task Update(int id, List<string> selectedSeats,List<string> prevSeats)
     {
         //keep track of the current users and what they choose.
-        await unusedChairsContext.Update(selectedSeats);
-        await unusedChairsContext.OpenSeat(selectedSeats,prevSeats);
-        await Clients.All.SendAsync("UpdateSeats", unusedChairsContext.Get());
+        await seatContext.Update(id,selectedSeats);
+        await seatContext.OpenSeat(id,selectedSeats,prevSeats);
+        await Clients.Group(id.ToString()).SendAsync("UpdateSeats", await seatContext.Get(id));
+    }
+    public async Task UnsubscribeNoBuy(int id,List<string> selectedSeats,List<string> prevSeats)
+    {
+        await Update(id, selectedSeats, prevSeats);
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, id.ToString());
+    }
+    public async Task Unsubscribe(int id)
+    {
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, id.ToString());
     }
 }
 
 public class CurrentSeatContext
 {
     private static CurrentSeatContext _instance = null;
-    private static List<string> currentlyUsedChairs { get; set; }
+    private static List<Tuple<int,List<string>>?> currentlyUsedChairs { get; set; }
     public CurrentSeatContext(){}
     public static CurrentSeatContext Instance
     {
@@ -56,31 +65,72 @@ public class CurrentSeatContext
             return _instance;
         }
     }
-    public async Task Update(List<string> list){
+    public async Task Update(int id, List<string> list){
         await Task.Run(() =>
         {
-            foreach (var item in currentlyUsedChairs.ToList())
+            var currentGroup = currentlyUsedChairs.Where(i => i.Item1 == id).First();
+            if (currentGroup == null){
+                return;
+            }
+            var scopedSeats = currentGroup.Item2.ToList();
+            foreach (var item in scopedSeats.ToList())
             {
                 if (list.Any(i => i == item))
                 {
-                    currentlyUsedChairs.Remove(item);
+                    scopedSeats.Remove(item);
                 }
             }
-            currentlyUsedChairs.AddRange(list);
+            scopedSeats.AddRange(list);
+            currentlyUsedChairs.First(i => i.Item1 == id).Item2.Clear();
+            currentlyUsedChairs.First(i => i.Item1 == id).Item2.AddRange(scopedSeats);
         });
     }
 
-    public async Task OpenSeat(List<string> current,List<string> prev){
+    public async Task OpenSeat(int id, List<string> current,List<string> prev){
         await Task.Run(() =>
         {
-            var openSeats = prev.Except(current);
-            foreach(var seat in openSeats){
-                System.Console.WriteLine(seat);
-                currentlyUsedChairs.Remove(seat); 
+            var currentGroup = currentlyUsedChairs.Where(i => i.Item1 == id).First();
+            if (currentGroup == null){
+                return;
             }
+            var scopedSeats = currentGroup.Item2.ToList();
+            var openSeats = prev.Except(current).ToList();
+            foreach(var seat in openSeats){
+                scopedSeats.Remove(seat);
+            }
+            currentlyUsedChairs.First(i => i.Item1 == id).Item2.Clear();
+            currentlyUsedChairs.First(i => i.Item1 == id).Item2.AddRange(scopedSeats);
         });
     }
-    public List<string> Get(){
-        return currentlyUsedChairs;
+    public async Task<List<string>> Get(int id){
+        return await Task.Run(() =>
+        {
+            List<string>? seatCtx;
+
+            try
+            {
+                var c = currentlyUsedChairs.Where(i => i.Item1 == id).First();
+                seatCtx = c.Item2.ToList();
+            }
+            catch (System.Exception)
+            {
+                seatCtx = null;
+            }
+
+            if(currentlyUsedChairs.Count == 0){
+                var newList = new Tuple<int,List<string>>(id, new List<string>());
+                currentlyUsedChairs.Add(newList);
+                return newList.Item2.ToList();
+            }
+
+            if (seatCtx == null)
+            {
+                var newList = new Tuple<int,List<string>>(id, new List<string>());
+                currentlyUsedChairs.Add(newList);
+                return newList.Item2.ToList();
+            }
+            return seatCtx;
+        });
+
     }
 }

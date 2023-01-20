@@ -17,8 +17,10 @@ import type {
 } from './types';
 
 type props = {
-    data: Data;
-}
+	connection: signalR.HubConnection;
+	data: Data;
+	selection: never[] | string[];
+} 
 enum states {
 	inProgress,
     done,
@@ -26,11 +28,15 @@ enum states {
 }
 
 import {
-	useNavigate 
+	useNavigate, useParams 
 } from 'react-router-dom';
 import API from '../../api/apiRoutes';
+import {
+	Programma 
+} from '../../components/global/globalTypes';
 
 function PostBetaling(props: props): JSX.Element {
+	const { id } = useParams();
 	const [state, setState] = React.useState<states>(states.inProgress);
 	const navigate = useNavigate();
 	React.useEffect(() => {
@@ -46,17 +52,22 @@ function PostBetaling(props: props): JSX.Element {
 				setState(states.failed);
 				return;
 			}
-			const paymentLog = await API('bestellingen').Create({
-					
+			const paymentLog = await API('reserveringen').Create({
+				stoelen: props.selection,
+				programmeringId: parseInt(id as string),
+				referenceCode: ref,
+				amountPaid: props.data.amount
+
 			});
 			if (paymentLog.status !== 200) {
 				setState(states.failed);
 				return; 
 			}
+			props.connection.invoke('Unsubscribe',parseInt(id as string));
 			setState(states.done);
 		};
 		req();
-	}, [props]);
+	}, [id, props]);
 
 	return (
 		<>

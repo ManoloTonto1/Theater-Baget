@@ -82,12 +82,19 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
             }
             user = await context.Gebruiker.FindAsync(data.userId);
         }
-
+        var stoelen = new List<Stoel>();
+        foreach (var stoel in data.stoelen)
+        {
+            stoelen.Add(new Stoel
+            {
+                value = stoel
+            });
+        }
+        System.Console.WriteLine(data.stoelen[0]);
         var newData = new Reservering
         {
-
             owner = user,
-            stoelen = data.stoelen,
+            stoelen = stoelen,
             programmering = await context.Programmering.FindAsync(data.programmeringId),
             betaling = new Betaling
             {

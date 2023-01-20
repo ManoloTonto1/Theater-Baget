@@ -15,22 +15,16 @@ import orange from '@mui/material/colors/orange';
 import {
 	green
 } from '@mui/material/colors';
-import API, {
-	apiEndPoint 
-} from '../../api/apiRoutes';
 import {
 	useParams
 } from 'react-router-dom';
+import * as signalR from '@microsoft/signalr';
+
 type props = {
+	connection: signalR.HubConnection;
 	selection: never[] | string[];
 	setSelection: React.Dispatch<React.SetStateAction<string[] | never[]>>;
 } & Programma;
-
-import * as signalR from '@microsoft/signalr';
-
-const connection = new signalR.HubConnectionBuilder()
-	.withUrl('/ws/stoelen')
-	.build();
 
 function SeatChoice(props: props) {
 	const { id } = useParams();
@@ -68,41 +62,41 @@ function SeatChoice(props: props) {
 	},[props.zaal.derderangsAantal, props.zaal.eersterangsAantal, props.zaal.tweederangsAantal]);
 
 	const doFirstFetch = React.useCallback(() => {
-		connection.invoke('GetDefault',parseInt(id as string));
-		connection.on('receiveMessage', (stoelen) => {
+		props.connection.invoke('GetDefault',parseInt(id as string));
+		props.connection.on('receiveMessage', (stoelen) => {
 			const seatArray = getSeats();
-			seatArray.filter((seat) => !stoelen.includes(seat));
-			setSeats(seatArray);
+			const currentStateList = seatArray.filter((seat) => !stoelen.includes(seat.key));
+			setSeats(currentStateList);
 		});
 	}, [getSeats, id]);
 
-	const waitForSocketConnetion = React.useCallback(() => {
+	const waitForSocketConnection = React.useCallback(() => {
 		setTimeout(() => {
-			if (connection.state === signalR.HubConnectionState.Connected && seats.length === 0) {
+			if (props.connection.state === signalR.HubConnectionState.Connected && seats.length === 0) {
 				doFirstFetch();
 			}
 			else {
-				waitForSocketConnetion();
+				waitForSocketConnection();
 			}
 		},5);
 	}, [doFirstFetch]);
 	
 	React.useEffect(() => {
-		connection.start().catch(err => console.error(err.toString()));
-		waitForSocketConnetion();
+		waitForSocketConnection();
 	}, []);
 	
-	const handleChange = (event: SelectChangeEvent<string[]>) => {
+	const handleChange = React.useCallback((event: SelectChangeEvent<string[]>) => {
 		const { target: { value }, } = event;
 		const prev = props.selection;
 		props.setSelection(
 			// On autofill we get a stringified value.
 			typeof value === 'string' ? value.split(',') : value,
 		);
-		connection.invoke('Update',id,value, prev);
+		props.connection.invoke('Update',parseInt(id as string), value, prev);
 
-	};
-	connection.on('UpdateSeats', (stoelen : string[]) => {
+	},[id, props]);
+	props.connection.on('UpdateSeats', (stoelen: string[]) => {
+		console.log(stoelen);
 		const seatArray = getSeats();
 		const filteredSeats = stoelen.filter((seat) => !props.selection.includes(seat));
 		const newSeats = seatArray.filter((seat) => !filteredSeats.includes(seat.key as string));
