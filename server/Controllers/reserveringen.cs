@@ -38,14 +38,20 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
     [HttpGet("{id}")]
     public async Task<ActionResult<Reservering>> Get([FromHeader(Name = "Authorization")] string token, int id)
     {
-        var value = await context.Reservering.FindAsync(id);
+        var value = await context.Reservering.Include(r=>r.stoelen).FirstOrDefaultAsync(i => i.id == id);
         return value == null ? NotFound() : value;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Reservering>>> GetAll([FromHeader(Name = "Authorization")] string token)
     {
-        var value = await context.Reservering.ToListAsync();
+        var value = await context.Reservering.Include(r=>r.stoelen).ToListAsync();
+        return value == null ? NotFound() : value;
+    }
+    [HttpGet("user/{id}")]
+    public async Task<ActionResult<IEnumerable<Reservering>>> GetByUserId([FromHeader(Name = "Authorization")] string token,int id)
+    {
+        var value = await context.Reservering.Include(r => r.stoelen).Where(r => r.owner.id == id).ToListAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet("datum/{datum}")]
@@ -66,6 +72,11 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
     [HttpPost]
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody] ReserveringData data)
     {
+        var currentProgramma = await context.Programmering.Include(p=>p.zaal).FirstOrDefaultAsync(p => p.id == data.programmeringId);
+        if (currentProgramma == null)
+        {
+            return NotFound();
+        }
         var user = new Gebruiker
         {
             naam = "Anoniem",
@@ -73,6 +84,15 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
             leeftijdsGroep = LeeftijdsGroep.Volwassenen,
         };
 
+        var stoelen = new List<Stoel>();
+        foreach (var stoel in data.stoelen)
+        {
+            stoelen.Add(new Stoel
+            {
+                value = stoel,
+            });
+        }
+        
         if (data.userId != null)
         {
             var (isValid, _token) = jwt.validateToken(token);
@@ -82,20 +102,12 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
             }
             user = await context.Gebruiker.FindAsync(data.userId);
         }
-        var stoelen = new List<Stoel>();
-        foreach (var stoel in data.stoelen)
-        {
-            stoelen.Add(new Stoel
-            {
-                value = stoel
-            });
-        }
-        System.Console.WriteLine(data.stoelen[0]);
+
         var newData = new Reservering
         {
             owner = user,
             stoelen = stoelen,
-            programmering = await context.Programmering.FindAsync(data.programmeringId),
+            programmering = currentProgramma,
             betaling = new Betaling
             {
                 aankoopDatum = DateTime.Today,
@@ -103,13 +115,15 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
                 prijs = data.amountPaid,
                 korting = 0,
             },
+            zaal = currentProgramma.zaal,
 
         };
         context.Reservering.Add(newData);
         await context.SaveChangesAsync();
 
         // should return a ticket, with info ect.
-        return CreatedAtAction("Get", new { data.userId }, newData);
+        // return CreatedAtAction("Get", new { data.userId }, newData);
+        return Ok();
     }
 
     [HttpPut("{id}")]

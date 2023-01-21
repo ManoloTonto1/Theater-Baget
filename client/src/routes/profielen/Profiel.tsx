@@ -1,24 +1,20 @@
 import {
-	Box, Button, Card, Container, Grid, Tab, Tabs, Typography
+	Box, Button, Card, Container, Grid, Tab, Tabs
 } from '@mui/material';
 import React from 'react';
-import ProfielSettings from '../settings/ProfielSettings';
-import ProfielTickets from '../tickets/ProfielTickets';
-import BandlidShows from '../bandlidProfiel/shows/BandlidShows';
-import BandlidBands from '../bandlidProfiel/bands/BandlidBands';
-import Logout from '../logout/Logout';
+import ProfielSettings from './settings/ProfielSettings';
+import ProfielTickets from './tickets/ProfielTickets';
+import BandlidShows from './bandlidProfiel/shows/BandlidShows';
+import BandlidBands from './bandlidProfiel/bands/BandlidBands';
+import Logout from './logout/Logout';
 import {
 	ProfileCard
-} from '../../../components/ProfileCard';
+} from '../../components/ProfileCard';
 import UserContext, {
-	leeftijdsGroep,
-	userData 
-	,
 	level 
-} from '../../../context/UserContext';
+} from '../../context/UserContext';
 
-import ErrorPage from '../../../components/ErrorPage';
-import AdminPage from '../../admin/AdminPage';
+import ErrorPage from '../../components/ErrorPage';
 import {
 	useNavigate 
 } from 'react-router-dom';

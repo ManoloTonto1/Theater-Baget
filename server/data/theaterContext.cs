@@ -36,11 +36,12 @@ public class theaterContext : DbContext
         // Donaties
         builder.Entity<Donatie>()
             .ToTable("Donatie");
+            
         builder.Entity<Donatie>()
         .HasOne(d => d.user)
         .WithMany(g => g.donaties);
-        // Betaling
 
+        // Betaling
         builder.Entity<Betaling>()
             .HasKey(betaling => betaling.id);
 
@@ -138,8 +139,9 @@ public class theaterContext : DbContext
             .HasKey(s => s.id);
 
         builder.Entity<Stoel>()
-            .HasOne(res => res.reservering)
-            .WithMany(stoelen => stoelen.stoelen);
+            .HasOne(s => s.reservering)
+            .WithMany(r => r.stoelen)
+            .HasForeignKey(s => s.reserveringFK);
 
     }
 }

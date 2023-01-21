@@ -31,11 +31,10 @@ import {
 	useNavigate, useParams 
 } from 'react-router-dom';
 import API from '../../api/apiRoutes';
-import {
-	Programma 
-} from '../../components/global/globalTypes';
+import UserContext from '../../context/UserContext';
 
 function PostBetaling(props: props): JSX.Element {
+	const { user } = React.useContext(UserContext);
 	const { id } = useParams();
 	const [state, setState] = React.useState<states>(states.inProgress);
 	const navigate = useNavigate();
@@ -56,7 +55,8 @@ function PostBetaling(props: props): JSX.Element {
 				stoelen: props.selection,
 				programmeringId: parseInt(id as string),
 				referenceCode: ref,
-				amountPaid: props.data.amount
+				amountPaid: props.data.amount,
+				userId: user.userData?.id
 
 			});
 			if (paymentLog.status !== 200) {

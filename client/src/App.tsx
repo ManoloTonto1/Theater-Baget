@@ -22,7 +22,7 @@ const Interesses = React.lazy(() => import('./routes/Interesses/Interesses'));
 const IntressesFeedback = React.lazy(() => import('./routes/Interesses/feedback/IntressesFeedback'));
 const IntressesSuggestie = React.lazy(() => import('./routes/Interesses/suggestie/IntressesSuggestie'));
 const TicketKopen = React.lazy(() => import('./routes/Bestellen/TicketKopen'));
-const Profiel = React.lazy(()=> import('./routes/profielen/profiel/Profiel'));
+const Profiel = React.lazy(()=> import('./routes/profielen/Profiel'));
 const BandProfiel = React.lazy(()=> import('./routes/profielen/bandProfiel/BandProfiel'));
 const Bands = React.lazy(()=>import('./routes/bands/Bands'));
 const BandsById = React.lazy(() => import('./routes/bands/BandsById'));

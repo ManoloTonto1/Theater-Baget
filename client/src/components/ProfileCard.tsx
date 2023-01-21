@@ -2,12 +2,11 @@ import {
 	Card, Grid, Avatar, Box, Typography
 } from '@mui/material';
 import React from 'react';
-import {
-	leeftijdsGroep,
-	userData 
+import UserContext, {
+	leeftijdsGroep
 } from '../context/UserContext';
 import Monki from '../assets/gorilla.jfif';
-import UserContext from '../context/UserContext';
+
 import ErrorPage from './ErrorPage';
 
 export function ProfileCard() {
