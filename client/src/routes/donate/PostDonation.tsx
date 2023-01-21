@@ -48,7 +48,17 @@ function PostDonation(props: props): JSX.Element {
 					setState(states.failed);
 					return;
 				}
-				setState(states.done);
+				API('donaties').Create({
+					message: props.data.comment,
+					factuurNr: crypto.randomUUID(),
+					prijs: props.data.amount,
+				}).then((res) => {
+					if (res.status === 200) {
+						setState(states.done);
+					}
+				}).catch(() => {
+					setState(states.failed);
+				});
 			}).catch(() => {
 				setState(states.failed);
 			});

@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using server.Controllers;
@@ -35,7 +34,7 @@ if (builder.Environment.IsDevelopment())
 else
 {
     builder.Services.AddDbContext<theaterContext>(options =>
-        options.UseMySQL("Data Source=manuellopezhernandez.database.windows.net;Integrated Security=false;User ID=cmykttpscpclmwxyqxuwgkqx;Password=exJpmn7E9XsDVEtU4WKGikia;"));
+        options.UseSqlServer(Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING")));
 }
 // Add services to the container.
 

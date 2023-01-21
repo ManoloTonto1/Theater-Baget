@@ -38,12 +38,18 @@ function Event(): JSX.Element {
 			}}
 		>
 			{data ? <Grid container spacing={2}>
-				<Grid item xs={12}
-					sm={6}>
+				<Grid item
+					xs={12}
+					sm={12}
+					lg={6}
+				>
 					<LeftCard data={data} />
 				</Grid>
-				<Grid item xs={12}
-					sm={6}>
+				<Grid item
+					xs={12}
+					sm={12}
+					lg={6}
+				>
 					<RightCard data={data} />
 				</Grid>
 			</Grid>

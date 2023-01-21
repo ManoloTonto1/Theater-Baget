@@ -28,7 +28,6 @@ function BandlidBands() {
 		API('betrokkenen')
 			.Get(user.userData?.id + '')
 			.then((res) => {
-				console.log(res.data);
 				setData(res.data.groepen);
 			});
 	}, []);
@@ -48,7 +47,6 @@ function BandlidBands() {
 				
 				{
 					data.map((card) => {
-						console.log(card);
 						return <BandCard key={card.id} {...card} />;
 					})}
 			</CardContent>

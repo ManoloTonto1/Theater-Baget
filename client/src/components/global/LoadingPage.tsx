@@ -18,7 +18,7 @@ function LoadingPage(){
 				justifyContent="center"
 				sx={{
 					minHeight:'100%',
-					height:'68vh'
+					maxHeight:'68vh'
 				}}
 			>
 				<CircularProgress/>

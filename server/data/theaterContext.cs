@@ -29,17 +29,21 @@ public class theaterContext : DbContext
         builder.Entity<Reservering>()
             .ToTable("Reservering");
         builder.Entity<Reservering>()
-        .HasKey(reservering => reservering.id);
+            .HasKey(reservering => reservering.id);
         builder.Entity<Betaling>()
             .ToTable("Betalingen");
 
+        builder.Entity<Donatie>()
+            .HasKey(donatie => donatie.id);
         // Donaties
         builder.Entity<Donatie>()
             .ToTable("Donatie");
-            
+
         builder.Entity<Donatie>()
         .HasOne(d => d.user)
-        .WithMany(g => g.donaties);
+        .WithMany()
+        .HasForeignKey(s => s.userFK)
+        .OnDelete(DeleteBehavior.NoAction);
 
         // Betaling
         builder.Entity<Betaling>()

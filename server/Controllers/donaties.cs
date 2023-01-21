@@ -89,16 +89,17 @@ public class DonatiesController : ControllerBase, IController<Donatie, DonatieDa
             betaling = new Betaling{
             factuurNr = data.factuurNr,
             prijs = data.prijs,
-
+            aankoopDatum = DateTime.Now
             },
             user = user,
             message = data.message,
+
         };
         context.Donatie.Add(newData);
         await context.SaveChangesAsync();
 
         // should return a ticket, with info ect.
-        return CreatedAtAction("Get", new { data.userId }, newData);
+        return Ok();
     }
     [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token, int id, [FromBody] DonatieData data)

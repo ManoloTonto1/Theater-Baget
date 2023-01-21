@@ -40,17 +40,30 @@ export default function Footer(props: TypographyProps) :JSX.Element {
 						justifyContent: 'center',
 						my: 1,
 					}}>
-					<IconButton href="https://twitter.com/elonmusk?" color='secondary'>
-						<TwitterIcon />
+					<IconButton
+						LinkComponent={'a'}
+						aria-label={'Redirect naar de Twitter Pagina'}
+						href="https://twitter.com/elonmusk?"
+						color='secondary'>
+						<TwitterIcon aria-label='Twitter icoon'/>
 					</IconButton>
-					<IconButton href='https://youtu.be/9zLWwGQf7v8' color='secondary'>
-						<YouTubeIcon />
+					<IconButton
+						LinkComponent={'a'}
+						aria-label={'Redirect naar de Youtube Pagina'}
+						href='https://youtu.be/9zLWwGQf7v8' color='secondary'>
+						<YouTubeIcon aria-label='Youtube icoon' />
 					</IconButton>
-					<IconButton href='tel:+31-0669696969' color='secondary'>
-						<LocalPhoneIcon />
+					<IconButton
+						LinkComponent={'a'}
+						aria-label={'het Theater bellen'}
+						href='tel:+31-0669696969' color='secondary'>
+						<LocalPhoneIcon aria-label='Telefoon icoon' />
 					</IconButton>
-					<IconButton href='mailto:bitch@gmail.com' color='secondary'>
-						<EmailIcon />
+					<IconButton
+						LinkComponent={'a'}
+						aria-label={'Stuur een e-mail naar het Theater'}
+						href='mailto:bitch@gmail.com' color='secondary'>
+						<EmailIcon aria-label='Email icoon'/>
 					</IconButton>
 				</Box>
 				<Typography
