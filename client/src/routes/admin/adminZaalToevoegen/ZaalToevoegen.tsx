@@ -41,7 +41,6 @@ export default function ZaalToevoegen() {
 				setErrorText('Vul de benodigde velden');
 				states.failed;
 			}
-			console.log('toegevoegd');
 			setState(states.done);
 		}).catch(() => {
 			setErrorText('Vul de benodigde velden');
