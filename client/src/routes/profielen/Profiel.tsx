@@ -77,9 +77,9 @@ function Profiel() {
 							<Grid item lg={12}
 								xs={12}>
 								<Card elevation={4}>
-									<ProfileCard />
+									<ProfileCard/>
 									<Tabs
-										variant="fullWidth"
+										variant="scrollable"
 										value={value}
 										onChange={handleChange}
 										aria-label="Vertical tabs"
@@ -112,7 +112,7 @@ function Profiel() {
 								<Card elevation={4} sx={{
 									maxHeight: 500,
 									minHeight: 500,
-							
+									overflowY: 'auto'
 								}}>
 									<TabPanel value={value} index={0}>
 										<Box sx={{
