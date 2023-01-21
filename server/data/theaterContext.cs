@@ -8,6 +8,7 @@ public class theaterContext : DbContext
     }
 
     public DbSet<Gebruiker> Gebruiker { get; set; } = default!;
+    public DbSet<Stoel> stoelen { get; set; } = default!;
     public DbSet<Betaling> Betaling { get; set; } = default!;
     public DbSet<Betrokkene> Betrokkene { get; set; } = default!;
     public DbSet<Donatie> Donatie { get; set; } = default!;
@@ -23,19 +24,28 @@ public class theaterContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-                builder.Entity<Zaal>()
+        builder.Entity<Zaal>()
             .ToTable("Zaal");
+        builder.Entity<Reservering>()
+            .ToTable("Reservering");
+        builder.Entity<Reservering>()
+            .HasKey(reservering => reservering.id);
         builder.Entity<Betaling>()
             .ToTable("Betalingen");
 
+        builder.Entity<Donatie>()
+            .HasKey(donatie => donatie.id);
         // Donaties
         builder.Entity<Donatie>()
             .ToTable("Donatie");
+
         builder.Entity<Donatie>()
         .HasOne(d => d.user)
-        .WithMany(g => g.donaties);
+        .WithMany()
+        .HasForeignKey(s => s.userFK)
+        .OnDelete(DeleteBehavior.NoAction);
+
         // Betaling
-        
         builder.Entity<Betaling>()
             .HasKey(betaling => betaling.id);
 
@@ -133,8 +143,9 @@ public class theaterContext : DbContext
             .HasKey(s => s.id);
 
         builder.Entity<Stoel>()
-            .HasOne(res => res.reservering)
-            .WithMany(stoelen => stoelen.stoelen);
+            .HasOne(s => s.reservering)
+            .WithMany(r => r.stoelen)
+            .HasForeignKey(s => s.reserveringFK);
 
     }
 }

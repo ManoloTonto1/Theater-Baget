@@ -1,24 +1,20 @@
 import {
-	Box, Button, Card, Container, Grid, Tab, Tabs, Typography
+	Box, Button, Card, Container, Grid, Tab, Tabs
 } from '@mui/material';
 import React from 'react';
-import ProfielSettings from '../settings/ProfielSettings';
-import ProfielTickets from '../tickets/ProfielTickets';
-import BandlidShows from '../bandlidProfiel/shows/BandlidShows';
-import BandlidBands from '../bandlidProfiel/bands/BandlidBands';
-import Logout from '../logout/Logout';
+import ProfielSettings from './settings/ProfielSettings';
+import ProfielTickets from './tickets/ProfielTickets';
+import BandlidShows from './bandlidProfiel/shows/BandlidShows';
+import BandlidBands from './bandlidProfiel/bands/BandlidBands';
+import Logout from './logout/Logout';
 import {
 	ProfileCard
-} from '../../../components/ProfileCard';
+} from '../../components/ProfileCard';
 import UserContext, {
-	leeftijdsGroep,
-	userData 
-	,
 	level 
-} from '../../../context/UserContext';
+} from '../../context/UserContext';
 
-import ErrorPage from '../../../components/ErrorPage';
-import AdminPage from '../../admin/AdminPage';
+import ErrorPage from '../../components/ErrorPage';
 import {
 	useNavigate 
 } from 'react-router-dom';
@@ -74,16 +70,19 @@ function Profiel() {
 		<>
 			{
 				user.userData && user.userData.naam != null ? (
-					<Container sx={{
-						my: 4
-					}}>
-						<Grid container spacing={3}>
+					<Container
+						maxWidth={'md'} sx={{
+							my: 4
+						}}>
+						<Grid container
+							
+							spacing={3}>
 							<Grid item lg={12}
 								xs={12}>
 								<Card elevation={4}>
-									<ProfileCard/>
+									<ProfileCard />
 									<Tabs
-										variant="scrollable"
+										variant="fullWidth"
 										value={value}
 										onChange={handleChange}
 										aria-label="Vertical tabs"
@@ -114,47 +113,46 @@ function Profiel() {
 								xs={12}
 							>
 								<Card elevation={4} sx={{
+									scrollbarWidth:'thin',
+									overflow:'auto',
 									maxHeight: 500,
-									minHeight: 500,
-									overflowY: 'auto'
 								}}>
-									<TabPanel value={value} index={0}>
-										<Box sx={{
-											width: '100%',
-											height: '100%',
-											scrollbarWidth: 'thin',
-											alignItems: 'center',
-											display: 'flex',
-											justifyContent: 'center'
-										}}>
-											<Logout />
-										</Box>	
-									</TabPanel>
-									<TabPanel value={value} index={1}>
-										<Box sx={{
-											width: '100%',
-											height: '100%',
-											scrollbarWidth: 'thin',
-											alignItems: 'center',
-											display: 'flex',
-											justifyContent: 'center'
-										}}>
-											<ProfielSettings />
-										</Box>
-									</TabPanel>
-									<TabPanel value={value} index={2}>
-										<ProfielTickets />
-									</TabPanel>
-									{ isBandLid &&
+									<Container>
+
+										<TabPanel value={value} index={0}>
+											<Box sx={{
+												scrollbarWidth: 'thin',
+												display: 'flex',
+												justifyContent: 'center',
+												alignItems:'center'
+											}}>
+												<Logout />
+											</Box>	
+										</TabPanel>
+										<TabPanel value={value} index={1}>
+											<Box sx={{
+												width: '100%',
+												height: '100%',
+												scrollbarWidth: 'thin',
+											}}>
+												<ProfielSettings />
+											</Box>
+										</TabPanel>
+										<TabPanel value={value} index={2}>
+											<ProfielTickets />
+										</TabPanel>
+										{ isBandLid &&
 								<TabPanel value={value} index={3}>
 									<BandlidBands />
 								</TabPanel>
-									}
-									{ isBandLid &&
+										}
+										{ isBandLid &&
 								<TabPanel value={value} index={4}>
 									<BandlidShows />
 								</TabPanel>
-									}
+										}
+									</Container>
+
 								</Card>
 							</Grid>
 						</Grid>

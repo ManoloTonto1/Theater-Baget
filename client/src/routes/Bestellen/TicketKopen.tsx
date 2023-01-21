@@ -30,13 +30,16 @@ import type {
 	Data 
 } from './types';
 import PostBetaling from './PostBetaling';
+import useWebsocket from '../../hooks/useWebsocket';
 
 function TicketKopen() {
 	const { id } = useParams();
 	const [data, setData] = React.useState<null | Programma>(null);
 	const [currentStep, setCurrentStep] = React.useState(0);
 	const [selection, setSelection] = React.useState<never[] | string[]>([]);
-	const [gegevens,setGegevens] = React.useState<Data | null>(null);
+	const [gegevens, setGegevens] = React.useState<Data | null>(null);
+	const [connection, unsubscribe] = useWebsocket(parseInt(id as string), selection);
+	
 	const previousStep = React.useCallback(async () => {
 		setCurrentStep((current) => current - 1);
 	}, []);
@@ -50,14 +53,19 @@ function TicketKopen() {
 				setData(res.data);
 			});
 	}, [id]);
+	React.useEffect(() => {
+		return () => {
+			unsubscribe(location.hash);
+		};
+	},[unsubscribe]);
 	return (
 		<Container
 			sx={{
-				height: '80vh',
+				height: '100vh',
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
-				my: 4,
+				my: 1,
 			}}
 		>
 			{data ? (
@@ -65,14 +73,14 @@ function TicketKopen() {
 					elevation={4}
 					sx={{
 						width: '100%',
-						maxHeight: '80vh',
+						maxHeight: '100vh',
 						overflow: 'auto',
 					}}
 				>
 					<Card
 						elevation={4}
 						sx={{
-							zIndex: 10000,
+							zIndex: 100,
 							p: 1,
 							position: 'sticky',
 							top: 0,
@@ -104,8 +112,8 @@ function TicketKopen() {
 								</Typography>
 								<Ticket {...data} />
 								<SeatChoice
-									columns={10}
-									rows={10}
+									{...data}
+									connection={connection}
 									selection={selection}
 									setSelection={setSelection}
 								/>
@@ -121,7 +129,8 @@ function TicketKopen() {
 								>
 									Betaal Gegevens:
 								</Typography>
-								<Betalen data={data}
+								<Betalen 
+									data={data}
 									selection={selection}
 									setGegevens={setGegevens}
 								/>
@@ -146,6 +155,8 @@ function TicketKopen() {
 						)}
 						{currentStep === 3 && gegevens && (
 							<PostBetaling
+								connection={connection}
+								selection={selection}
 								data={gegevens}
 
 							/>								

@@ -19,7 +19,7 @@ public class ZalenController : ControllerBase, IController<Zaal,Zaal>
 
     public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")] string token,int id)
     {
-        var role = auth.getRoleFromToken(token);
+        var role = await auth.getRoleFromToken(token);
         if (role != level.admin || role != level.medewerker)
         {
             return Unauthorized();
@@ -62,7 +62,7 @@ public class ZalenController : ControllerBase, IController<Zaal,Zaal>
     [HttpPost]
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody]Zaal data)
     {
-        var role = auth.getRoleFromToken(token);
+        var role = await auth.getRoleFromToken(token);
         if ((int)role == (int)level.admin || (int)role == (int)level.medewerker)
         {
             var newData = new Zaal
@@ -83,7 +83,7 @@ public class ZalenController : ControllerBase, IController<Zaal,Zaal>
     [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token,int id, [FromBody] Zaal data)
     {
-        var role = auth.getRoleFromToken(token);
+        var role = await auth.getRoleFromToken(token);
         if (role != level.admin || role != level.medewerker)
         {
             return Unauthorized();

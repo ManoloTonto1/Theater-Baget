@@ -77,7 +77,6 @@ function ProgrammaToevoegen() {
 		e.preventDefault();
 		const form = document.getElementById('form');
 		const formData = new FormData(form as HTMLFormElement);
-
 		const date = voorstellingDatum?.toDate();
 		if (!date) {
 			return;
