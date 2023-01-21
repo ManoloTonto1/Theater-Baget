@@ -5,7 +5,7 @@ import React from 'react';
 import Logout from './adminLogout/Logout';
 import ProgrammaToevoegen from './adminProgramma/ProgrammaToevoegen';
 import ZaalToevoegen from './adminZaalToevoegen/ZaalToevoegen';
-import GebruikerToevoegen from './adminGebruikerToevoegen/GebruikerToevoegen';
+import BetrokkenenToevoegen from './adminGebruikerToevoegen/BetrokkenenToevoegen';
 import GebruikerInzien from './adminGebruikerInzien/GebruikerInzien';
 import UserContext, {
 	level 
@@ -81,7 +81,7 @@ function AdminPage() {
 									}}>
 									<Tab label="Programma toevoegen" {...a11yAccesibilityProps(0)} />
 									<Tab label="Zaal toevoegen" {...a11yAccesibilityProps(1)} />
-									<Tab label="Gebruiker toevoegen" {...a11yAccesibilityProps(2)} />
+									<Tab label="Betrokkenen toevoegen" {...a11yAccesibilityProps(2)} />
 									<Tab label="Gebruiker inzien" {...a11yAccesibilityProps(3)} />
 									<Tab label="Logout" {...a11yAccesibilityProps(4)} />
 								</Tabs>
@@ -106,7 +106,7 @@ function AdminPage() {
 									<ZaalToevoegen />
 								</TabPanel>
 								<TabPanel value={value} index={2}>
-									<GebruikerToevoegen />
+									<BetrokkenenToevoegen />
 								</TabPanel>
 								<TabPanel value={value} index={3}>
 									<GebruikerInzien />
