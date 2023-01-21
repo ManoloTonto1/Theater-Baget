@@ -18,7 +18,7 @@ public class DonatiesController : ControllerBase, IController<Donatie, DonatieDa
 
     public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")] string token, int id)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         if (role != level.admin)
         {
             return Unauthorized();
@@ -43,7 +43,7 @@ public class DonatiesController : ControllerBase, IController<Donatie, DonatieDa
     [HttpGet("{id}")]
     public async Task<ActionResult<Donatie>> Get([FromHeader(Name = "Authorization")] string token, int id)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         if (role != level.admin)
         {
             return Unauthorized();
@@ -76,7 +76,7 @@ public class DonatiesController : ControllerBase, IController<Donatie, DonatieDa
 
         if (data.userId != null)
         {
-            var (isValid, _) = jwt.validateToken(token);
+            var (isValid, _) = await jwt.validateToken(token);
             if (!isValid)
             {
                 return Unauthorized();
@@ -103,7 +103,7 @@ public class DonatiesController : ControllerBase, IController<Donatie, DonatieDa
     [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token, int id, [FromBody] DonatieData data)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         if (role != level.admin)
         {
             return Unauthorized();

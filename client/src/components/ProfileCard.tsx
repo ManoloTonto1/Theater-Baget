@@ -2,6 +2,9 @@ import {
 	Card, Grid, Avatar, Box, Typography
 } from '@mui/material';
 import React from 'react';
+import type {
+	userData
+} from '../context/UserContext';
 import UserContext, {
 	leeftijdsGroep
 } from '../context/UserContext';
@@ -10,8 +13,7 @@ import Monki from '../assets/gorilla.jfif';
 import ErrorPage from './ErrorPage';
 
 export function ProfileCard(props?: userData) {
-	const { user, role } = React.useContext(UserContext);
-	console.log(props);
+	const { user} = React.useContext(UserContext);
 	const userData = props?.id? props : user.userData;
 	return (
 		<>

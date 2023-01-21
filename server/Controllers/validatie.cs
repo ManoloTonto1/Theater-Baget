@@ -11,6 +11,7 @@ public class ValidationController : ControllerBase
 
     public ValidationController(theaterContext _context)
     {
+        context = _context;
     }
     [HttpGet]
     public async Task<ActionResult> Get([FromHeader(Name = "Authorization")] string token)
@@ -19,7 +20,7 @@ public class ValidationController : ControllerBase
             return Unauthorized();
         };
 
-        var result = jwt.validateToken(token);
+        var result = await jwt.validateToken(token);
         if (!result.Item1)
         {
             return Unauthorized();
@@ -33,7 +34,7 @@ public class ValidationController : ControllerBase
             return Unauthorized();
         };
 
-        var result = jwt.validateToken(token);
+        var result = await jwt.validateToken(token);
         if (!result.Item1)
         {
             return Unauthorized();

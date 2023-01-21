@@ -45,6 +45,8 @@ public class GebruikerenController : ControllerBase, IController<Gebruiker, Gebr
         .ThenInclude(r=>r.zaal)
         .Include(g => g.reserveringen)
         .ThenInclude(r=>r.stoelen)
+        .Include(g => g.reserveringen)
+        .ThenInclude(r=>r.programmering)
         .Where(g => g.id == id).FirstAsync();
         return value == null ? NotFound() : value;
     }
@@ -63,7 +65,7 @@ public class GebruikerenController : ControllerBase, IController<Gebruiker, Gebr
     [HttpPost]
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, GebruikerData data)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         if (role != level.admin)
         {
             return BadRequest();
@@ -84,10 +86,10 @@ public class GebruikerenController : ControllerBase, IController<Gebruiker, Gebr
     [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token, int id, [FromBody]GebruikerData data)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         if (role != level.admin)
         {
-            if (!jwt.validateUserFromToken(token, id))
+            if (!await jwt.validateUserFromToken(token, id))
             {
                 return BadRequest();
             }

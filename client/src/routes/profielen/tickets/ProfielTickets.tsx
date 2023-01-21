@@ -18,7 +18,6 @@ import {
 } from 'react-router-dom';
 function ProfielTickets() {
 	const [data, setData] = React.useState<never[] | Reservering[]>([]);
-	const [dataLength, setDataLength] = React.useState<number>();
 	const { user } = React.useContext(UserContext);
 	const navigate = useNavigate();
 	const u = user.userData as userData;
@@ -30,37 +29,35 @@ function ProfielTickets() {
 				if (res.status != 200) {
 					return;
 				}
-				
+				console.log(res.data);
 				setData(res.data.reserveringen);
-				setDataLength(res.data.reserveringen.length);
 			});
 	}, []);
 
 	return (
 		<Box sx={{
-			p: 1,
+			overflow:'auto',
 			scrollbarWidth: 'thin',
 		}}>
-			<CardContent>
-				<Typography variant='h4' mb={2}>
-					Tickets:
-				</Typography>
-				{dataLength == 0 ? 
-					(
-						<Typography variant='h5' mb={2}>
-						You currently dont have any reservations.
-						</Typography>
-					)
-					:
-					data.map((card) => {
-						return <Ticket key={card.id} {...card.programmering}
-							onClick={(e): void => {
-								e.preventDefault();
-								e.stopPropagation();
-								navigate(`event/${card.id}`);
-							}} />;
-					})}
-			</CardContent>
+			<Typography variant='h4' mb={2}>
+					Tickets
+			</Typography>
+			{data.length == 0 ? 
+				(
+					<Typography variant='h5' mb={2}>
+						U heeft geen Tikets gekocht.
+					</Typography>
+				)
+				:
+				data.map((card) => {
+					return <Ticket key={card.id} 
+						{...card.programmering}
+						onClick={(e): void => {
+							e.preventDefault();
+							e.stopPropagation();
+							navigate(`event/${card.id}`);
+						}} />;
+				})}
 		</Box>
 
 	);

@@ -43,14 +43,15 @@ function ProfielSettings() {
 
 	return (
 		<FormGroup>
-			<Typography variant="h5">
+			<Typography variant="h4">
                 Gegevens aanpassen
 			</Typography>
 			
 			<TextField sx={{ 
 				m: 1, mb: 2 
 			}} 
-			label='Naam' 
+			fullWidth
+			label='Naam'
 			variant='standard' 
 			type='text' 
 			required 
@@ -91,7 +92,8 @@ function ProfielSettings() {
 				m: 1, mb: 3
 			}} label='Wachtwoord bevestigen'
 			variant='standard' type='password'
-			required onChange={handleConfirmPassword}
+			required
+			onChange={handleConfirmPassword}
 			value={confirmPassword}
 			error={!passwordsMatch} 
 			helperText={!passwordsMatch ? 'Wachtwoorden komen niet overeen' : ''}

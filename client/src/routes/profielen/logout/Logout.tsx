@@ -24,7 +24,7 @@ function Logout() {
 			alignContent: 'center',
 			flexDirection: 'column',
 			flexWrap: 'nowrap',
-			maxWidth: 500
+			maxWidth: 500,
 		}}>
 			<Typography variant="h3" align="center"
 				sx={{

@@ -48,10 +48,10 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
         var value = await context.Reservering.Include(r=>r.stoelen).ToListAsync();
         return value == null ? NotFound() : value;
     }
-    [HttpGet("user/{id}")]
-    public async Task<ActionResult<IEnumerable<Reservering>>> GetByUserId([FromHeader(Name = "Authorization")] string token,int id)
+    [HttpGet("ref/{id}")]
+    public async Task<ActionResult<IEnumerable<Reservering>>> GetByRefId(string refId)
     {
-        var value = await context.Reservering.Include(r => r.stoelen).Where(r => r.owner.id == id).ToListAsync();
+        var value = await context.Reservering.Include(r => r.stoelen).Where(r => r.betaling.factuurNr == refId).ToListAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet("datum/{datum}")]
@@ -73,10 +73,12 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody] ReserveringData data)
     {
         var currentProgramma = await context.Programmering.Include(p=>p.zaal).FirstOrDefaultAsync(p => p.id == data.programmeringId);
+
         if (currentProgramma == null)
         {
             return NotFound();
         }
+
         var user = new Gebruiker
         {
             naam = "Anoniem",
@@ -85,6 +87,10 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
         };
 
         var stoelen = new List<Stoel>();
+        if(stoelen == null)
+        {
+            return BadRequest();
+        }
         foreach (var stoel in data.stoelen)
         {
             stoelen.Add(new Stoel
@@ -95,7 +101,7 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
         
         if (data.userId != null)
         {
-            var (isValid, _token) = jwt.validateToken(token);
+            var (isValid, _token) = await jwt.validateToken(token);
             if (!isValid)
             {
                 return Unauthorized();
@@ -103,8 +109,11 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
             user = await context.Gebruiker.FindAsync(data.userId);
         }
 
+
+        var QrCode = await jwt.GenerateQRCode(user.naam, stoelen.Select(s => s.value).ToList(), currentProgramma, data.referenceCode);
         var newData = new Reservering
         {
+            QR = QrCode,
             owner = user,
             stoelen = stoelen,
             programmering = currentProgramma,
@@ -122,15 +131,14 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
         await context.SaveChangesAsync();
 
         // should return a ticket, with info ect.
-        // return CreatedAtAction("Get", new { data.userId }, newData);
-        return Ok();
+        return Ok(QrCode); 
     }
 
     [HttpPut("{id}")]
 
     public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token, int id, [FromBody] ReserveringData data)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         if (role != level.admin)
         {
             return Unauthorized();
