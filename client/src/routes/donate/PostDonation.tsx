@@ -53,9 +53,11 @@ function PostDonation(props: props): JSX.Element {
 					factuurNr: crypto.randomUUID(),
 					prijs: props.data.amount,
 				}).then((res) => {
-					if (res.status === 200) {
-						setState(states.done);
+					if (res.status != 200) {
+						setState(states.failed);
+						return;
 					}
+					setState(states.done);
 				}).catch(() => {
 					setState(states.failed);
 				});

@@ -16,8 +16,13 @@ function useWebsocket(
 	prevSeats: string[]
 ): [signalR.HubConnection, (location: string) => void] {
 	const location = useLocation();
+	window.onbeforeunload = () => {
+		unsubscribe(location.pathname);
+		unsubscribe(location.hash);
+	};
 	window.addEventListener('beforeunload', (e) => {
 		unsubscribe(location.pathname);
+		unsubscribe(location.hash);
 	});
 	
 	const unsubscribe = React.useCallback(

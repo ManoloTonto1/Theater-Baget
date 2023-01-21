@@ -1,4 +1,9 @@
-import React from 'react';
+import type {
+	ReactNode 
+} from 'react';
+import React, {
+	useRef 
+} from 'react';
 import type {
 	SelectChangeEvent 
 } from '@mui/material';
@@ -153,15 +158,26 @@ function SeatChoice(props: props) {
 		setSeats(newSeats);
 		setLoadedSeats(newSeats.slice(0, 10));
 	});
+
 	const loadMore = React.useCallback(() => {
+		if (seats.length === 0) {
+			setTimeout(() => {  },500);
+			return;
+		}
 		if (loadedSeats.length >= seats.length) {
 			setHasMore(false);
+			return;
 		}
-		setLoadedSeats(seats.slice(0, loadedSeats.length + 5));
+		setHasMore(true);
+		setTimeout(() => {
+			setLoadedSeats(seats.slice(0, loadedSeats.length + 5));
+		}, 750);
 	}, [loadedSeats.length, seats]);
-	const handleClose = React.useCallback(async ()=>{
+
+	const handleClose = React.useCallback(async () => {
 		setLoadedSeats(seats.slice(0, 10));
-	},[seats]);
+		setHasMore(true);
+	}, [seats]);
 	return (
 		<Box
 			sx={{
@@ -203,10 +219,19 @@ function SeatChoice(props: props) {
 				</Grid>
 				<Grid item lg={3}>
 					<FormControl fullWidth>
-						<Select
+						<InfiniteScroll
+							element={Select as unknown as ReactNode}
 							multiple
 							displayEmpty
 							MenuProps={{
+								MenuListProps: {
+									id: 'test',
+									sx: {
+										overflow: 'auto',
+										height: 400,
+										scrollbarWidth: 'thin',
+									},
+								},
 								anchorOrigin: {
 									vertical: 'top',
 									horizontal: 'left',
@@ -215,7 +240,6 @@ function SeatChoice(props: props) {
 									vertical: 'bottom',
 									horizontal: 'left',
 								},
-								getContentAnchorEl: null,
 							}}
 							labelId="Stoel selectie"
 							value={props.selection}
@@ -228,29 +252,19 @@ function SeatChoice(props: props) {
 
 								return selected.join(', ');
 							}}
+							pageStart={0}
+							loadMore={loadMore}
+							hasMore={hasMore}
+							loader={
+								<div className="loader" key={0}>
+                  					Even Geduld ...
+								</div>
+							}
+							useWindow={false}
+							getScrollParent={() => document.getElementById('test')}
 						>
-							<Box
-								sx={{
-									overflow: 'auto',
-									height: 500,
-									scrollbarWidth:'thin'
-								}}
-							>
-								<InfiniteScroll
-									pageStart={0}
-									loadMore={loadMore}
-									hasMore={hasMore}
-									loader={
-										<div className="loader" key={0}>
-                      Even Geduld ...
-										</div>
-									}
-									useWindow={false}
-								>
-									{loadedSeats}
-								</InfiniteScroll>
-							</Box>
-						</Select>
+							{loadedSeats}
+						</InfiniteScroll>
 					</FormControl>
 				</Grid>
 			</Grid>

@@ -61,11 +61,11 @@ function TicketKopen() {
 	return (
 		<Container
 			sx={{
-				height: '80vh',
+				height: '100vh',
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
-				my: 4,
+				my: 1,
 			}}
 		>
 			{data ? (
@@ -73,7 +73,7 @@ function TicketKopen() {
 					elevation={4}
 					sx={{
 						width: '100%',
-						maxHeight: '80vh',
+						maxHeight: '100vh',
 						overflow: 'auto',
 					}}
 				>

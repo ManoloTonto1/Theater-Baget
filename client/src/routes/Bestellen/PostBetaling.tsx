@@ -49,7 +49,10 @@ function PostBetaling(props: props): JSX.Element {
 				props.data.amount,
 				ref,
 				''
-			);
+			).catch(() => {
+				setState(states.failed);
+				
+			});
 			if (payment.status !== 200) {
 				setState(states.failed);
 				return;
@@ -61,6 +64,9 @@ function PostBetaling(props: props): JSX.Element {
 				amountPaid: props.data.amount,
 				userId: user.userData?.id
 
+			}).catch(() => {
+				setState(states.failed);
+				
 			});
 			if (paymentLog.status !== 200) {
 				setState(states.failed);
@@ -110,7 +116,7 @@ function PostBetaling(props: props): JSX.Element {
 					</Grow>
 					<Grid item xs={12}>
 						<Typography variant='h3' align='center'>
-                            betaling Gelukt
+                            Betaling Gelukt
 						</Typography>
 						<Typography variant='h3' align='center'>
                             Dank u wel!
@@ -164,7 +170,7 @@ function PostBetaling(props: props): JSX.Element {
 					</Grow>
 					<Grid item xs={12}>
 						<Typography variant='h3' align='center'>
-                            Donatie niet gelukt.
+                            Betaling niet gelukt.
 						</Typography>
 						<Typography variant='h3' align='center'>
                             Probeer later

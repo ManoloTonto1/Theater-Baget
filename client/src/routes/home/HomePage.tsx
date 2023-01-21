@@ -127,7 +127,7 @@ function Homepage(): JSX.Element {
 														<Typography
 															gutterBottom
 															variant="h5"
-															component="div"
+															component="p"
 														>
 															{card.titel}
 														</Typography>
