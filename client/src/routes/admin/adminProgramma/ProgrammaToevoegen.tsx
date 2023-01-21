@@ -52,6 +52,7 @@ function ProgrammaToevoegen() {
 	const [selectedZaal, setSelectedZaal] = React.useState('');
 	const [zalen, setZalen] = React.useState<never[] | Zaal[]>([]);
 	const [state, setState] = React.useState<states>(states.still);
+	const [errorText, setErrorText] = React.useState('');
 	
 	React.useEffect(() => {
 		API('zalen').GetAll().then((res) => {
@@ -73,7 +74,6 @@ function ProgrammaToevoegen() {
 	},[]);
 	
 	const handleForm = useCallback(async (e: { preventDefault: () => void; }) => {
-		setState(states.inProgress);
 		e.preventDefault();
 		const form = document.getElementById('form');
 		const formData = new FormData(form as HTMLFormElement);
@@ -90,10 +90,14 @@ function ProgrammaToevoegen() {
 			prijs: parseFloat(formData.get('prijs') as string),
 			zaalNr: parseInt(selectedZaal),
 		}).then((res) => {
-			if (res.status !== 200) { 
+			setState(states.inProgress);
+			if (res.status !== 200) {
+				setErrorText('Vul de benodigde velden'); 
 				states.failed;
 			}
 			setState(states.done);
+		}).catch(() => {
+			setErrorText('Vul de benodigde velden');
 		});
 	}, [image, selectedZaal, voorstellingDatum]);
 	
@@ -110,6 +114,7 @@ function ProgrammaToevoegen() {
 						<Typography variant="h5">
                 Programma toevoegen
 						</Typography>
+						<Typography color='red' align='center'>{errorText}</Typography>
 						<UploadImageCard imageProps={{
 							image: image,
 							setImage: setImage
@@ -121,6 +126,7 @@ function ProgrammaToevoegen() {
 						variant='standard' 
 						type='text' 
 						name='titel'
+						error={errorText?true:false}
 						required 
 						/>
 						<TextField sx={{ 
@@ -130,6 +136,7 @@ function ProgrammaToevoegen() {
 						variant='standard' 
 						type='text' 
 						name='omschrijving'
+						error={errorText?true:false}
 						required 
 						/>
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -155,6 +162,8 @@ function ProgrammaToevoegen() {
 										value={selectedZaal}
 										label="Zaal select"
 										onChange={handleChange}
+										error={errorText?true:false}
+										required
 									>
 										{zalen.map((zaal) => {
 											return <MenuItem key={zaal.zaalNr} value={zaal.zaalNr}>
@@ -173,6 +182,7 @@ function ProgrammaToevoegen() {
 								type='number'
 								name='prijs'
 								fullWidth
+								error={errorText?true:false}
 								required 
 								/>
 							</Grid>
@@ -203,7 +213,11 @@ function ProgrammaToevoegen() {
 					mt: 5
 				}}>
 					<Typography variant='h5'>Even geduld A.U.B.</Typography>
-				</Grid></> )}
+				</Grid>
+				<Grid item xs={12}
+					display='flex'
+					justifyContent={'center'}>
+				</Grid>	</> )}
 			{state === states.done && (
 				<>
 					<Grow in>
