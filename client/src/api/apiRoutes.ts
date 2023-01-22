@@ -5,7 +5,17 @@
  * @body {Email string, Hoeveelheid number, Doel string, Tekst string}
  */
 export const postDonation = 'https://ikdoneer.azurewebsites.net/api/donatie/';
+/**
+ * Payment url
+ *
+ * @type {"https://fakepay.azurewebsites.net/"}
+ */
 const postPay = 'https://fakepay.azurewebsites.net/';
+/**
+ * Donations url
+ *
+ * @type {"https://ikdoneer.azurewebsites.net/api/goededoelen/"}
+ */
 export const getCharities = 'https://ikdoneer.azurewebsites.net/api/goededoelen/';
 import type {
 	AxiosResponse
@@ -80,8 +90,31 @@ interface ApiModule {
     Create(data: Data<unknown> | any): Promise<AxiosResponse<any, any>>
 }
 
+/**
+ * endpoints to external modules
+ *
+ * @interface ExternalModule
+ * @typedef {ExternalModule}
+ */
 interface ExternalModule {
-    Donate(Email: string, Hoeveelheid: number, Doel: number, Tekst: string): Promise<AxiosResponse<any, any>>;
+    /**
+	 * Api request to donate
+	 *
+	 * @param {string} Email
+	 * @param {number} Hoeveelheid
+	 * @param {number} Doel
+	 * @param {string} Tekst
+	 * @returns {Promise<AxiosResponse<any, any>>}
+	 */
+	Donate(Email: string, Hoeveelheid: number, Doel: number, Tekst: string): Promise<AxiosResponse<any, any>>;
+	/**
+	 * Api request for a payment
+	 *
+	 * @param {number} amount
+	 * @param {string} reference
+	 * @param {string} url
+	 * @returns {Promise<AxiosResponse<any, any>>}
+	 */
 	Pay(amount: number, reference: string, url:string): Promise<AxiosResponse<any, any>>;
 }
 

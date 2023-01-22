@@ -5,7 +5,6 @@
 // using server.Controllers;
 // using Xunit;
 
-// namespace test;
 // public class ControllerTest : ControllerBase
 // {
 
