@@ -379,37 +379,19 @@ class Seed
             websiteUrl = "https://www.instagram.com/viezeasbak/",
             omschrijving = "Sit velit do ex excepteur ullamco dolor consequat enim. Sint ex nisi sunt ullamco ipsum commodo minim quis anim. Fugiat sunt consequat ea officia cillum laboris ut id culpa. Eu pariatur aute commodo et do consectetur do velit do deserunt pariatur velit voluptate. Deserunt anim laboris aliquip velit nulla incididunt et id. Veniam sint est proident qui mollit.",
             afbeelding = "https://lastfm.freetls.fastly.net/i/u/ar0/5016d207639858cdc0359c1abe74109a.jpg",
-            betrokkenen = new List<Betrokkene>{
-                new Betrokkene{
-                    leeftijdsGroep = LeeftijdsGroep.Volwassenen,
-                    naam= "je moeders cigarette",
-                    level = level.bandlid,
-                    loginGegevens = new LoginGegevens
-                    {
-                        wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
-                        email = "jemoeder@mail.com",
-                        twoFactor = false
-                    }
-                },
-            },
-            programmeringen = new List<Programmering>{
-                new Programmering
-                {
-                    datum = new DateTime(2023, 09, 27),
-                    titel = "roken = hoed",
-                    zaal = context.Zaal.Find(3),
-                    omschrijving = "Tempor nulla ex sit reprehenderit ipsum do deserunt nisi esse do aute amet. Laborum labore non fugiat enim. Quis exercitation aliqua proident fugiat in cupidatat cillum esse cillum velit duis exercitation. Minim duis consectetur officia voluptate sunt quis duis qui adipisicing.",
-                    afbeelding = "https://thumbs.dreamstime.com/b/confused-asian-person-142560915.jpg"
-                },
-                new Programmering
-                {
-                    datum = new DateTime(2023, 09, 27),
-                    titel = "roken = goed",
-                    zaal = context.Zaal.Find(3),
-                    omschrijving = "Tempor nulla ex sit reprehenderit ipsum do deserunt nisi esse do aute amet. Laborum labore non fugiat enim. Quis exercitation aliqua proident fugiat in cupidatat cillum esse cillum velit duis exercitation. Minim duis consectetur officia voluptate sunt quis duis qui adipisicing.",
-                    afbeelding = "https://thumbs.dreamstime.com/b/confused-asian-person-142560915.jpg"
-                }
+        });
+
+        context.Betrokkene.Add(new Betrokkene{
+            leeftijdsGroep = LeeftijdsGroep.Volwassenen,
+            naam= "mechaManolo",
+            level = level.bandlid,
+            loginGegevens = new LoginGegevens
+            {
+                wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
+                email = "mema@mail.com",
+                twoFactor = false
             }
+
         });
 
         context.SaveChanges();

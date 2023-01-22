@@ -37,7 +37,7 @@ function TabPanel(props: TabPanelProps) {
 				<Box sx={{
 					p: 3
 				}}>
-					<Typography>{children}</Typography>
+					{children}
 				</Box>
 			)}
 		</Box>
@@ -77,7 +77,7 @@ function BandProfiel() {
 				<Grid item lg={12}
 					xs={12}>
 					<Card elevation={4}>
-						<BandCard key='hoe' {...data as Groep} />
+						<BandCard {...data as Groep} />
 						<Tabs
 							variant="fullWidth"
 							value={value}

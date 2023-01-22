@@ -36,7 +36,7 @@ public class BetrokkenenController : ControllerBase, IController<Betrokkene,Betr
     [HttpGet("{id}")]
     public async Task<ActionResult<Betrokkene>> Get([FromHeader(Name = "Authorization")]string token,int id)
     {
-        var value = await context.Betrokkene.Include(b=> b.groepen).ThenInclude(g => g.programmeringen).Where(b=> b.id == id).FirstAsync();
+        var value = await context.Betrokkene.Include(b=> b.groepen).ThenInclude(g => g.programmeringen).ThenInclude(p => p.zaal).Where(b=> b.id == id).FirstAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet]

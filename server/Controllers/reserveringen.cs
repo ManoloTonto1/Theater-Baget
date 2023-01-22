@@ -38,7 +38,7 @@ public class ReserveringenController : ControllerBase, IController<Reservering, 
     [HttpGet("{id}")]
     public async Task<ActionResult<Reservering>> Get([FromHeader(Name = "Authorization")] string token, int id)
     {
-        var value = await context.Reservering.Include(r=>r.stoelen).FirstOrDefaultAsync(i => i.id == id);
+        var value = await context.Reservering.Include(r=>r.stoelen).Include(r=>r.zaal).FirstOrDefaultAsync(i => i.id == id);
         return value == null ? NotFound() : value;
     }
 
