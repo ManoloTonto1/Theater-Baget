@@ -21,7 +21,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
 
     public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")] string token, int id)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         if (role != level.admin || role != level.medewerker)
         {
             return Unauthorized();
@@ -73,7 +73,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     [HttpPost]
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")] string token, [FromBody] ProgrammeringData data)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         if ((int)role == (int)level.admin || (int)role == (int)level.medewerker)
         {
             var date = DateTime.Parse(data.datum);
@@ -101,7 +101,7 @@ public class ProgrammeringenController : ControllerBase, IController<Programmeri
     [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromHeader(Name = "Authorization")] string token, int id, [FromBody] ProgrammeringData data)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         if (role != level.admin | role != level.medewerker)
         {
             return Unauthorized();

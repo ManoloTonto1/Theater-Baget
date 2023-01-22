@@ -5,6 +5,7 @@ WORKDIR /App
 COPY ./server .
 # Restore as distinct layers
 RUN dotnet restore
+ENV SQL_CONNECTION_STRING=${SQL_CONNECTION_STRING}
 # Build and publish a release
 RUN dotnet publish -c Release -o out
 

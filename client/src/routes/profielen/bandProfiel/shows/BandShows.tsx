@@ -48,7 +48,6 @@ function BandShows() {
 					No current shows available.
 					</Typography> :
 					data.map((card) => {
-						console.log('caRD:', card);
 						return <Ticket key={card.id} {...card} />;
 					})}
 			</CardContent>

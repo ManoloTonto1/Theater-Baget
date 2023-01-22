@@ -29,7 +29,6 @@ function BandlidBands() {
 		API('betrokkenen')
 			.Get(user.userData?.id + '')
 			.then((res) => {
-				console.log(res.data);
 				setData(res.data.groepen);
 				setDataLength(res.data.groepen.length);
 			});
@@ -53,7 +52,6 @@ function BandlidBands() {
 						You are currently not part of a band.
 					</Typography> :
 					data.map((card) => {
-						console.log(card);
 						return <BandCard key={card.id} {...card} />;
 					})}
 			</CardContent>

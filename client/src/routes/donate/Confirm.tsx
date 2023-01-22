@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+	Fragment 
+} from 'react';
 import type {
 	Charity,Data 
 } from './types';
@@ -56,7 +58,7 @@ function Confirm(props: props): JSX.Element {
 					sm={6}>
 					{info.map((item) => {
 						return (
-							<>
+							<Fragment key={item.label}>
                         
 								<Typography variant='body2' sx={{
 									color: 'primary.main'
@@ -67,7 +69,7 @@ function Confirm(props: props): JSX.Element {
 									{item.data}
 								</Typography>
 								<br />
-							</>
+							</Fragment>
 						);
 					})}
 				</Grid>

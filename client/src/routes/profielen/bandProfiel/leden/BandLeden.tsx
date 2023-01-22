@@ -44,7 +44,6 @@ function BandLeden() {
 					Band currently has no members.
 					</Typography> :
 					data.map((card) => {
-						console.log(card);
 						return <ProfileCard key={card.id} {...card} />;
 					})}
 			</CardContent>

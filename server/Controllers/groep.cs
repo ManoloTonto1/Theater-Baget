@@ -18,7 +18,7 @@ public class GroepenController : ControllerBase, IController<Groep,Groep>
 
     public async Task<ActionResult> Delete([FromHeader(Name = "Authorization")]string token,int id)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         var thisGroup = await context.Groep.FindAsync(id);
         if (thisGroup == null){
             return BadRequest();
@@ -26,7 +26,7 @@ public class GroepenController : ControllerBase, IController<Groep,Groep>
         
         if (role != level.admin)
         {
-            var user = jwt.getUserFromToken(token);
+            var user = await jwt.getUserFromToken(token);
             var thisUser = await context.Betrokkene.Where(b => b.id == user && b.groepen.Find(g => g.id == id) == thisGroup).FirstAsync();
             if (thisUser == null || thisUser.naam == "")
             {
@@ -80,7 +80,7 @@ public class GroepenController : ControllerBase, IController<Groep,Groep>
     [HttpPost]
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")]string token,[FromBody] Groep data)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         if (role != level.admin || role != level.bandlid || role != level.medewerker)
         {
             return Unauthorized();
@@ -94,7 +94,7 @@ public class GroepenController : ControllerBase, IController<Groep,Groep>
     [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromHeader(Name = "Authorization")]string token,int id, Groep data)
     {
-        var role = jwt.getRoleFromToken(token);
+        var role = await jwt.getRoleFromToken(token);
         var thisGroup = await context.Groep.FindAsync(id);
         if (thisGroup == null){
             return BadRequest();
@@ -102,7 +102,7 @@ public class GroepenController : ControllerBase, IController<Groep,Groep>
         
         if (role != level.admin)
         {
-            var user = jwt.getUserFromToken(token);
+            var user = await jwt.getUserFromToken(token);
             var thisUser = await context.Betrokkene.Where(b => b.id == user && b.groepen.Find(g => g.id == id) == thisGroup).FirstAsync();
             if (thisUser == null || thisUser.naam == "")
             {

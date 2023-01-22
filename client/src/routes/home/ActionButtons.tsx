@@ -39,8 +39,9 @@ export function ActionButtons(): JSX.Element {
 			}}>
 			{
 				buttons.map((data,index) => (
-					<Grid item xs={12}
-						sm={6}
+					<Grid item
+						xs={12}
+						lg={6}
 						key={data.label}
 					>
 						<Slide in
@@ -58,9 +59,11 @@ export function ActionButtons(): JSX.Element {
 										display: 'flex',
 									}}>
 									{data.icon}
-									<Typography variant='h3' sx={{
-										fontWeight: 'bold'
-									}}>
+									<Typography variant='h3'
+										component={'p'}
+										sx={{
+											fontWeight: 'bold'
+										}}>
 										{data.label}
 									</Typography>
 								</CardActionArea>

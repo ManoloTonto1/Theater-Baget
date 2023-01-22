@@ -11,10 +11,12 @@ import type {
 } from './global/globalTypes';
 import truncateString from '../api/truncateString';
 export type TicketsProps = {
+	disableLink? : boolean
 	onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, data:Programma)=>void
 } & Programma
 
-export function Ticket(props:TicketsProps) {
+export function Ticket(props: TicketsProps) {
+	const disabled = props.disableLink
 	const datum = new Date(props.datum);
 	const newDate = datum.toString().split(' ');
 	return (
@@ -40,8 +42,8 @@ export function Ticket(props:TicketsProps) {
 			}
 		>
 			<CardActionArea
-				LinkComponent={'a'}
-				href={`/#/bestellen/${props.id}`}>
+				LinkComponent={disabled? undefined: 'a'}
+				href={disabled? '#': `/#/bestellen/${props.id}`}>
 				<Grid container>
 					<Grid item>
 						<CardMedia
@@ -94,7 +96,7 @@ export function Ticket(props:TicketsProps) {
 									<Box sx={{
 									}}>
 										<Typography variant="body1">
-											{datum.toUTCString()}
+											Zaal: #{props.zaal.zaalNr}
 										</Typography>
 										<Typography variant="h6">{props.titel}</Typography>
 										<Typography variant="body2" >

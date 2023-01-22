@@ -28,7 +28,7 @@ function Confirm(props: props): JSX.Element {
 		},
 		{
 			label: 'Hoeveelheid:',
-			data: `€ ${props.data?.amount.toFixed(2) }`
+			data: `€ ${props.ticket.prijs.toFixed(2) }`
 		},
 		{
 			label: 'Rekeningsnummer:',
@@ -82,7 +82,7 @@ function Confirm(props: props): JSX.Element {
 						sx={{
 							mr: 2
 						}}>
-                        gereed
+                        Gereed
 					</Button>
 					<Button variant='outlined' onClick={props.previousStep}>terug</Button>
 				</Grid>

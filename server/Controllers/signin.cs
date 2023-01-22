@@ -30,7 +30,7 @@ public class SignInController : ControllerBase
             return BadRequest();
         };
         
-        var token = jwt.CreateUserToken(user, data.persistentLogin);
+        var token = await jwt.CreateUserToken(user, data.persistentLogin);
         var loggedInUser = new loggedInUserData
         {
             token = token,
