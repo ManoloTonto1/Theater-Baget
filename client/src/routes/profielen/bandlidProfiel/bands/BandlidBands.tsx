@@ -23,6 +23,7 @@ import {
 
 function BandlidBands() {
 	const [data, setData] = React.useState<never[] | Groep[]>([]);
+	const [dataLength, setDataLength] = React.useState<number>();
 	const { user } = React.useContext(UserContext);
 	React.useEffect(() => {
 		API('betrokkenen')
@@ -30,6 +31,7 @@ function BandlidBands() {
 			.then((res) => {
 				console.log(res.data);
 				setData(res.data.groepen);
+				setDataLength(res.data.groepen.length);
 			});
 	}, []);
 
@@ -43,10 +45,13 @@ function BandlidBands() {
 				
 			}}>
 				<Typography variant='h4' mb={2}>
-					Mijn bands:
+					My bands:
 				</Typography>
 				
-				{
+				{dataLength == 0? 
+					<Typography variant='h5' mb={2}>
+						You are currently not part of a band.
+					</Typography> :
 					data.map((card) => {
 						console.log(card);
 						return <BandCard key={card.id} {...card} />;
