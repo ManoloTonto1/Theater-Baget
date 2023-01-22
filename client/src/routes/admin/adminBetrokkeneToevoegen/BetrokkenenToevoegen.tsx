@@ -46,8 +46,6 @@ function BetrokkeneToevoegen() {
 		}).then(async ()=> {
 			setErrorText('');
 			setSuccessText('Betrokkene toegevoegd');
-			
-			console.log((await API('betrokkenen').GetAll()).data);
 		}).catch((err) => {
 			setSuccessText('');
 			setErrorText(err.response.data);
