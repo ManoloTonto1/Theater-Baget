@@ -49,20 +49,20 @@ describe('Profiel doesnt have', () => {
 
 	it('test tickets if user doesnt has tickets', () => {
 		cy.get('button').contains('Tickets').click();
-		cy.get('h4').contains('Tickets:');
-		cy.get('h5').contains('You currently dont have any reservations.');
+		cy.get('h4').contains('Tickets');
+		cy.get('h5').contains('U heeft geen Tikets gekocht');
 		
 	});
 
 	it('test my bands doesnt have band', () => {
 		cy.get('button').contains('Bands').click();
-		cy.get('h4').contains('My bands:');
+		cy.get('h4').contains('My bands');
 		cy.get('h5').contains('You are currently not part of a band.');
 	});
 
 	it('test my shows doesnt have shows', () => {
 		cy.get('button').contains('Shows').click();
-		cy.get('h4').contains('My shows:');
+		cy.get('h4').contains('My shows');
 		cy.get('h5').contains('You currently dont have any jobs to work.');
         
 	});

@@ -28,7 +28,7 @@ describe('Donate', () => {
 		cy.get('button').contains('Volgende Stap').click();
 		cy.get('p').contains('10.00');
 		cy.get('button').contains('Gereed').click();
-		cy.get('h3').contains('betaling Gelukt');
+		cy.get('h3').contains('Betaling Gelukt');
 		cy.get('div > svg[style="width: 100%;"]').contains('Betaling Gelukt');
 	});
 	it('ticket failed', () => {
