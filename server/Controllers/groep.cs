@@ -54,7 +54,7 @@ public class GroepenController : ControllerBase, IController<Groep,Groep>
     [HttpGet("{id}")]
     public async Task<ActionResult<Groep>> Get([FromHeader(Name = "Authorization")]string token,int id)
     {
-        var value = await context.Groep.Include(g=>g.betrokkenen).Include(g=>g.programmeringen).Where(g => g.id == id).FirstAsync();
+        var value = await context.Groep.Include(g=>g.betrokkenen).Include(g=>g.programmeringen).ThenInclude(p => p.zaal).Where(g => g.id == id).FirstAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet("naam/{name}")]
@@ -63,12 +63,12 @@ public class GroepenController : ControllerBase, IController<Groep,Groep>
         var value = from s in context.Groep
                     where EF.Functions.Like(s.naam.ToLower(), "%"+name.ToLower()+"%")
                     select s;
-        return value == null ? NoContent() : await value.Include(g=>g.betrokkenen).Include(g=>g.programmeringen).ToListAsync();
+        return value == null ? NoContent() : await value.Include(g=>g.betrokkenen).Include(g=>g.programmeringen).ThenInclude(p => p.zaal).ToListAsync();
     }
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Groep>>> GetAll([FromHeader(Name = "Authorization")]string token)
     {
-        var value = await context.Groep.Include(g => g.betrokkenen).Include(g=>g.programmeringen).ToListAsync();
+        var value = await context.Groep.Include(g => g.betrokkenen).Include(g=>g.programmeringen).ThenInclude(p => p.zaal).ToListAsync();
         return value == null ? NoContent() : value;
     }
     [HttpGet("/count")]

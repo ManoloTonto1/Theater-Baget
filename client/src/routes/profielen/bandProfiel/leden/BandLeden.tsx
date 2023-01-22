@@ -24,6 +24,7 @@ function BandLeden() {
 					return;
 				}
 				setData(res.data.betrokkenen);
+				console.log(res.data.betrokkenen);
 				setDataLength(res.data.betrokkenen.length);
 			});
 	}, [id]);
@@ -44,6 +45,7 @@ function BandLeden() {
 					Band currently has no members.
 					</Typography> :
 					data.map((card) => {
+						console.log(card);
 						return <ProfileCard key={card.id} {...card} />;
 					})}
 			</CardContent>

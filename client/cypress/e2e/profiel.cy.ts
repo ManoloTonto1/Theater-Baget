@@ -24,11 +24,6 @@ describe('Profiel has', () => {
 		// deze moet nog
 		cy.get('button').contains('Settings').click();
 	});
-	it('test tickets if user has tickets', () => {
-		cy.get('button').contains('Tickets').click();
-		cy.get('h4').contains('Tickets:');
-		cy.get('h6').contains('good day');
-	});
 
 	it('test my bands', () => {
 		cy.get('button').contains('Bands').click();

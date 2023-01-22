@@ -16,7 +16,7 @@ export type TicketsProps = {
 } & Programma
 
 export function Ticket(props: TicketsProps) {
-	const disabled = props.disableLink
+	const disabled = props.disableLink;
 	const datum = new Date(props.datum);
 	const newDate = datum.toString().split(' ');
 	return (

@@ -302,22 +302,6 @@ class Seed
                         wachtwoord = "umNHIe5L6tXabCJDPMJltjrt00F+TwQEeZ3DmpU9YWk=",
                         email = "jan@mail.com",
                         twoFactor = false
-                    },
-                    reserveringen = new List<Reservering>
-                    {
-                        new Reservering{
-                            QR = "asfrgasdfgarg",
-                            zaal = context.Zaal.Find(3),
-                            programmering = new Programmering
-                            {
-                                datum = new DateTime(2023, 09, 27),
-                                titel = "Akasha's good day",
-                                zaal = context.Zaal.Find(3),
-                                omschrijving = "Tempor nulla ex sit reprehenderit ipsum do deserunt nisi esse do aute amet. Laborum labore non fugiat enim. Quis exercitation aliqua proident fugiat in cupidatat cillum esse cillum velit duis exercitation. Minim duis consectetur officia voluptate sunt quis duis qui adipisicing.",
-                                afbeelding = "https://thumbs.dreamstime.com/b/confused-asian-person-142560915.jpg"
-                            }
-                        }
-                        
                     }
 
                 },
