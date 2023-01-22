@@ -20,6 +20,7 @@ enum states {
 
 export default function ZaalToevoegen() {
 	const [state, setState] = React.useState<states>(states.still);
+	const [errorText, setErrorText] = React.useState('');
 
 	const handleChangeState = React.useCallback(async () => {
 		setState(states.still);
@@ -31,15 +32,18 @@ export default function ZaalToevoegen() {
 		const formData = new FormData(form as HTMLFormElement);
 
 		API('zalen').Create({
+			soort: formData.get('soort'),
 			eersterangsAantal: parseFloat(formData.get('eersterang')as string),
 			tweederangsAantal: parseFloat(formData.get('tweederang')as string),
 			derderangsAantal: parseFloat(formData.get('derderang')as string),
-			soort: formData.get('soort'),
 		}).then((res) => {
 			if (res.status !== 200) { 
+				setErrorText('Vul de benodigde velden');
 				states.failed;
 			}
 			setState(states.done);
+		}).catch(() => {
+			setErrorText('Vul de benodigde velden');
 		});
 	}, []);
 
@@ -53,6 +57,7 @@ export default function ZaalToevoegen() {
 					component='form'
 					id='form'
 				>
+					<Typography color='red' align='center'>{errorText}</Typography>
 					<FormGroup>
 						<Typography variant="h5">
 					Zaal toevoegen
@@ -64,6 +69,7 @@ export default function ZaalToevoegen() {
 						variant='standard'
 						type='text'
 						name='soort'
+						error={errorText?true:false}
 						required
 						/>
 						<TextField sx={{
@@ -71,23 +77,26 @@ export default function ZaalToevoegen() {
 						}}
 						label='Aantal eersterangs stoelen'
 						variant='standard'
-						type='text'
+						type='number'
 						name='eersterang'
+						error={errorText?true:false}
 						required
 						/>
 						<TextField sx={{
 							m: 1, mb: 2
 						}} label='Aantal tweederangs stoelen'
-						variant='standard' type='text'
+						variant='standard' 
+						type='number'
 						name='tweederang'
+						error={errorText?true:false}
 						required
 						/>
 						<TextField sx={{
 							m: 1, mb: 3
 						}} label='Aantal derderangs stoelen'
-						variant='standard' type='text'
+						variant='standard' 
+						type='number'
 						name='derderang'
-						required
 						/>
 						<Button variant='contained' type='submit'
 							onClick={handleForm} sx={{
@@ -144,7 +153,7 @@ export default function ZaalToevoegen() {
 							sx={{
 								mt: 5
 							}}>
-						Terug naar programma toevoegen
+						Terug naar zaal toevoegen
 						</Button>
 					</Grid>	
 				</>

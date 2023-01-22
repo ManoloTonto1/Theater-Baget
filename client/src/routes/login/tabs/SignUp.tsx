@@ -25,6 +25,7 @@ import API from '../../../api/apiRoutes';
 import {
 	useNavigate 
 } from 'react-router-dom';
+import axios from 'axios';
 
 function SignUp () {
 	const { user, role } = React.useContext(UserContext);
@@ -61,6 +62,13 @@ function SignUp () {
 	};
 
 	const validatePassword = useCallback(() => {
+
+		const api = (data:any) => {
+			if(data.password) {
+				return true;
+			}
+			return false;
+		};
 
 		const regex = new RegExp('(((?=012|123|234|345|456|567|678|789|891|901)\d)+|((?=109|109|198|987|876|765|654|543|432|321|210)\d)+)\d');
 		
@@ -117,13 +125,22 @@ function SignUp () {
 			setErrorText('Wachtwoord moet minimaal 1 speciaal karakter bevatten');
 			return false;
 		}
+		
+		// o Niet in de lijst van gekraakte wachtwoorden 
+		const res = api({
+			method: 'GET',
+			url: 'haveibeenpwned.com/Passwords',
+			password: password
+		});
+		
+		if(!res) {
+			setErrorText('Dit wachtwoord is gevonden in een datalek');
+			return false;
+		}
 
 		// o Geen woorden (gebruik een woordenboek, je kunt dat gewoon downloaden)
 		// wordt gedaan in de backend
-
-		// o Niet in de lijst van gekraakte wachtwoorden 
-		// kost geld
-
+		
 		return true;
 	}, [password, setErrorText]);
 

@@ -28,6 +28,9 @@ export type userData = {
 	leeftijdsGroep: string,
 	token: string
 }
+export type profielCardProps = {
+	user?: userData
+}
 type contextData = {
 
     user: {

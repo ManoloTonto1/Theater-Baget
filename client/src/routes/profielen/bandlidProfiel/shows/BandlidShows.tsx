@@ -24,7 +24,6 @@ function BandlidShows() {
 		API('betrokkenen')
 			.Get(user.userData?.id + '')
 			.then((res) => {
-				console.log(res.data);
 				setData(getBandsPrograms(res.data.groepen));
 				setDataLength(getBandsPrograms(res.data.groepen).length);
 			});
@@ -44,7 +43,6 @@ function BandlidShows() {
 						You currently dont have any jobs to work.
 					</Typography> :
 					data.map((card) => {
-						console.log(card);
 						return <Ticket key={card.id} {...card} />;
 					})}
 			</CardContent>

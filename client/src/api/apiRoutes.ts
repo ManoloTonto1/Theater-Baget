@@ -26,7 +26,7 @@ export type Data<T> = {
  *
  * @type {("/api" | "{cloud provider link}")}
  */
-const apiEndPoint = import.meta.env.MODE === 'development' ?
+export const apiEndPoint = import.meta.env.MODE === 'development' ?
 	'/api'
 	: 'https://theater-baget-t24oktgp5q-ew.a.run.app/api';
 
