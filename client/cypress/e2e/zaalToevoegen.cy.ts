@@ -9,10 +9,11 @@ describe('Admin', () => {
 		cy.get('input[type="password"]').click().type('password');
 		cy.get('button[type="submit"]').click();
 		cy.get('button').contains('My Account').click();
-		gotoPage('admin/1');
+		cy.get('button').contains('To admin page').click();
+		cy.get('button').contains('Zaal toevoegen').click();
 	});
 	it('test zaalToevoegen loads correctly', () => {
-		cy.get('h5').contains('Programma toevoegen');
+		cy.get('h5').contains('Zaal toevoegen');
 	});
 	it('test zaalToevoegen verbindt met api', () => {
 		cy.get('input[name="soort"]').click().type('theater');
