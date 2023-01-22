@@ -5,7 +5,7 @@ import React from 'react';
 import Logout from './adminLogout/Logout';
 import ProgrammaToevoegen from './adminProgramma/ProgrammaToevoegen';
 import ZaalToevoegen from './adminZaalToevoegen/ZaalToevoegen';
-import BetrokkenenToevoegen from './adminGebruikerToevoegen/BetrokkenenToevoegen';
+import BetrokkenenToevoegen from './adminBetrokkeneToevoegen/BetrokkenenToevoegen';
 import GebruikerInzien from './adminGebruikerInzien/GebruikerInzien';
 import UserContext, {
 	level 
