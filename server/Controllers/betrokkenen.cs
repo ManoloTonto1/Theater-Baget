@@ -36,7 +36,7 @@ public class BetrokkenenController : ControllerBase, IController<Betrokkene,Betr
     [HttpGet("{id}")]
     public async Task<ActionResult<Betrokkene>> Get([FromHeader(Name = "Authorization")]string token,int id)
     {
-        var value = await context.Betrokkene.Include(b=> b.groepen).ThenInclude(g => g.programmeringen).Where(b=> b.id == id).FirstAsync();
+        var value = await context.Betrokkene.Include(b=> b.groepen).ThenInclude(g => g.programmeringen).ThenInclude(p => p.zaal).Where(b=> b.id == id).FirstAsync();
         return value == null ? NotFound() : value;
     }
     [HttpGet]
@@ -54,10 +54,19 @@ public class BetrokkenenController : ControllerBase, IController<Betrokkene,Betr
     [HttpPost]
     public async Task<ActionResult> Post([FromHeader(Name = "Authorization")]string token,Betrokkene data)
     {
-        // context.Betrokkene.Add(data);
-        await context.SaveChangesAsync();
 
-        return CreatedAtAction("Get", new { data.id }, data);
+        // check if betrokkene already exists
+        var betrokkene = context.Betrokkene.Where(b => b.loginGegevens.email == data.loginGegevens.email).FirstOrDefault();
+
+        if(betrokkene == null) {
+            context.Betrokkene.Add(data);
+
+            await context.SaveChangesAsync();
+
+            return CreatedAtAction("Get", new { data.id }, data);
+        }
+
+        return BadRequest("Betrokkene is al toegevoegd");
     }
     [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromHeader(Name = "Authorization")]string token,int id, Betrokkene data)

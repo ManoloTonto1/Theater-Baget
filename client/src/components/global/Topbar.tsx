@@ -116,7 +116,7 @@ export default function Topbar(): JSX.Element {
 									) : (
 										<Button onClick={(): void => navigate('/profiel')}
 											color='secondary' startIcon={<PersonIcon />}
-											variant='contained'>
+											variant='contained' id='myAccount'>
 											My Account
 										</Button>
 									)
