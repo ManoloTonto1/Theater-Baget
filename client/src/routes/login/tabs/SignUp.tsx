@@ -223,6 +223,7 @@ function SignUp () {
 						<TextField sx={{ 
 							mb: 2 
 						}} 
+						id="firstName"
 						label='Voornaam' 
 						variant='standard' 
 						type='text' 
@@ -234,6 +235,7 @@ function SignUp () {
 						<TextField sx={{ 
 							mb: 2 
 						}} 
+						id="tussenv"
 						label='Tussenvg' 
 						variant='standard' 
 						type='text' 
@@ -244,6 +246,7 @@ function SignUp () {
 						<TextField sx={{ 
 							mb: 2 
 						}} 
+						id="lastName"
 						label='Achternaam' 
 						variant='standard' 
 						type='text' 
@@ -255,6 +258,7 @@ function SignUp () {
 					</Box>
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
 						<DatePicker
+							id="date"
 							label="Geboorte datum"
 							value={geboorteDatum}
 							onChange={(newValue) => {
@@ -269,12 +273,14 @@ function SignUp () {
 					<TextField sx={{
 						m: 1, mb: 2 
 					}} label='E-mail adres'
+					id="email"
 					variant='standard' type='email'
 					required onChange={handleEmail} 
 					value={email}/>
 					<TextField sx={{
 						m: 1, mb: 2 
 					}} label='Wachtwoord'
+					id="password"
 					variant='standard' type='password'
 					required onChange={handlePassword} 
 					value={password}/>
@@ -282,6 +288,7 @@ function SignUp () {
 						m: 1, mb: 2 
 					}} label='Wachtwoord bevestigen'
 					variant='standard' type='password'
+					id="confirmPassword"
 					required onChange={handleConfirmPassword}
 					value={confirmPassword}
 					error={!passwordsMatch} 
@@ -297,7 +304,8 @@ function SignUp () {
 						mb: 2 
 					}} control={<Checkbox checked={acceptPolicy} 
 						onChange={() => setAcceptPolicy(!acceptPolicy)}
-						required 	/>}
+						required
+						id='acceptPolicy' 	/>}
 					label='Ik accepteer de privacy policy' />
 					<Button variant='contained' color='secondary'
 						type='submit'>sign up</Button>
