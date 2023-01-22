@@ -46,7 +46,8 @@ function BandLeden() {
 					</Typography> :
 					data.map((card) => {
 						console.log(card);
-						return <ProfileCard key={card.id} {...card} />;
+						return <ProfileCard key={card.id} user={card}
+						/>;
 					})}
 			</CardContent>
 		</Box>
