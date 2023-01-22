@@ -4,13 +4,27 @@ import {
 
 describe('Admin', () => {
 	beforeEach(() => {
+		gotoPage('login');
+		cy.get('input[type="email"]').click().type('chad@e.com');
+		cy.get('input[type="password"]').click().type('password');
+		cy.get('button[type="submit"]').click();
+		cy.get('button').contains('My Account').click();
 		gotoPage('admin/1');
-		cy.get('input[type="text"]').click().type('theater');
-		cy.get('input[type="email"]').click().type('jan@mail.com');
 	});
 	it('test zaalToevoegen loads correctly', () => {
-		cy.get('h4').contains('Electric callboy');
-		cy.get('p').contains('Sit velit do ex excepteur ullamco dolor consequat enim.');
-		cy.get('a[href="https://www.electriccallboy.com/"]').contains('Website');
+		cy.get('h5').contains('Programma toevoegen');
+	});
+	it('test zaalToevoegen verbindt met api', () => {
+		cy.get('input[name="soort"]').click().type('theater');
+		cy.get('input[name="eersterang"]').click().type('21');
+		cy.get('input[name="tweederang"]').click().type('22');
+		cy.get('input[name="derderang"]').click().type('23');
+
+		cy.intercept({
+			url: '/api/zalen',
+			method: 'POST'
+		}).as('post');
+
+		cy.get('button[type="submit"').should('be.enabled').click();
 	});
 });

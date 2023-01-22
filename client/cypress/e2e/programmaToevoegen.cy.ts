@@ -4,11 +4,14 @@ import {
 
 describe('Admin', () => {
 	beforeEach(() => {
+		gotoPage('login');
+		cy.get('input[type="email"]').click().type('chad@e.com');
+		cy.get('input[type="password"]').click().type('password');
+		cy.get('button[type="submit"]').click();
+		cy.get('button').contains('My Account').click();
 		gotoPage('admin/0');
 	});
 	it('test ProgrammaToevoegen loads correctly', () => {
-		cy.get('h4').contains('Electric callboy');
-		cy.get('p').contains('Sit velit do ex excepteur ullamco dolor consequat enim.');
-		cy.get('a[href="https://www.electriccallboy.com/"]').contains('Website');
+		cy.get('h5').contains('Programma toevoegen');
 	});
 });
