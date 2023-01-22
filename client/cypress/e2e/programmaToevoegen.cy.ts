@@ -14,4 +14,21 @@ describe('Admin', () => {
 	it('test ProgrammaToevoegen loads correctly', () => {
 		cy.get('h5').contains('Programma toevoegen');
 	});
+	it('test zaalToevoegen verbindt met api', () => {
+		cy.get('input[name="titel"]').click().type('Monkeys on ice');
+		cy.get('input[name="omschrijving"]').click().type('A very refreshing experience');
+		cy.get('div[aria-labelledby="Zaal select"]').click();
+		cy.get('li').contains('#1').click();
+		cy.get('input[name="prijs"]').click().type('420');
+
+		cy.intercept({
+			url: '/api/programmeringen',
+			method: 'POST'
+		}).as('post');
+
+		cy.get('button[type="submit"').should('be.enabled').click();
+		cy.wait('@post').then(() => {			
+			cy.get('h3').should('be.visible').contains('Toevoegen Gelukt');
+		});
+	});
 });

@@ -27,5 +27,8 @@ describe('Admin', () => {
 		}).as('post');
 
 		cy.get('button[type="submit"').should('be.enabled').click();
+		cy.wait('@post').then(() => {			
+			cy.get('h3').should('be.visible').contains('Toevoegen Gelukt');
+		});
 	});
 });
