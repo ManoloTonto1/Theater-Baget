@@ -1,10 +1,10 @@
 public class Reservering {
     public int id { get; set; }
     public string QR { get; set; } = "";
-    public List<Stoel> stoelen { get; set; }
+    public List<Stoel>? stoelen { get; set; }
     public Gebruiker owner { get; set; }
-    public Zaal zaal { get; set; }
-    public Programmering programmering { get; set; }
+    public Zaal? zaal { get; set; }
+    public Programmering? programmering { get; set; }
 
     public Betaling betaling { get; set; }
 }
