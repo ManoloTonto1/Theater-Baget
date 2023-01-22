@@ -16,6 +16,13 @@ export type Programma = {
     datum: string;
     omschrijving: string;
     titel: string;
+    zaal: {
+        zaalNr: number
+        soort: string;
+        eersterangsAantal: number;
+        tweederangsAantal: number;
+        derderangsAantal: number;
+    }
     zaalNr: string;
 }
 

@@ -61,7 +61,6 @@ function BandProfiel() {
 		API('groepen')
 			.Get(id)
 			.then((res) => {
-				console.log(res.data);
 				setData(res.data);
 			});
 	}, []);

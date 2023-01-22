@@ -26,12 +26,16 @@ function LeftCard(props:EventProps) : JSX.Element {
 				}}>
 					
 					<Box sx={{
-						m: 2
+						m: 2,
+						display: 'flex',
+						justifyContent:'center'
 					}}>
 						<CardMedia component='img'
+							alt={props.data.titel}
 							src={props.data.afbeelding}
 							sx={{
-								width: '100%',
+								minWidth:'50%',
+								maxWidth: 500,
 								borderRadius: 1,
 							}} />
 					</Box>

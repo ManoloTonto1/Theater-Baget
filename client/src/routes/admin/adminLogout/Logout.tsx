@@ -2,8 +2,19 @@ import {
 	Box, Button, Typography 
 } from '@mui/material';
 import React from 'react';
+import {
+	useNavigate 
+} from 'react-router-dom';
+import UserContext from '../../../context/UserContext';
 
 function Logout() {
+	const { user } = React.useContext(UserContext);
+	const navigate = useNavigate();
+	const SignOut = React.useCallback(() => {
+		localStorage.removeItem('token');
+		user.setUser(null);
+		navigate('/');
+	},[navigate,user]);
 	return (
 		<Box
 			component = 'form'
@@ -21,6 +32,7 @@ function Logout() {
                 Klik op de knop hieronder om uit te loggen.
 			</Typography>
 			<Button variant="contained" size="large"
+				onClick={SignOut}
 				sx={{
 					mt:4,
 					width: '100%'

@@ -22,7 +22,7 @@ const Interesses = React.lazy(() => import('./routes/Interesses/Interesses'));
 const IntressesFeedback = React.lazy(() => import('./routes/Interesses/feedback/IntressesFeedback'));
 const IntressesSuggestie = React.lazy(() => import('./routes/Interesses/suggestie/IntressesSuggestie'));
 const TicketKopen = React.lazy(() => import('./routes/Bestellen/TicketKopen'));
-const Profiel = React.lazy(()=> import('./routes/profielen/profiel/Profiel'));
+const Profiel = React.lazy(()=> import('./routes/profielen/Profiel'));
 const BandProfiel = React.lazy(()=> import('./routes/profielen/bandProfiel/BandProfiel'));
 const Bands = React.lazy(()=>import('./routes/bands/Bands'));
 const BandsById = React.lazy(() => import('./routes/bands/BandsById'));
@@ -32,7 +32,7 @@ const ProgrammaOverzicht = React.lazy(() => import('./routes/programma/Programma
 const BegunstigersPortaal = React.lazy(() => import('./routes/programma/BegunstigersPortaal'));
 
 function App() : JSX.Element {
-	const { _, theme } = React.useContext(UserContext);
+	const { theme } = React.useContext(UserContext);
 	const location = useLocation();
 	return (
 		<ThemeProvider theme={theme.theme} >

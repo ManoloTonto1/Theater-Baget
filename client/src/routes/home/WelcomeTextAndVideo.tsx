@@ -23,9 +23,10 @@ const WelcomeText = () : JSX.Element => {
 					style={{
 						// eslint-disable-next-line max-len
 						background: '-webkit-linear-gradient(180deg, rgba(213,0,0,1) 0%, rgba(255,235,59,1) 90%)',
-						webkitBackgroundClip: 'text',
+						WebkitBackgroundClip: 'text',
+						backgroundClip:'text',
 						WebkitTextFillColor: 'transparent',
-					} as $TSfixMeAny}
+					}}
 					sx={{
 						fontWeight: 'bold',
 					}}
@@ -83,7 +84,7 @@ function WelcomeTextAndVideo() :JSX.Element {
 			<Grid item
 				lg={6}
 				xs={12}
-				sm={6}>
+			>
 				<WelcomeText/>
 			</Grid>
 			<Grid item
