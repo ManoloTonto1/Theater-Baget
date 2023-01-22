@@ -2,20 +2,18 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using server.Controllers;
 
-var policy = "Client";
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: policy,
-                      policy =>
+    options.AddDefaultPolicy(policy =>
                       {
                           policy.AllowAnyOrigin()
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                       });
 });
+
 
 builder.Services.AddMvc().AddJsonOptions(options =>
 {
@@ -44,6 +42,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors();
 app.UseRouting();
 app.UseAuthorization();
 app.UseEndpoints(builder =>
@@ -57,7 +56,5 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseCors(policy);
 
 app.Run();
