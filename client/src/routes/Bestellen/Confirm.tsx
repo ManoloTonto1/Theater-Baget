@@ -59,7 +59,7 @@ function Confirm(props: props): JSX.Element {
 					sm={6}>
 					{info.map((item) => {
 						return (
-							<>
+							<React.Fragment key={item.label}>
                         
 								<Typography variant='body2' sx={{
 									color: 'primary.main'
@@ -70,7 +70,7 @@ function Confirm(props: props): JSX.Element {
 									{item.data}
 								</Typography>
 								<br />
-							</>
+							</React.Fragment>
 						);
 					})}
 				</Grid>

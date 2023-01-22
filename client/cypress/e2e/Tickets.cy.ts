@@ -48,7 +48,7 @@ describe('Donate', () => {
 		cy.get('input').type('6969');
 		cy.get('button').contains('Volgende Stap').click();
 		cy.get('p').contains('10.00');
-		cy.intercept('https://fakepay.azurewebsites.net/', {
+		cy.intercept('/api/reserveringen', {
 			times: 2
 		}, {
 			statusCode: 500 

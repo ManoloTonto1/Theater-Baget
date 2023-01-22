@@ -14,8 +14,8 @@ describe('BetrokkeneToevoegen', () => {
 		cy.get('#vertical-tab-2').click();
 		cy.get('input[type="text"]').click().type('Mitchell Ekelschot');
 		cy.get('input[type="email"]').click().type('test@cypress.com');
-        cy.get('.MuiSelect-select').click();
-        cy.get('[data-value="1"]').click();
+		cy.get('.MuiSelect-select').click();
+		cy.get('[data-value="1"]').click();
 		cy.get('button[type="submit"]').click();
 	});
     
@@ -29,11 +29,11 @@ describe('BetrokkeneToevoegen', () => {
 		cy.get('#vertical-tab-2').click();
 		cy.get('input[type="text"]').click().type('Mitchell Ekelschot');
 		cy.get('input[type="email"]').click().type('test@cypress.com');
-        cy.get('.MuiSelect-select').click();
-        cy.get('[data-value="1"]').click();
+		cy.get('.MuiSelect-select').click();
+		cy.get('[data-value="1"]').click();
 		cy.get('button[type="submit"]').click();
 
-        // nogmaals het formulier verzenden
+		// nogmaals het formulier verzenden
 		cy.get('button[type="submit"]').click();
 	});
 });
