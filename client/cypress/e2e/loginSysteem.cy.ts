@@ -2,7 +2,7 @@ import {
 	gotoPage
 } from './scripts';
 
-describe('SignIn', () => {
+describe('LoginSysteem', () => {
 	beforeEach(() => {
 		gotoPage('login');
 	});
@@ -34,5 +34,21 @@ describe('SignIn', () => {
 	it('kan van sign up naar sign in wisselen', () => {
 		cy.get('button#simple-tab-1').click();
 		cy.get('button#simple-tab-0').click();
+	});
+	it('kan een gebruiker uitloggen', () => {
+		cy.get('input[type="email"]').click().type('chad@e.com');
+		cy.get('input[type="password"]').click().type('password');
+		cy.get('button[type="submit"]').click();
+		cy.get('button[id="myAccount"]').click();
+		cy.get('.css-1vbswuw > .MuiBox-root > .MuiButtonBase-root').click();
+	});
+	it('kan een admin uitloggen', () => {
+		cy.get('input[type="email"]').click().type('chad@e.com');
+		cy.get('input[type="password"]').click().type('password');
+		cy.get('button[type="submit"]').click();
+		cy.get('button[id="myAccount"]').click();
+		cy.get('button').contains('admin').click();
+		cy.get('#vertical-tab-4').click();
+		cy.get('#form > .MuiButtonBase-root').click();
 	});
 });
